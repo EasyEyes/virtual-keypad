@@ -6,7 +6,7 @@ function queryString(params) {
     return Object.keys(params).map(key => key + '=' + params[key]).join('&');
 }
 
-export function keypad_receiver(keypad_params, callback){
+export default function keypad_receiver(keypad_params, callback){
     var lastPeerId = null;
     var peer = null; // Own peer object
     var peerId = null;
