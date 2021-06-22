@@ -1,8 +1,6 @@
 require('./receiver.css');
-var QRCode = require('qrcode')
+var QRCode = require('qrcode');
 require('peerjs');
-
-export var keypad_communications = [];
 
 function queryString(params) {
     return Object.keys(params).map(key => key + '=' + params[key]).join('&');
@@ -105,22 +103,10 @@ export function keypad_receiver(keypad_params, callback){
      */
     function ready() {
         conn.on('data', function (data) {
-            // Record communciation
-            window.keypad_communications.push(data);
             // Perform callback with data
             callback(data);
 
             console.log("Data recieved, ", data);
-            // switch (data) {
-            //     // case 'Reset':
-            //     //     reset();
-            //     //     addMessage(cueString + data);
-            //     //     break;
-            //     default:
-            //         communications.push(
-            //             JSON.parse(data)['response']);
-            //         updateDataDisplay();
-            // };
         });
         conn.on('close', function () {
             status.innerHTML = "Connection reset<br>Awaiting connection...";
