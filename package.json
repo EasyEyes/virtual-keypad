@@ -1,6 +1,6 @@
 {
   "name": "keypad-receiver",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple utility to summon forth a virtual keypad webapp.",
   "main": "dist/receiver.js",
   "directories": {
