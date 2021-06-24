@@ -13,6 +13,7 @@ export class Receiver {
   constructor(keypad_params, on_data_callback) {
     this.peer = new Peer(null, { debug: 2 });
     this.conn = null;
+    this.data_callback = on_data_callback;
     this.#lastPeerId = null;
     // DELETE this.#peerId = null;
 
@@ -39,7 +40,7 @@ export class Receiver {
     this.peer.on("close", this.on_peer_close);
     this.peer.on("error", this.on_peer_error);
   };
-  static display_update = (message, append = false) => {
+  display_update = (message, append = false) => {
     // If the specified elem exists, update that elem
     if (!!document.getElementById(this.display_element)) {
       const display_elem = document.getElementById(this.display_element);
@@ -50,6 +51,24 @@ export class Receiver {
       }
     } else {
       console.log("RECEIVER MESSAGE: ", message);
+    }
+  };
+  update_alphabet = (alphabet) => {
+    // Get an array of unique symbols
+    console.log('New alphabet: ', alphabet);
+    try {
+      console.log('DEBUG sending new alphabet');
+      this.conn.send({'alphabet': alphabet});
+    } catch (e) {
+      this.display_update("Error in updating alphabet! ", e);
+    }
+  };
+  update_font = (font) => {
+    // TODO check if the font is supported, somehow
+    try {
+      this.conn.send({'font': font});
+    } catch (e) {
+      this.display_update("Error in updating font! ", e);
     }
   };
   on_peer_open = (id) => {
@@ -68,11 +87,13 @@ export class Receiver {
     };
 
     let query_string = queryString(params);
-    const uri =
-      window.location.protocol +
-      window.location.hostname +
-      "/keypad?" +
-      query_string;
+    // Assuming you are serving the receiver and keypad from the same domain
+    // const uri =
+    //   window.location.protocol +
+    //   window.location.hostname +
+    //   "/keypad?" +
+    //   query_string;
+    const uri = 'https://testtestgus.xyz/keypad?' + query_string;
 
     // Display QR code for the participant to scan
     const qrCanvas = document.createElement("canvas");
@@ -85,7 +106,6 @@ export class Receiver {
       console.log("Peer reachable at: ", uri);
     }
   };
-
   on_peer_connection = (c) => {
     // Allow only a single connection
     if (this.conn && this.conn.open) {
@@ -98,13 +118,11 @@ export class Receiver {
       return;
     }
     this.conn = c;
-    display_update("Connected to: ", this.conn.peer);
+    this.display_update("Connected to: ", this.conn.peer);
     this.ready();
   };
   on_peer_disconnected = () => {
-    this.display_element.innerHTML = "Connection lost. Please reconnect";
-    console.log("Connection lost. Please reconnect");
-
+    this.display_update("Connection lost. Please reconnect");
     // Workaround for peer.reconnect deleting previous id
     this.peer.id = this.#lastPeerId;
     this.peer._lastServerId = this.#lastPeerId;
@@ -125,10 +143,9 @@ export class Receiver {
      * Defines callbacks to handle incoming data and connection events.
      */
     // Perform callback with data
-    this.conn.on("data", on_data_callback);
-    this.conn.on("close", function () {
-      this.display_element.innerHTML =
-        "Connection reset<br>Awaiting connection...";
+    this.conn.on("data", this.data_callback);
+    this.conn.on("close", () => {
+      this.display_update("Connection reset<br>Awaiting connection...");
       this.conn = null;
     });
   };
