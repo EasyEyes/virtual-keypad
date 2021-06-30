@@ -1,14 +1,12 @@
 const webpack = require('webpack')
 
 module.exports = {
-  mode: 'development',
-  entry: {
-    receiver: './src/receiver.js',
-  },
+  mode: 'production',
+  entry: './src/main.js',
   output: {
     path: `${__dirname}/dist`,
     filename: '[name].js',
-    library: 'keypad-receiver',
+    library: 'virtualKeypad',
     libraryTarget: 'umd',
   },
   module: {

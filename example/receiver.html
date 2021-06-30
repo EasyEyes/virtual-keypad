@@ -6,7 +6,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- TODO include JS and css from webpack bundle -->
-        <script src="../dist/receiver.js"></script>
+        <script src="../dist/main.js"></script>
     </head>
     <body>
         <main id="main"> </main>
@@ -14,12 +14,13 @@
             let keypad_options = {
                 'alphabet': "ZYXWABCD",
                 'font': "Sloan",
-                // 'display_element_id': 'main'
+                'targetElementId': 'main'
             };
             let ondata_callback = (data) => {
                 console.log(data);
             };
-            window.my_receiver = new window['keypad-receiver'].Receiver(keypad_options, ondata_callback);
+            // window.my_receiver = new window['keypad-receiver'].Receiver(keypad_options, ondata_callback);
+            var receiver = new virtualKeypad.Receiver(keypad_options, ondata_callback);
         </script>
     </body>
 </html>
