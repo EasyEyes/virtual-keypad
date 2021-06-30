@@ -8,7 +8,12 @@ specified keypad, handle's a user-defined callback on the incoming data,
 and allows for real-time changes to the keypad content.
 
 ## How
-TODO
+**tl;dr** instantiate a `Receiver`, eg from within a PsychoJS experiment,
+and scan the generated QR Code from your mobile device. By default the user 
+is taken to a publically-hosted webpage wrapper around `Keypad`. 
+Use the `keypadURL` parameter of `Receiver` to instead direct
+the user to a custom keypad webapp, should you choose to self-host, eg with
+a server like `server.js`.
 
 ## What
 A simple (optionally self-hosted) keypad webapp, with user-specified callback behavior.
