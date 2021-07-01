@@ -12,7 +12,7 @@ export class KeypadPeer {
   //   #keypadUrl;
   //   #targetElement;
   constructor(
-    keypadURL = "https://testtestgus.xyz/keypad?",
+    keypadURL = "https://www.keypad.website/keypad?",
     targetElementId = null
   ) {
     /* Create the Peer object for our end of the connection. */
