@@ -31,7 +31,7 @@ class Keypad extends KeypadPeer {
       console.log("Received null id from peer open");
       this.peer.id = this.lastPeerId;
     } else {
-      this.lastPeerId = peer.id;
+      this.lastPeerId = this.peer.id;
     }
     this.#join();
   };
