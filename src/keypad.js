@@ -2,12 +2,11 @@ import "./keypad.css";
 import { KeypadPeer } from "./keypadPeer.js";
 
 class Keypad extends KeypadPeer {
-  constructor(targetElementId = null, visualResponseFeedback = false) {
+  constructor(keypadURL = "https://www.keypad.website/keypad?", targetElementId = null, visualResponseFeedback = false) {
     super();
     console.log("DEBUG Keypad constructed.");
+    console.log("This peer: ", this.peer)
     this.startTime = Date.now();
-    this.alphabet = null;
-    this.font = null;
     this.receiverPeerId = null;
     this.targetElement = targetElementId;
 
@@ -17,9 +16,6 @@ class Keypad extends KeypadPeer {
     this.pressFeedback = new Audio(this.pressFeedbackSound);
     this.visualResponseFeedback = visualResponseFeedback;
 
-    this.#initialize();
-  }
-  #initialize = () => {
     this.peer.on("open", this.#onPeerOpen);
     this.peer.on("connection", this.#onPeerConnection);
     this.#prepareHTML();
