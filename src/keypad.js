@@ -31,12 +31,12 @@ class Keypad extends KeypadPeer {
     }
     this.#join();
   };
-  #onPeerConnection = (c) => {
+  #onPeerConnection = (connection) => {
     // Disallow incoming connections
-    c.on("open", function () {
-      c.send("Sender does not accept incoming connections");
+    connection.on("open", function () {
+      connection.send("Sender does not accept incoming connections");
       setTimeout(function () {
-        c.close();
+        connection.close();
       }, 500);
     });
   };
@@ -85,8 +85,8 @@ class Keypad extends KeypadPeer {
 
     this.conn.on("open", this.#populateKeypad);
     // Handle incoming data (messages only since this is the signal sender)
-    conn.on("data", this.#onConnData);
-    conn.on("close", function () {
+    this.conn.on("data", this.#onConnData);
+    this.conn.on("close", function () {
       console.log("Connection closed");
     });
   };
