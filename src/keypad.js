@@ -3,7 +3,7 @@ import { KeypadPeer } from "./keypadPeer.js";
 
 class Keypad extends KeypadPeer {
   constructor(keypadURL = "https://www.keypad.website/keypad?", targetElementId = null, visualResponseFeedback = false) {
-    super();
+    super(keypadParameters.keypadURL, keypadParameters.targetElementId);
     console.log("DEBUG Keypad constructed.");
     console.log("This peer: ", this.peer)
     this.startTime = Date.now();
@@ -18,6 +18,10 @@ class Keypad extends KeypadPeer {
 
     this.peer.on("open", this.#onPeerOpen);
     this.peer.on("connection", this.#onPeerConnection);
+    this.peer.on("disconnected", this.onPeerDisconnected);
+    this.peer.on("close", this.onPeerClose);
+    this.peer.on("error", this.onPeerError);
+
     this.#prepareHTML();
     this.#populateKeypad();
   };
