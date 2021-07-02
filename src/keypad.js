@@ -154,7 +154,7 @@ class Keypad extends KeypadPeer {
         e.target.click();
       });
       button.addEventListener("click", () => {
-        responseButtonHandler(button, alphabet, font, conn, peer);
+        buttonResponseFn(button);
       });
 
       // Create a label for the button
@@ -177,9 +177,7 @@ class Keypad extends KeypadPeer {
     // Remove previous buttons
     remoteControl.innerHTML = "";
     // Create new buttons
-    this.alphabet.forEach((symbol) =>
-      createButton(symbol, alphabet, font, conn, peer)
-    );
+    this.alphabet.forEach((symbol) => createButton(symbol));
   };
   visualFeedbackThenReset = (delayTime = 1000) => {
     // ie grey out keys just after use, to discourage rapid response
