@@ -1,4 +1,4 @@
-# Virtual Keypad Receiver
+# Virtual Keypad
 
 Spawn and communicate with a virtual keypad, eg for use in online psychology 
 experiments. 
@@ -12,8 +12,13 @@ and allows for real-time changes to the keypad content.
 and scan the generated QR Code from your mobile device. By default the user 
 is taken to a publically-hosted webpage wrapper around `Keypad`. 
 Use the `keypadURL` parameter of `Receiver` to instead direct
-the user to a custom keypad webapp, should you choose to self-host, eg with
-a server like `example/server.js`.
+the user to a keypad hosted elsewhere.
+
+### Receiver
+Most users, eg experimenters, should only need to use the `Receiver` class.
+This class handles configuring the content of the keypad (ie what symbols to
+show, and in what font face), creates a link -- in the form of a QR code -- to
+a keypad for the user to use.
 
 ## What
 A simple (optionally self-hosted) keypad webapp, with user-specified callback behavior.
