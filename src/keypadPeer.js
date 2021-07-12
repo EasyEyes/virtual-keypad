@@ -12,15 +12,19 @@ export class KeypadPeer {
   //   #keypadUrl;
   //   #targetElement;
   constructor(
-    keypadUrl = "https://www.keypad.website/keypad?",
-    targetElementId = null
+    parameters = {
+      keypadUrl: "https://www.keypad.website/keypad?",
+      targetElementId: null,
+    }
   ) {
     /* Create the Peer object for our end of the connection. */
     this.peer = new Peer(null, { debug: 2 });
     this.conn = null;
     this.lastPeerId = null;
-    this.keypadUrl = keypadUrl;
-    this.targetElement = targetElementId;
+    this.keypadUrl = parameters.hasOwnProperty("keypadUrl")
+      ? parameters.keypadUrl
+      : "https://www.keypad.website/keypad?";
+    this.targetElement = parameters.targetElementId;
 
     this.alphabet = null;
     this.font = null;

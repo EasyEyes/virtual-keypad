@@ -2,8 +2,17 @@ import "./keypad.css";
 import { KeypadPeer } from "./keypadPeer.js";
 
 class Keypad extends KeypadPeer {
-  constructor(keypadParameters = {keypadUrl: "https://www.keypad.website/keypad?", targetElementId : null, visualResponseFeedback : false}) {
-    super({ keypadUrl: keypadParameters.keypadUrl, targetElementId: keypadParameters.targetElementId});
+  constructor(
+    keypadParameters = {
+      keypadUrl: "https://www.keypad.website/keypad?",
+      targetElementId: null,
+      visualResponseFeedback: false,
+    }
+  ) {
+    super({
+      keypadUrl: keypadParameters.keypadUrl,
+      targetElementId: keypadParameters.targetElementId,
+    });
     this.startTime = Date.now();
     this.receiverPeerId = null;
 
@@ -21,7 +30,7 @@ class Keypad extends KeypadPeer {
 
     this.#prepareHTML();
     this.#populateKeypad();
-  };
+  }
   #onPeerOpen = (id) => {
     // Workaround for peer.reconnect deleting previous id
     if (this.peer.id === null) {

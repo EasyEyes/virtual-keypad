@@ -1,100 +1,102 @@
 /* REMOTE KEYPAD STYLING */
 :root {
-    /* w3 minimum is 44px: https://www.w3.org/WAI/WCAG21/Understanding/target-size.html */
-    --min-size: 50px; 
-    --num-rows-or-cols: 3;
+  /* w3 minimum is 44px: https://www.w3.org/WAI/WCAG21/Understanding/target-size.html */
+  --min-size: 50px;
+  --num-rows-or-cols: 3;
 }
 /* html {
     font-size: calc(1em + 1vw);
 } */
-h1 { font-size: 1.5em }
-h2 { font-size: 1.125em }
+h1 {
+  font-size: 1.5em;
+}
+h2 {
+  font-size: 1.125em;
+}
 
-body  {
-    padding: 0;
-    margin: 0;
+body {
+  padding: 0;
+  margin: 0;
 
-    width: 100vw;
-    height: 100vh;
+  width: 100vw;
+  height: 100vh;
 
-    overflow: hidden;
-    overflow-y: scroll;
+  overflow: hidden;
+  overflow-y: scroll;
 
-    /* background-color: #eeeeee; */
+  /* background-color: #eeeeee; */
 
-    position: absolute;
-    /* color: DarkSlateBlue; */
+  position: absolute;
+  /* color: DarkSlateBlue; */
 }
 
 #keypad-header {
-    height: 20vh;
+  height: 20vh;
 
-    text-align: center;
-    /* padding: .25em .5em 0 .25em; */
+  text-align: center;
+  /* padding: .25em .5em 0 .25em; */
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    touch-action: none;
+  touch-action: none;
 }
 
 main {
-    height: 80vh;
-    /* width: 98vw; */
-    text-align: center;
-
+  height: 80vh;
+  /* width: 98vw; */
+  text-align: center;
 }
 
 #keypad {
-    /* Center the keypad */
-    margin: auto;
-    width: 90vw;
+  /* Center the keypad */
+  margin: auto;
+  width: 90vw;
 
-    /* Set height to not conflict with header */
-    height: 75vw;
+  /* Set height to not conflict with header */
+  height: 75vw;
 
-    /* Auto grid of buttons */
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: auto;
-    /* justify-content: center; */
+  /* Auto grid of buttons */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: auto;
+  /* justify-content: center; */
 }
 
 .response-button {
-    cursor: pointer;
+  cursor: pointer;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    /* width: 23vw;
+  /* width: 23vw;
     height: 23vw;
     margin: 1vw; */
-    /* height: var(--button-dim);
+  /* height: var(--button-dim);
     width: var(--button-dim); */
 
-    /* background-color: lightslategray; */
+  /* background-color: lightslategray; */
 
-    border-radius: 1vw;
-    border: darkslategray 2px solid;
+  border-radius: 1vw;
+  border: darkslategray 2px solid;
 }
 
 /* Only do on a hover-enabled device, ie not a phone/tablet */
-@media (hover: hover){
-    .response-button:hover {
-        box-shadow: 1px 5px 5px 1px lightslategray;
-    }
-
+@media (hover: hover) {
+  .response-button:hover {
+    box-shadow: 1px 5px 5px 1px lightslategray;
+  }
 }
- 
+
 /* Very narrow windows */
 @media only screen and (max-width: 200px) {
-    #keypad {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  #keypad {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-    /* .response-button {
+  /* .response-button {
         width: 37.5vw;
         height: 37.5vw;
     } */
@@ -102,32 +104,32 @@ main {
 
 /* Wide windows */
 @media only screen and (min-width: 823px) {
-    #keypad {
-        grid-template-columns: repeat(4, 1fr);
-    }
+  #keypad {
+    grid-template-columns: repeat(4, 1fr);
+  }
 
-    /* .response-button {
+  /* .response-button {
         width: 16.75vw;
         height: 16.75vw;
     } */
 }
 /* Landscape phones */
 @media only screen and (max-width: 823px) and (orientation: landscape) {
-    #keypad-header {
-        height: 15vh;
-        padding: .25em .5em 0 .25em;
-    }
+  #keypad-header {
+    height: 15vh;
+    padding: 0.25em 0.5em 0 0.25em;
+  }
 
-    #keypad { 
-        width: 90vw;
-        height: 80vh;
-        grid-template-columns: repeat(4, 1fr);
-    }
-    /* .response-button {
+  #keypad {
+    width: 90vw;
+    height: 80vh;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  /* .response-button {
         width: 19.75vw;
         height: min(19.75vw, 40vh);
     } */
-} 
+}
 
 /* .response-button:active {
     background-color: steelblue;
@@ -135,22 +137,22 @@ main {
 } */
 
 .response-button-label {
-        text-align: center;
-        /* color: #eeeeee; */
+  text-align: center;
+  /* color: #eeeeee; */
 }
 
 .noselect {
-    -webkit-touch-callout: none; /* iOS Safari */
-      -webkit-user-select: none; /* Safari */
-       -khtml-user-select: none; /* Konqueror HTML */
-         -moz-user-select: none; /* Old versions of Firefox */
-          -ms-user-select: none; /* Internet Explorer/Edge */
-              user-select: none; /* Non-prefixed version, currently
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
-  }
+}
 
 .unpressable {
-   /* background-color: lightgray;  */
-   /* border-color: lightgray;  */
-   box-shadow: none;
+  /* background-color: lightgray;  */
+  /* border-color: lightgray;  */
+  box-shadow: none;
 }
