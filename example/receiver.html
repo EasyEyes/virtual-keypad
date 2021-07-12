@@ -13,6 +13,8 @@
         <main id="main"> </main>
         <script>
             let keypad_options = {
+                // Specify a 'keypadUrl' field to redirect to a keypad hosted elsewhere
+                // FUTURE should be able to have a visual keypress or not from here
                 'alphabet': "ZYXWABCD",
                 'font': "Sloan",
                 'targetElementId': 'main'
@@ -20,7 +22,6 @@
             let ondata_callback = (data) => {
                 console.log(data);
             };
-            // window.my_receiver = new window['keypad-receiver'].Receiver(keypad_options, ondata_callback);
             var receiver = new virtualKeypad.Receiver(keypad_options, ondata_callback);
         </script>
     </body>

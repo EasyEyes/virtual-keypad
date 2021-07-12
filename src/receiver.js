@@ -5,16 +5,16 @@ import { KeypadPeer } from "./keypadPeer.js";
 
 class Receiver extends KeypadPeer {
   constructor(keypadParameters, onDataCallback) {
-    super(keypadParameters.keypadURL, keypadParameters.targetElementId);
-    this.onDataCallback = onDataCallback;
+    super({ targetElementId: keypadParameters.targetElementId });
+    keypadParameters = this.#verifyKeypadParameters(keypadParameters);
 
-    this.alphabet = keypadParameters["alphabet"];
-    this.font = keypadParameters["font"];
+    this.onDataCallback = onDataCallback; // What to do on a button-press
+    this.alphabet = keypadParameters["alphabet"]; // What symbols to display on the keys
+    this.font = keypadParameters["font"]; // What fontface to display the symbols in
 
     /* Set up callbacks that handle any events related to our peer object. */
-    console.log("DEBUG This peer: ", this.peer);
-    this.peer.on("open", this.#onPeerOpen);
-    this.peer.on("connection", this.#onPeerConnection);
+    this.peer.on("open", this.#onPeerOpen); // On creation of Receiver (local) Peer object
+    this.peer.on("connection", this.#onPeerConnection); // On connection with Keypad (remote) Peer object
     this.peer.on("disconnected", this.onPeerDisconnected);
     this.peer.on("close", this.onPeerClose);
     this.peer.on("error", this.onPeerError);
@@ -37,6 +37,25 @@ class Receiver extends KeypadPeer {
       this.displayUpdate("Error in updating font! ");
       console.error(e);
     }
+  };
+  #verifyKeypadParameters = (keypadParameters) => {
+    if (!keypadParameters.hasOwnProperty("alphabet")) {
+      console.error(
+        "Must provide 'alphabet' parameter to Receiver object. Defaulting to 'CDHKNORSVZ'"
+      );
+      keypadParameters["alphabet"] = "CDHKNORSVZ";
+    } else {
+      // FUTURE verify that symbols are displayable in desired font
+    }
+    if (!keypadParameters.hasOwnProperty("font")) {
+      console.error(
+        "Must provide 'font' parameter to Receiver object. Defaulting to 'Sloan'"
+      );
+      keypadParameters["alphabet"] = "Sloan";
+    } else {
+      // FUTURE verify that the selected font is available
+    }
+    return keypadParameters;
   };
   #onPeerOpen = (id) => {
     // Workaround for peer.reconnect deleting previous id

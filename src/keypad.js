@@ -2,13 +2,10 @@ import "./keypad.css";
 import { KeypadPeer } from "./keypadPeer.js";
 
 class Keypad extends KeypadPeer {
-  constructor(keypadURL = "https://www.keypad.website/keypad?", targetElementId = null, visualResponseFeedback = false) {
-    super(keypadParameters.keypadURL, keypadParameters.targetElementId);
-    console.log("DEBUG Keypad constructed.");
-    console.log("This peer: ", this.peer)
+  constructor(keypadParameters = {keypadUrl: "https://www.keypad.website/keypad?", targetElementId : null, visualResponseFeedback : false}) {
+    super({ keypadUrl: keypadParameters.keypadUrl, targetElementId: keypadParameters.targetElementId});
     this.startTime = Date.now();
     this.receiverPeerId = null;
-    this.targetElement = targetElementId;
 
     [this.alphabet, this.font, this.receiverPeerId] = this.parseParams(
       new URLSearchParams(window.location.search)

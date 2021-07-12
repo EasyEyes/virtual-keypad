@@ -4,9 +4,9 @@
     --min-size: 50px; 
     --num-rows-or-cols: 3;
 }
-html {
+/* html {
     font-size: calc(1em + 1vw);
-}
+} */
 h1 { font-size: 1.5em }
 h2 { font-size: 1.125em }
 
@@ -20,10 +20,10 @@ body  {
     overflow: hidden;
     overflow-y: scroll;
 
-    background-color: #eeeeee;
+    /* background-color: #eeeeee; */
 
     position: absolute;
-    color: DarkSlateBlue;
+    /* color: DarkSlateBlue; */
 }
 
 #keypad-header {
@@ -74,7 +74,7 @@ main {
     /* height: var(--button-dim);
     width: var(--button-dim); */
 
-    background-color: lightslategray;
+    /* background-color: lightslategray; */
 
     border-radius: 1vw;
     border: darkslategray 2px solid;
@@ -129,14 +129,14 @@ main {
     } */
 } 
 
-.response-button:active {
+/* .response-button:active {
     background-color: steelblue;
     box-shadow: 1px 5px 5px 1px lightslategray;
-}
+} */
 
 .response-button-label {
         text-align: center;
-        color: #eeeeee;
+        /* color: #eeeeee; */
 }
 
 .noselect {
@@ -150,7 +150,7 @@ main {
   }
 
 .unpressable {
-   background-color: lightgray; 
+   /* background-color: lightgray;  */
    /* border-color: lightgray;  */
    box-shadow: none;
 }
