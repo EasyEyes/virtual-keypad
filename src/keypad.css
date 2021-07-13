@@ -20,18 +20,19 @@ body {
 
   width: 100vw;
   height: 100vh;
+  overflow: scroll;
 
   /* overflow: hidden;
   overflow-y: scroll; */
 
   /* background-color: #eeeeee; */
 
-  position: absolute;
+  /* position: absolute; */
   /* color: DarkSlateBlue; */
 }
 
 #keypad-header {
-  height: 20vh;
+  height: 15vh;
 
   text-align: center;
   /* padding: .25em .5em 0 .25em; */
@@ -44,7 +45,7 @@ body {
 }
 
 main {
-  height: 80vh;
+  height: 85vh;
   /* width: 98vw; */
   text-align: center;
 }
@@ -55,7 +56,7 @@ main {
   width: 90vw;
 
   /* Set height to not conflict with header */
-  height: 75vw;
+  height: 100%;
 
   /* Auto grid of buttons */
   display: grid;
@@ -70,14 +71,6 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  /* width: 23vw;
-    height: 23vw;
-    margin: 1vw; */
-  /* height: var(--button-dim);
-    width: var(--button-dim); */
-
-  /* background-color: lightslategray; */
 
   border-radius: 1vw;
   border: darkslategray 2px solid;
