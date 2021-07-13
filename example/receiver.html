@@ -6,7 +6,7 @@
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- TODO include JS and css from webpack bundle -->
-    <script src="/static/main.js"></script>
+    <script src="../dist/main.js"></script>
     <!-- <script src="https://unpkg.com/virtual-keypad"></script> -->
   </head>
   <body>
@@ -22,7 +22,11 @@
       let ondata_callback = (data) => {
         console.log(data);
       };
-      var receiver = new virtualKeypad.Receiver(
+    //   var receiver = new virtualKeypad.Receiver(
+    //     keypad_options,
+    //     ondata_callback
+    //   );
+      var receiver = new Receiver(
         keypad_options,
         ondata_callback
       );
