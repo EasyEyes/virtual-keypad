@@ -7,10 +7,10 @@ var server = "http://localhost:3000";
 
 // I got an error with line below if I didnt' add the extended property
 // Don't actually know if this should be set to true or false.
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
 
-app.use(express.static(path.join(__dirname, 'dist')));
+// app.use(express.static(path.join(__dirname, 'dist')));
 
 // Middleware to check we have all the params we need
 const checkParams = (req, res, next) => {
@@ -39,10 +39,10 @@ const checkParams = (req, res, next) => {
 // Link to the actual keypad
 // ie this is where the user will be sent (from the QR code) on their phone
 app.get('/keypad', checkParams, function (req, res) {
-  res.render(path.join(__dirname, '/example', 'keypad.html'));
+  res.render(path.join(__dirname, 'keypad.html'));
 });
 app.get('/receiver', function (req, res) {
-  res.render(path.join(__dirname, '/example', 'receiver.html'));
+  res.render(path.join(__dirname, 'receiver.html'));
 });
 
 app.use(function (err, req, res, next) {
