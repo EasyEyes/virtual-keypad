@@ -4,9 +4,9 @@
   --min-size: 50px;
   --num-rows-or-cols: 3;
 }
-/* html {
+html {
     font-size: calc(1em + 1vw);
-} */
+}
 h1 {
   font-size: 1.5em;
 }
@@ -21,8 +21,8 @@ body {
   width: 100vw;
   height: 100vh;
 
-  overflow: hidden;
-  overflow-y: scroll;
+  /* overflow: hidden;
+  overflow-y: scroll; */
 
   /* background-color: #eeeeee; */
 
