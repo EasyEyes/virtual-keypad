@@ -20,7 +20,7 @@ class Keypad extends KeypadPeer {
       new URLSearchParams(window.location.search)
     );
     this.pressFeedback = new Audio(this.pressFeedbackSound);
-    this.visualResponseFeedback = visualResponseFeedback;
+    this.visualResponseFeedback = keypadParameters.visualResponseFeedback;
 
     this.peer.on("open", this.#onPeerOpen);
     this.peer.on("connection", this.#onPeerConnection);

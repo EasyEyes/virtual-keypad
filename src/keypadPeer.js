@@ -8,9 +8,6 @@ const pressFeedbackURI =
 // -- Parameters --
 
 export class KeypadPeer {
-  //   #lastPeerId;
-  //   #keypadUrl;
-  //   #targetElement;
   constructor(
     parameters = {
       keypadUrl: "https://www.keypad.website/keypad?",
