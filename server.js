@@ -10,7 +10,7 @@ var server = "http://localhost:3000";
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use('/static', express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 // Middleware to check we have all the params we need
 const checkParams = (req, res, next) => {
