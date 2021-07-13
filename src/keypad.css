@@ -57,6 +57,7 @@ main {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: auto;
+  row-gap: 25px;
   /* justify-content: center; */
 }
 
