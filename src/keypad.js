@@ -190,7 +190,7 @@ class Keypad extends KeypadPeer {
     // Create new buttons
     this.alphabet.forEach((symbol) => createButton(symbol));
   };
-  visualFeedbackThenReset = (delayTime = 1000) => {
+  visualFeedbackThenReset = (delayTime = 800) => {
     // ie grey out keys just after use, to discourage rapid response
     this.interResponseKeypadMessaging();
     // Setup keys for the next trial

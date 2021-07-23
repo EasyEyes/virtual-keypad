@@ -74,6 +74,10 @@ main {
   font-weight: 700;
 }
 
+.response-button:active {
+  box-shadow: 1px 5px 5px 1px lightslategray;
+}
+
 /* Only do on a hover-enabled device, ie not a phone/tablet */
 @media (hover: hover) {
   .response-button:hover {
