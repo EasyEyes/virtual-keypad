@@ -114,13 +114,18 @@ class Keypad extends KeypadPeer {
   };
   #populateKeypad = () => {
     const buttonResponseFn = (button) => {
-      // If sound is still playing from previous press, stop and reset it
-      if (!this.pressFeedback.paused) {
-        this.pressFeedback.pause();
-        this.pressFeedback.currentTime = 0;
-      }
       // Start playing feedback sound, ie just a 'beep'
-      this.pressFeedback.play();
+      this.pressFeedback
+        .play()
+        .then(() => {
+          setTimeout(() => {
+            this.pressFeedback.pause();
+            this.pressFeedback.currentTime = 0;
+          }, 200);
+        })
+        .catch((error) => {
+          console.error("Error in stopping feedback sound after play: ", error);
+        });
 
       // Send response message to experimentClient
       const message = {
