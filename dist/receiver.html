@@ -17,17 +17,17 @@
     <!-- <script src="https://unpkg.com/virtual-keypad"></script> -->
   </head>
   <body>
-    <main id="main">
+    <main>
       <h1>Keypad Receiver</h1>
-      <p>Scan the QR below, from your mobile device, to be taken to a virtual keypad.</p>
+      <p id="display" style="overflow-y: scroll;">Scan the QR code, from your mobile device, to be taken to a virtual keypad.</p>
     </main>
     <script>
       let keypad_options = {
         // Specify a 'keypadUrl' field to redirect to a keypad hosted elsewhere
         // FUTURE should be able to have a visual keypress or not from here
-        alphabet: "ZYXWABCD",
-        font: "Sloan",
-        targetElementId: "main",
+        alphabet: "CDHKNORSVZ", // Set of symbols to display
+        font: "Sloan", // Supported font, in which to display letters
+        targetElementId: "display", // id of the the div where messages should be displayed
       };
       let ondata_callback = (data) => {
         console.log(data);
