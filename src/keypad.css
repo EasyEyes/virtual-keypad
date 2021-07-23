@@ -75,7 +75,8 @@ main {
 }
 
 .response-button:active {
-  box-shadow: 1px 5px 5px 1px lightslategray;
+  box-shadow: 1px 5px 5px 1px #999;
+  background-color: #bbb;
 }
 
 /* Only do on a hover-enabled device, ie not a phone/tablet */
