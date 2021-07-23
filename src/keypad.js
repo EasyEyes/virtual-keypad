@@ -116,16 +116,16 @@ class Keypad extends KeypadPeer {
     const buttonResponseFn = (button) => {
       // Start playing feedback sound, ie just a 'beep'
       this.pressFeedback
-        .play()
-        .then(() => {
-          setTimeout(() => {
-            this.pressFeedback.pause();
-            this.pressFeedback.currentTime = 0;
-          }, 200);
-        })
-        .catch((error) => {
-          console.error("Error in stopping feedback sound after play: ", error);
-        });
+        .play();
+        // .then(() => {
+        //   setTimeout(() => {
+        //     this.pressFeedback.pause();
+        //     this.pressFeedback.currentTime = 0;
+        //   }, 200);
+        // })
+        // .catch((error) => {
+        //   console.error("Error in stopping feedback sound after play: ", error);
+        // });
 
       // Send response message to experimentClient
       const message = {
