@@ -17,7 +17,7 @@ body {
   margin: 0;
   padding: 0;
   font-size: calc(1em + 1vw);
-  background-color: #eee; 
+  background-color: #eee;
 }
 
 main {
@@ -32,9 +32,10 @@ main {
 /* color: #666; */
 
 #keypad-header {
-  margin-top: 1rem;
+  margin-top: 2%;
+  max-height: 10vh;
   width: 80%;
-  font-size: 3rem;
+  font-size: 1.5rem;
   font-weight: 700;
   text-align: left;
   touch-action: none;
@@ -45,19 +46,21 @@ main {
   margin: auto;
   width: 90vw;
 
+  /* Use full height */
   height: 100%;
 
   /* Auto grid of buttons */
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  /* grid-auto-rows: auto; */
   gap: 15px;
   justify-content: space-evenly;
 }
 
 .response-button {
-  width: 25vw;
-  height: 25vw;
+  max-width: 25vw;
+  min-width: 44px;
+  max-height: 25vw;
+  min-width: 44px;
   cursor: pointer;
 
   display: flex;
@@ -84,10 +87,10 @@ main {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  /* .response-button {
-        width: 37.5vw;
-        height: 37.5vw;
-    } */
+  .response-button {
+    width: 37.5vw;
+    height: 37.5vw;
+  }
 }
 
 /* Wide windows */
@@ -104,19 +107,16 @@ main {
 /* Landscape phones */
 @media only screen and (max-width: 823px) and (orientation: landscape) {
   #keypad-header {
-    height: 15vh;
+    height: 10vh;
     padding: 0.25em 0.5em 0 0.25em;
   }
-
   #keypad {
-    width: 90vw;
-    height: 80vh;
     grid-template-columns: repeat(4, 1fr);
   }
-  /* .response-button {
-        width: 19.75vw;
-        height: min(19.75vw, 40vh);
-    } */
+  .response-button {
+    width: 20vw;
+    height: 20vw;
+  }
 }
 
 /* .response-button:active {
@@ -140,7 +140,7 @@ main {
 }
 
 .unpressable {
-  background-color: #999; 
+  background-color: #999;
   /* border-color: lightgray;  */
   box-shadow: none;
 }
