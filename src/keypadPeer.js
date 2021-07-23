@@ -32,7 +32,8 @@ export class KeypadPeer {
     if (!!document.getElementById(this.targetElement)) {
       const displayElement = document.getElementById(this.targetElement);
       if (append) {
-        displayElement.innerText += "\n" + message;
+        const oldInnerText = displayElement.innerText;
+        displayElement.innerText = message+ "\n" + oldInnerText;
       } else {
         displayElement.innerText = message;
       }
