@@ -16,9 +16,10 @@ class Keypad extends KeypadPeer {
     this.startTime = Date.now();
     this.receiverPeerId = null;
 
-    [this.alphabet, this.font, this.receiverPeerId] = this.parseParams(
-      new URLSearchParams(window.location.search)
-    );
+    const parametersFromURL = this.parseParams( new URLSearchParams(window.location.search));
+    this.alphabet = parametersFromURL.alphabet; 
+    this.font = parametersFromURL.font; 
+    this.receiverPeerId = parametersFromURL.peerId;
     this.pressFeedback = new Audio(this.pressFeedbackSound);
     this.visualResponseFeedback = keypadParameters.visualResponseFeedback;
 
@@ -52,7 +53,7 @@ class Keypad extends KeypadPeer {
   };
   #onConnData = (data) => {
     // Keypad has received data, namely instructions to update the keypad
-    if (!data.hasOwnProperty("alphabet") && !data.hasOwnProperty("font")) {
+    if (!data.hasOwnProperty("alphabet") || !data.hasOwnProperty("font")) {
       console.error(
         'Error in parsing data received! Must set "alphabet" and "font" properties'
       );

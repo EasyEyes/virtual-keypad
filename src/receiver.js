@@ -9,7 +9,7 @@ class Receiver extends KeypadPeer {
     keypadParameters = this.#verifyKeypadParameters(keypadParameters);
 
     this.onDataCallback = onDataCallback; // What to do on a button-press
-    this.alphabet = keypadParameters["alphabet"]; // What symbols to display on the keys
+    this.alphabet = this.checkAlphabet(keypadParameters["alphabet"]); // What symbols to display on the keys
     this.font = keypadParameters["font"]; // What fontface to display the symbols in
 
     /* Set up callbacks that handle any events related to our peer object. */
@@ -21,9 +21,10 @@ class Receiver extends KeypadPeer {
   }
   updateAlphabet = (alphabet) => {
     // Get an array of unique symbols
-    this.displayUpdate("New alphabet: " + String(alphabet), true);
+    const validAlphabet = this.checkAlphabet(alphabet);
+    this.displayUpdate("New alphabet: " + String(validAlphabet), true);
     try {
-      this.conn.send({ alphabet: alphabet });
+      this.conn.send({ alphabet: validAlphabet });
     } catch (e) {
       this.displayUpdate("Error in updating alphabet! ", e);
       console.error(e);
@@ -43,9 +44,9 @@ class Receiver extends KeypadPeer {
       console.error(
         "Must provide 'alphabet' parameter to Receiver object. Defaulting to 'CDHKNORSVZ'"
       );
-      keypadParameters["alphabet"] = "CDHKNORSVZ";
+      keypadParameters["alphabet"] = "CDHKNORSVZ".split("");
     } else {
-      // FUTURE verify that symbols are displayable in desired font
+      keypadParameters["alphabet"] = this.checkAlphabet(keypadParameters.alphabet);
     }
     if (!keypadParameters.hasOwnProperty("font")) {
       console.error(

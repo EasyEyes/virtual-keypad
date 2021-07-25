@@ -58,14 +58,38 @@ export class KeypadPeer {
   };
   parseParams = (params) => {
     const font = params.get("font");
-    const alphabet = [...new Set(params.get("alphabet").split(""))];
+    const alphabet = this.checkAlphabet(decodeURIComponent(params.get("alphabet").split(",")));
     const peerId = params.get("peerID");
-    return [alphabet, font, peerId];
+    return {alphabet: alphabet, font: font, peerId: peerId};
   };
   queryStringFromObject = (params) => {
     return Object.keys(params)
-      .map((key) => key + "=" + params[key])
+      .map((key) => key + "=" + encodeURIComponent(params[key]))
       .join("&");
+  };
+  checkAlphabet = (proposedAlphabet) => {
+    let validAlphabet;
+    if (typeof proposedAlphabet !== Array) {
+      switch (typeof proposedAlphabet) {
+        case String:
+          if (
+            proposedAlphabet.toUpperCase() === "SPACE" ||
+            proposedAlphabet.toUpperCase() == "ESC"
+          ) {
+            validAlphabet = [propsedAlphabet];
+          } else {
+            validAlphabet = propsedAlphabet.split("");
+          }
+          break;
+        default:
+          // FUTURE gracefully handle other reasonable types (if any)
+          console.error(
+            "Error! Alphabet must be specified as an array of symbols, including 'ESC', 'SPACE'"
+          );
+      }
+      return validAlphabet;
+    }
+    // FUTURE verify that symbols are displayable in desired font
   };
   static keypressFeedbackSound = pressFeedbackURI;
 }
