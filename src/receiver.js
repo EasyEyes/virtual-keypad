@@ -22,11 +22,11 @@ class Receiver extends KeypadPeer {
   updateAlphabet = (alphabet) => {
     // Get an array of unique symbols
     const validAlphabet = this.checkAlphabet(alphabet);
-    this.displayUpdate("New alphabet: " + String(validAlphabet), true);
+    this.displayUpdate("New alphabet: " + String(validAlphabet), true); // DEBUG
     try {
       this.conn.send({ alphabet: validAlphabet });
     } catch (e) {
-      this.displayUpdate("Error in updating alphabet! ", e);
+      this.displayUpdate("Error in updating alphabet! ", e); // DEBUG 
       console.error(e);
     }
   };
@@ -35,7 +35,7 @@ class Receiver extends KeypadPeer {
     try {
       this.conn.send({ font: font });
     } catch (e) {
-      this.displayUpdate("Error in updating font! ");
+      this.displayUpdate("Error in updating font! "); // DEBUG 
       console.error(e);
     }
   };
@@ -61,7 +61,7 @@ class Receiver extends KeypadPeer {
   #onPeerOpen = (id) => {
     // Workaround for peer.reconnect deleting previous id
     if (this.id === null) {
-      this.displayUpdate("Received null id from peer open");
+      this.displayUpdate("Received null id from peer open"); // DEBUG
       this.peer.id = this.lastPeerId;
     } else {
       this.lastPeerId = this.peer.id;
@@ -100,7 +100,7 @@ class Receiver extends KeypadPeer {
       return;
     }
     this.conn = connection;
-    this.displayUpdate("Connected to: ", this.conn.peer);
+    this.displayUpdate("Connected to: ", this.conn.peer); // DEBUG
     this.#ready();
   };
   #ready = () => {
@@ -110,11 +110,10 @@ class Receiver extends KeypadPeer {
      */
     // Perform callback with data
     this.conn.on("data", (data) => {
-      this.onDataCallback(data);
-      this.displayUpdate(data, true);
+      this.onDataCallback(JSON.parse(data));
     });
     this.conn.on("close", () => {
-      this.displayUpdate("Connection reset<br>Awaiting connection...");
+      // this.displayUpdate("Connection reset<br>Awaiting connection...");
       this.conn = null;
     });
   };

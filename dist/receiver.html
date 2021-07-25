@@ -31,6 +31,7 @@
         visualResponseFeedback: true,
       };
       let ondata_callback = (data) => {
+        document.getElementById("display").innerText += JSON.stringify(data);
         console.log(data);
       };
       var receiver = new virtualKeypad.Receiver(
