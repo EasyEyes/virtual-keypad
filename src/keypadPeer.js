@@ -73,15 +73,15 @@ export class KeypadPeer {
     let validAlphabet;
     if (Array.isArray(proposedAlphabet)) { // ARRAY : good
       // FUTURE verify that symbols are displayable in desired font
-      return propsedAlphabet;
-    } else if (typeof propsedAlphabet == "string") { // STRING : ok
+      return proposedAlphabet;
+    } else if (typeof proposedAlphabet == "string") { // STRING : ok
       if (
         proposedAlphabet.toUpperCase() === "SPACE" ||
         proposedAlphabet.toUpperCase() == "ESC"
       ) {
-        return [propsedAlphabet];
+        return [proposedAlphabet];
       } else { 
-        return propsedAlphabet.split("");
+        return proposedAlphabet.split("");
       }
     } else { // SOMETHING ELSE : bad
       console.error(
