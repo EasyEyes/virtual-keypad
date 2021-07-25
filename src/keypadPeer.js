@@ -70,7 +70,7 @@ export class KeypadPeer {
   checkAlphabet = (proposedAlphabet) => {
     let validAlphabet;
     if (typeof proposedAlphabet !== Array) {
-      switch (typeof proposedAlphabet) {
+      switch (typeof(proposedAlphabet)) {
         case String:
           if (
             proposedAlphabet.toUpperCase() === "SPACE" ||

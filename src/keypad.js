@@ -60,7 +60,7 @@ class Keypad extends KeypadPeer {
     } else {
       this.conn.close();
       if (data.hasOwnProperty("alphabet")) {
-        this.alphabet = data["alphabet"];
+        this.alphabet = this.checkAlphabet(data["alphabet"]);
       }
       if (data.hasOwnProperty("font")) {
         this.font = data["font"];
