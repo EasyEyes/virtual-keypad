@@ -69,7 +69,7 @@ export class KeypadPeer {
   };
   checkAlphabet = (proposedAlphabet) => {
     let validAlphabet;
-    if (typeof proposedAlphabet !== Array) {
+    if (typeof(proposedAlphabet) !== Array) {
       switch (typeof(proposedAlphabet)) {
         case String:
           if (
