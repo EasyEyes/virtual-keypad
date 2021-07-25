@@ -75,9 +75,9 @@ main {
 
   text-decoration: none;
 }
-.response-button#space {
+.response-button#SPACE {
   /* TODO actually make sure test doesn't clip */
-  font-size: 2.25rem; 
+  font-size: 2.5rem; 
 }
 .response-button:active {
   box-shadow: 1px 5px 5px 1px #999;
