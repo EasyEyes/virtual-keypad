@@ -59,7 +59,8 @@ export class KeypadPeer {
   parseParams = (params) => {
     const font = params.get("font");
     const alphabet = this.checkAlphabet(
-      decodeURIComponent(params.get("alphabet").split(","))
+      decodeURIComponent(params.get("alphabet"))
+      .split(",")
     );
     const peerId = params.get("peerID");
     return { alphabet: alphabet, font: font, peerId: peerId };
@@ -73,22 +74,39 @@ export class KeypadPeer {
     let validAlphabet;
     if (Array.isArray(proposedAlphabet)) { // ARRAY : good
       // FUTURE verify that symbols are displayable in desired font
-      return proposedAlphabet;
+      validAlphabet = proposedAlphabet;
     } else if (typeof proposedAlphabet == "string") { // STRING : ok
       if (
         proposedAlphabet.toUpperCase() === "SPACE" ||
         proposedAlphabet.toUpperCase() == "ESC"
       ) {
-        return [proposedAlphabet];
+        validAlphabet = [proposedAlphabet];
       } else { 
-        return proposedAlphabet.split("");
+        validAlphabet = proposedAlphabet.split("");
       }
     } else { // SOMETHING ELSE : bad
       console.error(
         "Error! Alphabet must be specified as an array of symbols, including 'ESC', 'SPACE'"
       );
-      return [];
+      validAlphabet = [];
     }
+    // Return unique elements, see: https://stackoverflow.com/questions/11246758/how-to-get-unique-values-in-an-array
+    const uniqueValidAlphabet = [... new Set(validAlphabet)];
+
+    // Order alphabet so that if 'SPACE' and 'ESC' are in the list, they are correctly positioned
+    if ('SPACE' in uniqueValidAlphabet) {
+      uniqueValidAlphabet = moveElementToEndOfArray(uniqueValidAlphabet, 'SPACE');
+    }
+    if ('ESC' in uniqueValidAlphabet) {
+      uniqueValidAlphabet = moveElementToEndOfArray(uniqueValidAlphabet, 'ESC');
+    }
+    return uniqueValidAlphabet;
   };
   static keypressFeedbackSound = pressFeedbackURI;
 }
+
+const moveElementToEndOfArray = (array, element) => {
+  // see: Ferdi265, Nikola Lukic https://stackoverflow.com/questions/24909371/move-item-in-array-to-last-position
+  return array.push(array.splice(array.indexOf(element), 1)[0]);
+};
+

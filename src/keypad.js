@@ -17,7 +17,7 @@ class Keypad extends KeypadPeer {
     this.receiverPeerId = null;
 
     const parametersFromURL = this.parseParams( new URLSearchParams(window.location.search));
-    this.alphabet = parametersFromURL.alphabet; 
+    this.alphabet = this.checkAlphabet(parametersFromURL.alphabet); 
     this.font = parametersFromURL.font; 
     this.receiverPeerId = parametersFromURL.peerId;
     this.pressFeedback = new Audio(this.pressFeedbackSound);
