@@ -77,7 +77,11 @@ main {
 }
 .response-button#SPACE {
   /* TODO actually make sure test doesn't clip */
-  font-size: 2.5rem; 
+  font-size: 5vw; 
+}
+.response-button#ESC {
+  /* TODO actually make sure test doesn't clip */
+  font-size: 10vw; 
 }
 .response-button:active {
   box-shadow: 1px 5px 5px 1px #999;
