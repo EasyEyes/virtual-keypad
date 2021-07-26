@@ -121,15 +121,15 @@ main {
 /* Landscape phones */
 @media only screen and (max-width: 823px) and (orientation: landscape) {
   #keypad-header {
-    height: 10vh;
+    height: 15vh;
     padding: 0.25em 0.5em 0 0.25em;
   }
   #keypad {
     grid-template-columns: repeat(4, 1fr);
   }
   .response-button {
-    width: 20vw;
-    height: 20vw;
+    width: 18vw;
+    height: 18vw;
   }
 }
 
