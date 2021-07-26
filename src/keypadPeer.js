@@ -106,7 +106,6 @@ export class KeypadPeer {
 }
 
 const moveElementToEndOfArray = (array, element) => {
-  // see: Ferdi265, Nikola Lukic https://stackoverflow.com/questions/24909371/move-item-in-array-to-last-position
-  return array.push(array.splice(array.indexOf(element), 1)[0]);
+  return [...array.slice(0, array.indexOf(element)), ...array.slice(array.indexOf(element)+1), element];
 };
 

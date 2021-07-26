@@ -116,8 +116,7 @@ class Keypad extends KeypadPeer {
   #populateKeypad = () => {
     const buttonResponseFn = (button) => {
       // Start playing feedback sound, ie just a 'beep'
-      this.pressFeedback
-        .play();
+      this.pressFeedback.play();
         // .then(() => {
         //   setTimeout(() => {
         //     this.pressFeedback.pause();
