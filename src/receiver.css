@@ -27,10 +27,9 @@ body {
   max-width: 1440px;
 }
 #display {
-	height: 70vh;
+	max-height: 70vh;
 	overflow-y: scroll;
 }
 #info {
-	height: 30vh;
 	max-width: 800px;
 }
