@@ -1,6 +1,6 @@
 {
   "name": "virtual-keypad",
-  "version": "2.2.10",
+  "version": "3.0.0",
   "description": "User response at a distance. Simple utility to summon forth a virtual keypad webapp.",
   "main": "dist/main.js",
   "directories": {
