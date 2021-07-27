@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html style="background-color: #eee;">  
+<html style="background-color: #eee">
   <head>
     <meta charset="utf-8" />
     <title>Receiver</title>
@@ -55,9 +55,9 @@
     <div id="info">
       <h1>Set up keypad</h1>
       <p>
-        Scan the QR code from the device you'd like to use as a keypad.
-        This receiver just echoes keypresses; provide a different on-data 
-        callback to customize how the receiver handles keypresses.
+        Scan the QR code from the device you'd like to use as a keypad. This
+        receiver just echoes keypresses; provide a different on-data callback to
+        customize how the receiver handles keypresses.
       </p>
     </div>
     <div id="display"></div>
@@ -65,13 +65,17 @@
       let keypad_options = {
         // Specify a 'keypadUrl' field to redirect to a keypad hosted elsewhere
         // FUTURE should be able to have a visual keypress or not from here
-        alphabet: [..."CDHKNORSVZ".split(""), 'ESC', 'SPACE'], // Set of symbols to display; array perfered
+        alphabet: [..."CDHKNORSVZ".split(""), "ESC", "SPACE"], // Set of symbols to display; array perfered
         font: "Sloan", // Supported font, in which to display letters
         targetElementId: "display", // id of the the div where messages should be displayed
         visualResponseFeedback: false,
       };
       let ondata_callback = (data) => {
-        document.getElementById("display").innerText += "- " + JSON.stringify(data.response) + "\n";
+        document.getElementById("display").innerText =
+          "•" +
+          JSON.stringify(data.response) +
+          "\n" +
+          document.getElementById("display").innerText;
         console.log(data);
       };
       var receiver = new virtualKeypad.Receiver(
