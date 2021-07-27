@@ -17,12 +17,14 @@
     <!-- <script src="https://unpkg.com/virtual-keypad"></script> -->
   </head>
   <body>
-    <h1>Set up keypad</h1>
-    <p>
-      Scan the QR code from the device you'd like to use as a keypad.
-      This receiver just echoes keypresses; provide a different on-data 
-      callback to customize how the receiver handles keypresses.
-    </p>
+    <div id="info">
+      <h1>Set up keypad</h1>
+      <p>
+        Scan the QR code from the device you'd like to use as a keypad.
+        This receiver just echoes keypresses; provide a different on-data 
+        callback to customize how the receiver handles keypresses.
+      </p>
+    </div>
     <div id="display"></div>
     <script>
       let keypad_options = {
