@@ -20,13 +20,48 @@
     <!-- <script src="https://unpkg.com/virtual-keypad"></script> -->
     <!-- <script src="../dist/main.js"></script> -->
     <script src="./main.js"></script>
+    <style>
+      * {
+        outline: none;
+        vertical-align: baseline;
+        box-sizing: border-box;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: auto;
+        -moz-osx-font-smoothing: grayscale;
+        font-kerning: normal;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        color: #333;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
+        font-size: calc(1em + 1vw);
+        background-color: #eee;
+      }
+
+      main {
+        margin: 0 auto;
+        padding-bottom: 5rem;
+        width: 80%;
+        max-width: 1440px;
+        background-color: #eee;
+      }
+      /* -------------------------------------------------------------------------- */
+      /* color: #FF9A00; */
+      /* color: #666; */
+    </style>
   </head>
   <body>
     <h2 id="keypad-header" class="noselect">Keypad Loading...</h2>
-    <main></main>
+    <div id="target"></div>
 
     <script type="text/javascript">
-      var keypad = new virtualKeypad.Keypad();
+      var keypad = new virtualKeypad.Keypad({ targetElementId: target });
     </script>
   </body>
 </html>
