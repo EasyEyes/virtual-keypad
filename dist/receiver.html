@@ -17,17 +17,13 @@
     <!-- <script src="https://unpkg.com/virtual-keypad"></script> -->
   </head>
   <body>
-    <main>
-      <h1>Keypad Receiver</h1>
-      <p id="display" style="overflow-y: scroll; padding: 5%; margin: 5%;">
-        Scan the QR code from your mobile device to be taken to a virtual keypad.
-        <br/>
-      In practice, an experimenter would include such a QR code on an early screen of their experiment.
-        <br/>
-      The participant would scan the code from their mobile device, and use the conquered keypad for the rest of the experiment.
-        <br/>
+    <h1>Set up keypad</h1>
+    <p>
+      Scan the QR code from the device you'd like to use as a keypad.
+      This receiver just echoes keypresses; provide a different on-data 
+      callback to customize how the receiver handles keypresses.
     </p>
-    </main>
+    <div id="display"></div>
     <script>
       let keypad_options = {
         // Specify a 'keypadUrl' field to redirect to a keypad hosted elsewhere
@@ -38,7 +34,7 @@
         visualResponseFeedback: true,
       };
       let ondata_callback = (data) => {
-        document.getElementById("display").innerText += JSON.stringify(data);
+        document.getElementById("display").innerText += "- " + JSON.stringify(data.response) + "\n";
         console.log(data);
       };
       var receiver = new virtualKeypad.Receiver(
