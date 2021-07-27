@@ -108,8 +108,10 @@ class Keypad extends KeypadPeer {
     keypadHeader.setAttribute("id", "keypad-header");
     keypadElem.appendChild(keypadHeader);
     if (!!document.getElementById(this.targetElement)) {
+      console.log("Specified target element successfully used.")
       document.getElementById(this.targetElement).appendChild(keypadElem);
     } else {
+      console.log("No target element used.")
       document.getElementsByTagName("main")[0].appendChild(keypadElem);
     }
   };
