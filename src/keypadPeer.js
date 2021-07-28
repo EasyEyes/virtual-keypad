@@ -21,7 +21,9 @@ export class KeypadPeer {
     this.keypadUrl = parameters.hasOwnProperty("keypadUrl")
       ? parameters.keypadUrl
       : "https://www.keypad.website/keypad?";
-    this.targetElement = parameters.targetElementId;
+    this.targetElement = parameters.hasOwnProperty("targetElementId")
+      ? parameters.targetElementId
+      : null;
 
     this.alphabet = null;
     this.font = null;
@@ -59,8 +61,7 @@ export class KeypadPeer {
   parseParams = (params) => {
     const font = params.get("font");
     const alphabet = this.checkAlphabet(
-      decodeURIComponent(params.get("alphabet"))
-      .split(",")
+      decodeURIComponent(params.get("alphabet")).split(",")
     );
     const peerId = params.get("peerID");
     return { alphabet: alphabet, font: font, peerId: peerId };
@@ -72,33 +73,39 @@ export class KeypadPeer {
   };
   checkAlphabet = (proposedAlphabet) => {
     let validAlphabet;
-    if (Array.isArray(proposedAlphabet)) { // ARRAY : good
+    if (Array.isArray(proposedAlphabet)) {
+      // ARRAY : good
       // FUTURE verify that symbols are displayable in desired font
       validAlphabet = proposedAlphabet;
-    } else if (typeof proposedAlphabet == "string") { // STRING : ok
+    } else if (typeof proposedAlphabet == "string") {
+      // STRING : ok
       if (
         proposedAlphabet.toUpperCase() === "SPACE" ||
         proposedAlphabet.toUpperCase() == "ESC"
       ) {
         validAlphabet = [proposedAlphabet];
-      } else { 
+      } else {
         validAlphabet = proposedAlphabet.split("");
       }
-    } else { // SOMETHING ELSE : bad
+    } else {
+      // SOMETHING ELSE : bad
       console.error(
         "Error! Alphabet must be specified as an array of symbols, including 'ESC', 'SPACE'"
       );
       validAlphabet = [];
     }
     // Return unique elements, see: https://stackoverflow.com/questions/11246758/how-to-get-unique-values-in-an-array
-    const uniqueValidAlphabet = [... new Set(validAlphabet)];
+    const uniqueValidAlphabet = [...new Set(validAlphabet)];
 
     // Order alphabet so that if 'SPACE' and 'ESC' are in the list, they are correctly positioned
-    if ('SPACE' in uniqueValidAlphabet) {
-      uniqueValidAlphabet = moveElementToEndOfArray(uniqueValidAlphabet, 'SPACE');
+    if ("SPACE" in uniqueValidAlphabet) {
+      uniqueValidAlphabet = moveElementToEndOfArray(
+        uniqueValidAlphabet,
+        "SPACE"
+      );
     }
-    if ('ESC' in uniqueValidAlphabet) {
-      uniqueValidAlphabet = moveElementToEndOfArray(uniqueValidAlphabet, 'ESC');
+    if ("ESC" in uniqueValidAlphabet) {
+      uniqueValidAlphabet = moveElementToEndOfArray(uniqueValidAlphabet, "ESC");
     }
     return uniqueValidAlphabet;
   };
@@ -106,6 +113,9 @@ export class KeypadPeer {
 }
 
 const moveElementToEndOfArray = (array, element) => {
-  return [...array.slice(0, array.indexOf(element)), ...array.slice(array.indexOf(element)+1), element];
+  return [
+    ...array.slice(0, array.indexOf(element)),
+    ...array.slice(array.indexOf(element) + 1),
+    element,
+  ];
 };
-

@@ -78,10 +78,14 @@ class Receiver extends KeypadPeer {
 
     // Display QR code for the participant to scan
     const qrCanvas = document.createElement("canvas");
-    console.log(uri);
+
     QRCode.toCanvas(qrCanvas, uri, function (error) {
       if (error) console.error(error);
     });
+
+    // Store encoding of QR code, eg to use as an image source
+    this.qrURI = qrCanvas.toDataURL();
+
     if (!!document.getElementById(this.targetElement)) {
       document.getElementById(this.targetElement).appendChild(qrCanvas);
     } else {
