@@ -4,4 +4,6 @@
 }
 #info {
 	max-width: 800px;
+	min-height: 350px;
+	min-width: 350px;
 }

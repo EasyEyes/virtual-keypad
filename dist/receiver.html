@@ -62,6 +62,10 @@
     </div>
     <div id="display"></div>
     <script>
+      if ( window.location !== window.parent.location ) { 
+        // The page is in an iframe, per https://tommcfarlin.com/check-if-a-page-is-in-an-iframe/
+        document.getElementById("info").style.display = "none";
+      } 
       let keypad_options = {
         // Specify a 'keypadUrl' field to redirect to a keypad hosted elsewhere
         // FUTURE should be able to have a visual keypress or not from here
