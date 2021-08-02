@@ -1,9 +1,9 @@
 #display {
 	max-height: 70vh;
 	overflow-y: scroll;
+	min-height: 350px;
+	min-width: 350px;
 }
 #info {
 	max-width: 800px;
-	min-height: 350px;
-	min-width: 350px;
 }
