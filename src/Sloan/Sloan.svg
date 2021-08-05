@@ -1,0 +1,138 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+<metadata>
+Created by FontForge 20190801 at Wed Mar 14 01:59:04 2007
+ By Jimmy Wärting
+Copyright (c) 1990, 1994, 2007 Denis G. Pelli.  All rights reserved.
+</metadata>
+<defs>
+<font id="Sloan" horiz-adv-x="1000" >
+  <font-face 
+    font-family="Sloan"
+    font-weight="500"
+    font-stretch="normal"
+    units-per-em="1000"
+    panose-1="2 0 6 9 2 0 0 2 0 2"
+    ascent="1000"
+    descent="0"
+    x-height="1000"
+    cap-height="1000"
+    bbox="0 0 1000 1000"
+    underline-thickness="0"
+    underline-position="0"
+    stemh="200"
+    stemv="200"
+    unicode-range="U+0020-2014"
+  />
+<missing-glyph 
+d="M600 0h-200v200h200v-200z" />
+    <glyph glyph-name=".notdef" 
+d="M600 0h-200v200h200v-200z" />
+    <glyph glyph-name=".null" horiz-adv-x="0" 
+ />
+    <glyph glyph-name="CR" 
+ />
+    <glyph glyph-name="space" unicode=" " 
+ />
+    <glyph glyph-name="period" unicode="." 
+d="M600 0h-200v200h200v-200z" />
+    <glyph glyph-name="slash" unicode="/" 
+d="M1000 860l-860 -860l-140 140l860 860z" />
+    <glyph glyph-name="A" unicode="A" 
+d="M1000 0h-200l-106 264h-388l-106 -264h-200l400 1000h200zM614 464l-114 286l-114 -286h228z" />
+    <glyph glyph-name="B" unicode="B" 
+d="M800 700c0 54 -44 100 -100 100h-500v-200h500c56 0 100 46 100 100zM800 300c0 54 -44 100 -100 100h-500v-200h500c56 0 100 46 100 100zM0 0v1000h700c166 0 300 -134 300 -300c0 -76 -28 -146 -76 -200c48 -52 76 -118 76 -200c0 -166 -134 -300 -300 -300h-700z
+M700 400h-500h500z" />
+    <glyph glyph-name="C" unicode="C" 
+d="M990 400c-46 -228 -248 -400 -490 -400c-276 0 -500 224 -500 500s224 500 500 500c242 0 444 -172 490 -400h-208c-42 116 -152 200 -282 200c-164 0 -300 -136 -300 -300s136 -300 300 -300c130 0 240 84 282 200h208z" />
+    <glyph glyph-name="D" unicode="D" 
+d="M1000 400c0 -220 -180 -400 -400 -400h-600v1000h600c220 0 400 -180 400 -400v-200zM800 400v200c0 110 -90 200 -200 200h-400v-600h400c110 0 200 90 200 200z" />
+    <glyph glyph-name="E" unicode="E" 
+d="M1000 800h-800v-200h800v-200h-800v-200h800v-200h-1000v1000h1000v-200z" />
+    <glyph glyph-name="F" unicode="F" 
+d="M1000 800h-800v-200h800v-200h-800v-400h-200v1000h1000v-200z" />
+    <glyph glyph-name="G" unicode="G" 
+d="M1000 200h-100c-92 -122 -236 -200 -400 -200c-276 0 -500 224 -500 500s224 500 500 500c242 0 444 -172 490 -400h-208c-42 116 -152 200 -282 200c-164 0 -300 -136 -300 -300s136 -300 300 -300c36 0 70 6 100 18v182h180h2h208h10v-200z" />
+    <glyph glyph-name="H" unicode="H" 
+d="M1000 0h-200v400h-600v-400h-200v1000h200v-400h600v400h200v-1000z" />
+    <glyph glyph-name="I" unicode="I" 
+d="M1000 0h-1000v200h400v600h-400v200h1000v-200h-400v-600h400v-200z" />
+    <glyph glyph-name="J" unicode="J" 
+d="M0 400h200c0 -110 90 -200 200 -200h200c110 0 200 90 200 200v600h200v-600c0 -220 -180 -400 -400 -400h-200c-220 0 -400 180 -400 400zM0 400h200h-200z" />
+    <glyph glyph-name="K" unicode="K" 
+d="M574 678l426 -678h-254l-344 548l-202 -152v-396h-200v1000h200v-354l468 354h332z" />
+    <glyph glyph-name="L" unicode="L" 
+d="M1000 0h-1000v1000h200v-800h800v-200z" />
+    <glyph glyph-name="M" unicode="M" 
+d="M1000 0h-200v480l-200 -480h-200l-200 480v-480h-200v1000h200l300 -720l300 720h200v-1000z" />
+    <glyph glyph-name="N" unicode="N" 
+d="M1000 0h-200l-600 692v-692h-200v1000h200l600 -692v692h200v-1000z" />
+    <glyph glyph-name="O" unicode="O" 
+d="M1000 500c0 -276 -224 -500 -500 -500s-500 224 -500 500s224 500 500 500s500 -224 500 -500zM800 500c0 164 -136 300 -300 300s-300 -136 -300 -300s136 -300 300 -300s300 136 300 300z" />
+    <glyph glyph-name="P" unicode="P" 
+d="M1000 700c0 -166 -134 -300 -300 -300h-500v-400h-200v1000h700c166 0 300 -134 300 -300zM800 700c0 54 -44 100 -100 100h-500v-200h500c56 0 100 46 100 100z" />
+    <glyph glyph-name="Q" unicode="Q" 
+d="M1000 144l-140 -140l-82 80c-80 -52 -176 -84 -278 -84c-276 0 -500 224 -500 500s224 500 500 500s500 -224 500 -500c0 -102 -30 -196 -82 -274zM800 500c0 164 -136 300 -300 300s-300 -136 -300 -300s136 -300 300 -300c48 0 92 12 132 32l-48 48l140 140l48 -48
+c18 40 28 82 28 128z" />
+    <glyph glyph-name="R" unicode="R" 
+d="M1000 0h-218l-170 400h-412v-400h-200v1000h700c166 0 300 -134 300 -300c0 -124 -74 -230 -182 -276zM800 700c0 54 -44 100 -100 100h-500v-200h500c56 0 100 46 100 100z" />
+    <glyph glyph-name="S" unicode="S" 
+d="M1000 700h-200c0 44 -36 76 -36 76s-52 24 -64 24h-400c-18 0 -53 -12 -72 -34c-31 -36 -34 -92 -4 -130c18 -24 48 -36 76 -36h400c102 0 169 -51 204 -82c125 -109 124 -296 14 -418c-60 -68 -110 -100 -218 -100h-400c-76 0 -148 24 -210 82c-66 62 -90 148 -90 218
+h200c0 -30 6 -54 26 -74s34 -26 74 -26h400c12 0 46 8 66 24c42 34 48 100 12 142c-20 24 -60 34 -78 34h-400c-92 0 -162 46 -204 84c-132 120 -122 316 0 430c38 36 102 86 204 86h400c48 0 140 -10 216 -96h2c42 -48 82 -124 82 -204z" />
+    <glyph glyph-name="T" unicode="T" 
+d="M1000 800h-400v-800h-200v800h-400v200h1000v-200z" />
+    <glyph glyph-name="U" unicode="U" 
+d="M1000 400c0 -220 -180 -400 -400 -400h-200c-220 0 -400 180 -400 400v600h200v-600c0 -110 90 -200 200 -200h200c110 0 200 90 200 200v600h200v-600z" />
+    <glyph glyph-name="V" unicode="V" 
+d="M1000 1000l-400 -1000h-200l-400 1000h216l284 -712l284 712h216z" />
+    <glyph glyph-name="W" unicode="W" 
+d="M1000 0h-200l-300 720l-300 -720h-200v1000h200v-480l200 480h200l200 -480v480h200v-1000z" />
+    <glyph glyph-name="X" unicode="X" 
+d="M1000 0h-250l-250 332l-250 -332h-250l374 500l-374 500h250l250 -334l250 334h250l-374 -500z" />
+    <glyph glyph-name="Y" unicode="Y" 
+d="M1000 1000l-400 -534v-466h-200v466l-400 534h250l250 -334l250 334h250z" />
+    <glyph glyph-name="Z" unicode="Z" 
+d="M1000 0h-1000v200l692 600h-692v200h1000v-200l-692 -600h692v-200z" />
+    <glyph glyph-name="bracketleft" unicode="[" 
+d="M700 0h-300v1000h300v-200h-100v-600h100v-200z" />
+    <glyph glyph-name="backslash" unicode="\" 
+d="M1000 140l-140 -140l-860 860l140 140z" />
+    <glyph glyph-name="bracketright" unicode="]" 
+d="M600 0h-300v200h100v600h-100v200h300v-1000z" />
+    <glyph glyph-name="underscore" unicode="_" 
+d="M1000 0h-1000v200h1000v-200z" />
+    <glyph glyph-name="nbspace" unicode="&#xa0;" 
+ />
+    <glyph glyph-name="b" unicode="b" horiz-adv-x="250" 
+ />
+    <glyph glyph-name="x" unicode="x" 
+d="M1000 500c0 -276 -224 -500 -500 -500s-500 224 -500 500s224 500 500 500s500 -224 500 -500zM800 500c0 164 -136 300 -300 300s-300 -136 -300 -300s136 -300 300 -300s300 136 300 300z" />
+    <glyph glyph-name="comma" unicode="," 
+d="M600 200l-300 -200l100 200v200h200v-200z" />
+    <glyph glyph-name="quotesingle" unicode="'" 
+d="M600 1000l-100 -400l-100 400h200z" />
+    <glyph glyph-name="hyphen" unicode="-" 
+d="M800 400h-600v200h600v-200z" />
+    <glyph glyph-name="plus" unicode="+" 
+d="M600 200h-200v600h200v-600zM800 400h-600v200h600v-200z" />
+    <glyph glyph-name="a" unicode="a" horiz-adv-x="500" 
+ />
+    <glyph glyph-name="c" unicode="c" horiz-adv-x="125" 
+ />
+    <glyph glyph-name="d" unicode="d" horiz-adv-x="100" 
+ />
+    <glyph glyph-name="p" unicode="p" 
+d="M1000 500c0 -276 -224 -500 -500 -500s-500 224 -500 500s224 500 500 500s500 -224 500 -500zM800 500c0 164 -136 300 -300 300s-300 -136 -300 -300s136 -300 300 -300s300 136 300 300z" />
+    <glyph glyph-name="colon" unicode=":" 
+d="M600 400h-200v200h200v-200zM600 0h-200v200h200v-200z" />
+    <glyph glyph-name="bar" unicode="|" 
+d="M600 0h-200v1000h200v-1000z" />
+    <glyph glyph-name="emdash" unicode="&#x2014;" 
+d="M1000 600v-200h-1000v200h1000z" />
+    <glyph glyph-name="e" unicode="e" 
+d="M1000 800h-1000v200h1000v-200zM1000 400h-1000v200h1000v-200zM1000 0h-1000v200h1000v-200z" />
+    <glyph glyph-name="f" unicode="f" 
+d="M200 1000v-1000h-200v1000h200zM600 1000v-1000h-200v1000h200zM1000 1000v-1000h-200v1000h200z" />
+  </font>
+</defs></svg>

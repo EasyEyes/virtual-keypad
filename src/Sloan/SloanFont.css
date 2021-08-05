@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Sloan';
+  src: url('Sloan.eot');
+  src: url('Sloan.eot?#iefix') format('embedded-opentype'),
+       url('Sloan.svg#Sloan') format('svg'),
+       url('Sloan.ttf') format('truetype'),
+       url('Sloan.woff') format('woff'),
+       url('Sloan.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+

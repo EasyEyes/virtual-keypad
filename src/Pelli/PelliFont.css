@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Pelli';
+  src: url('Pelli-EyeChart.eot');
+  src: url('Pelli-EyeChart.eot?#iefix') format('embedded-opentype'),
+       url('Pelli-EyeChart.svg#Pelli-EyeChart') format('svg'),
+       url('Pelli-EyeChart.ttf') format('truetype'),
+       url('Pelli-EyeChart.woff') format('woff'),
+       url('Pelli-EyeChart.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
