@@ -27,7 +27,7 @@ class Keypad extends KeypadPeer {
     this.visualResponseFeedback = keypadParameters.visualResponseFeedback;
 
     // Set-up sound to play on press
-    this.pressFeedback = new Audio(this.pressFeedbackSound);
+    this.pressFeedback = new Audio(this.keypressFeedbackSound);
 
     this.peer.on("open", this.#onPeerOpen);
     this.peer.on("connection", this.#onPeerConnection);
@@ -205,7 +205,7 @@ class Keypad extends KeypadPeer {
     // Set-up audio element
     const feedbackAudio = document.createElement('audio');
     feedbackAudio.id = "feedbackAudio";
-    feedbackAudio.src = this.pressFeedbackSound;
+    feedbackAudio.src = this.keypressFeedbackSound;
     header.appendChild(feedbackAudio);
 
     // Set correct font for button labels
