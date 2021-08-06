@@ -201,10 +201,13 @@ class Keypad extends KeypadPeer {
     header.innerText = "Please respond by pressing a key.";
     // Get the keypad element
     const remoteControl = document.getElementById("keypad");
+
+    // Set-up audio element
     const feedbackAudio = document.createElement('audio');
-    feedbackAudio.setAttribute("id", "feedbackAudio");
+    feedbackAudio.id = "feedbackAudio";
     feedbackAudio.src = this.pressFeedbackSound;
-    remoteControl.appendChild(feedbackAudio);
+    header.appendChild(feedbackAudio);
+
     // Set correct font for button labels
     remoteControl.style.fontFamily = this.font;
     // Remove previous buttons
