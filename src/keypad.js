@@ -18,9 +18,11 @@ class Keypad extends KeypadPeer {
     this.startTime = Date.now();
     this.receiverPeerId = null;
 
-    const parametersFromURL = this.parseParams( new URLSearchParams(window.location.search));
-    this.alphabet = this.checkAlphabet(parametersFromURL.alphabet); 
-    this.font = parametersFromURL.font; 
+    const parametersFromURL = this.parseParams(
+      new URLSearchParams(window.location.search)
+    );
+    this.alphabet = this.checkAlphabet(parametersFromURL.alphabet);
+    this.font = parametersFromURL.font;
     this.receiverPeerId = parametersFromURL.peerId;
     this.pressFeedback = new Audio(this.pressFeedbackSound);
     this.visualResponseFeedback = keypadParameters.visualResponseFeedback;
@@ -55,23 +57,22 @@ class Keypad extends KeypadPeer {
   };
   #onConnData = (data) => {
     // Keypad has received data, namely instructions to update the keypad
-    if (!data.hasOwnProperty("alphabet") || !data.hasOwnProperty("font")) {
+    if (!data.hasOwnProperty("alphabet") && !data.hasOwnProperty("font")) {
       console.error(
-        'Error in parsing data received! Must set "alphabet" and "font" properties'
+        'Error in parsing data received! Must set "alphabet" or "font" properties'
       );
     } else {
       this.conn.close();
-      if (data.hasOwnProperty("alphabet")) {
-        this.alphabet = this.checkAlphabet(data["alphabet"]);
-      }
-      if (data.hasOwnProperty("font")) {
-        this.font = data["font"];
-      }
+      this.alphabet = data.hasOwnProperty("alphabet")
+        ? this.checkAlphabet(data["alphabet"])
+        : this.alphabet;
+      this.font = data.hasOwnProperty("font") 
+        ? data["font"] 
+        : this.font;
       let newParams = {
         alphabet: this.alphabet,
         font: this.font,
         peerID: this.conn.peer,
-        // 'recvId': recvId // VERIFY This SHOULD be the same as peerID??
       };
       /*
       FUTURE does this limit usable environments?
@@ -110,10 +111,10 @@ class Keypad extends KeypadPeer {
     keypadHeader.setAttribute("id", "keypad-header");
     keypadElem.appendChild(keypadHeader);
     if (!!document.getElementById(this.targetElement)) {
-      console.log("Specified target element successfully used.")
+      console.log("Specified target element successfully used.");
       document.getElementById(this.targetElement).appendChild(keypadElem);
     } else {
-      console.log("No target element used.")
+      console.log("No target element used.");
       document.getElementsByTagName("main")[0].appendChild(keypadElem);
     }
   };
@@ -121,15 +122,15 @@ class Keypad extends KeypadPeer {
     const buttonResponseFn = (button) => {
       // Start playing feedback sound, ie just a 'beep'
       this.pressFeedback.play();
-        // .then(() => {
-        //   setTimeout(() => {
-        //     this.pressFeedback.pause();
-        //     this.pressFeedback.currentTime = 0;
-        //   }, 200);
-        // })
-        // .catch((error) => {
-        //   console.error("Error in stopping feedback sound after play: ", error);
-        // });
+      // .then(() => {
+      //   setTimeout(() => {
+      //     this.pressFeedback.pause();
+      //     this.pressFeedback.currentTime = 0;
+      //   }, 200);
+      // })
+      // .catch((error) => {
+      //   console.error("Error in stopping feedback sound after play: ", error);
+      // });
 
       // Send response message to experimentClient
       const message = {
