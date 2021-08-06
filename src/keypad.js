@@ -162,6 +162,7 @@ class Keypad extends KeypadPeer {
       let button = document.createElement("a");
       button.id = symbol;
       button.className = "response-button";
+      button.style.fontFamily = this.font;
 
       // Set behavior for press
       button.addEventListener("touchend", (e) => {
@@ -177,6 +178,7 @@ class Keypad extends KeypadPeer {
       let buttonLabel = document.createElement("span");
       buttonLabel.classList.add("response-button-label", "noselect");
       buttonLabel.innerText = symbol;
+      buttonLabel.style.fontFamily = this.font;
 
       // Add the label to the button
       button.appendChild(buttonLabel);
