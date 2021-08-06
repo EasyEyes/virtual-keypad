@@ -24,7 +24,6 @@ class Keypad extends KeypadPeer {
     this.alphabet = this.checkAlphabet(parametersFromURL.alphabet);
     this.font = parametersFromURL.font;
     this.receiverPeerId = parametersFromURL.peerId;
-    this.pressFeedback = new Audio(this.pressFeedbackSound);
     this.visualResponseFeedback = keypadParameters.visualResponseFeedback;
 
     this.peer.on("open", this.#onPeerOpen);
@@ -121,7 +120,10 @@ class Keypad extends KeypadPeer {
   #populateKeypad = () => {
     const buttonResponseFn = (button) => {
       // Start playing feedback sound, ie just a 'beep'
-      this.pressFeedback.play();
+      console.log("Sound to be played: ", this.pressFeedback);
+      this.pressFeedback.play()
+      .then(() => console.log("Feedback sound played successfully!"))
+      .catch((error) => console.error("Error playing feedback sound! ", error));
       // .then(() => {
       //   setTimeout(() => {
       //     this.pressFeedback.pause();
@@ -185,6 +187,8 @@ class Keypad extends KeypadPeer {
       // Add the labeled-button to the HTML
       document.querySelector("#keypad").appendChild(button);
     };
+    // Set-up sound to play on press
+    this.pressFeedback = new Audio(this.pressFeedbackSound);
     // Set-up an instructio/welcome message for the user
     const header = document.getElementById("keypad-header");
     header.innerText = "Please respond by pressing a key.";
