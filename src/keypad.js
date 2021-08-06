@@ -24,8 +24,7 @@ class Keypad extends KeypadPeer {
     this.alphabet = this.checkAlphabet(parametersFromURL.alphabet);
     this.font = parametersFromURL.font;
     this.receiverPeerId = parametersFromURL.peerId;
-
-    // this.visualResponseFeedback = keypadParameters.visualResponseFeedback;
+    this.visualResponseFeedback = keypadParameters.visualResponseFeedback;
 
     // Set-up sound to play on press
     this.pressFeedback = new Audio(this.pressFeedbackSound);
@@ -122,13 +121,13 @@ class Keypad extends KeypadPeer {
   #populateKeypad = () => {
     const buttonResponseFn = (button) => {
       // Start playing feedback sound, ie just a 'beep'
-      console.log("Sound to be played: ", this.pressFeedback);
-      this.pressFeedback
-        .play()
-        .then(() => console.log("Feedback sound played successfully!"))
-        .catch((error) =>
-          console.error("Error playing feedback sound! ", error)
-        );
+      // console.log("Sound to be played: ", this.pressFeedback);
+      // this.pressFeedback
+      //   .play()
+      //   .then(() => console.log("Feedback sound played successfully!"))
+      //   .catch((error) =>
+      //     console.error("Error playing feedback sound! ", error)
+      //   );
       // .then(() => {
       //   setTimeout(() => {
       //     this.pressFeedback.pause();
@@ -171,6 +170,9 @@ class Keypad extends KeypadPeer {
       button.className = "response-button";
       button.style.fontFamily = this.font;
 
+      const feedbackAudio = document.getElementById("feedbackAudio");
+      console.log("feedbackAudio: ", feedbackAudio);
+
       // Set behavior for press
       button.addEventListener("touchend", (e) => {
         /* prevent delay and simulated mouse events */
@@ -178,6 +180,7 @@ class Keypad extends KeypadPeer {
         e.target.click();
       });
       button.addEventListener("click", () => {
+        feedbackAudio.play();
         buttonResponseFn(button);
       });
 
@@ -192,11 +195,16 @@ class Keypad extends KeypadPeer {
       // Add the labeled-button to the HTML
       document.querySelector("#keypad").appendChild(button);
     };
+
     // Set-up an instructio/welcome message for the user
     const header = document.getElementById("keypad-header");
     header.innerText = "Please respond by pressing a key.";
     // Get the keypad element
     const remoteControl = document.getElementById("keypad");
+    const feedbackAudio = document.createElement('audio');
+    feedbackAudio.setAttribute("id", "feedbackAudio");
+    feedbackAudio.src = this.pressFeedbackSound;
+    remoteControl.appendChild(feedbackAudio);
     // Set correct font for button labels
     remoteControl.style.fontFamily = this.font;
     // Remove previous buttons
