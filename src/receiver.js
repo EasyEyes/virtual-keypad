@@ -105,7 +105,8 @@ class Receiver extends KeypadPeer {
       return;
     }
     this.conn = connection;
-    this.displayUpdate("Connected to: ", this.conn.peer); // DEBUG
+    // this.displayUpdate("Connected to: " + this.conn.peer); // DEBUG
+    this.displayUpdate("You typed: ");
     this.#ready();
   };
   #ready = () => {
