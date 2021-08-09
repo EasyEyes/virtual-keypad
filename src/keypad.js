@@ -166,7 +166,7 @@ class Keypad extends KeypadPeer {
         e.preventDefault();
         feedbackAudio.play();
         console.log("mouseup event: ", e);
-        buttonResponseFn(button);  // e.target.click();
+        buttonResponseFn(e.toElement.parentElement);  // e.target.click();
       });
       // ...send signal on release
       button.addEventListener("touchend", (e) => {
