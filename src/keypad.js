@@ -183,7 +183,14 @@ class Keypad extends KeypadPeer {
         /* prevent delay and simulated mouse events */
         e.preventDefault();
         console.log("touchend event: ", e);
-        buttonResponseFn(button);  // e.target.click();
+        switch (e.toElement.className) {
+          case "response-button-label noselect":
+            buttonResponseFn(e.toElement.parentElement);  // e.target.click();
+            break;
+          case "response-button":
+            buttonResponseFn(e.toElement);  // e.target.click();
+            break;
+        }
       });
       // button.addEventListener("click", () => {
       //   buttonResponseFn(button);
