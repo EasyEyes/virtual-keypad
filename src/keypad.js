@@ -159,17 +159,20 @@ class Keypad extends KeypadPeer {
       // Sound on press...
       button.addEventListener("touchstart", (e) => {
         e.preventDefault();
+        console.log("touchstart event: ", e);
         feedbackAudio.play();
       });
       button.addEventListener("mouseup", (e) => {
         e.preventDefault();
         feedbackAudio.play();
+        console.log("mouseup event: ", e);
         buttonResponseFn(button);  // e.target.click();
       });
       // ...send signal on release
       button.addEventListener("touchend", (e) => {
         /* prevent delay and simulated mouse events */
         e.preventDefault();
+        console.log("touchend event: ", e);
         buttonResponseFn(button);  // e.target.click();
       });
       // button.addEventListener("click", () => {
