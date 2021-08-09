@@ -165,8 +165,8 @@ class Keypad extends KeypadPeer {
       button.addEventListener("mouseup", (e) => {
         e.preventDefault();
         console.log("mouseup event: ", e);
-        switch (e.toElement.class) {
-          case "response-button-label":
+        switch (e.toElement.className) {
+          case "response-button-label noselect":
             feedbackAudio.play();
             buttonResponseFn(e.toElement.parentElement);  // e.target.click();
             break;
