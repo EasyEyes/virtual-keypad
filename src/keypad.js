@@ -120,7 +120,6 @@ class Keypad extends KeypadPeer {
   };
   #populateKeypad = () => {
     const buttonResponseFn = (button) => {
-
       // Send response message to experimentClient
       const message = {
         message: "Keypress",
@@ -171,10 +170,10 @@ class Keypad extends KeypadPeer {
         console.log("mouseup event: ", e);
         switch (e.toElement.className) {
           case "response-button-label noselect":
-            buttonResponseFn(e.toElement.parentElement);  // e.target.click();
+            buttonResponseFn(e.toElement.parentElement); // e.target.click();
             break;
           case "response-button":
-            buttonResponseFn(e.toElement);  // e.target.click();
+            buttonResponseFn(e.toElement); // e.target.click();
             break;
         }
       });
@@ -188,13 +187,18 @@ class Keypad extends KeypadPeer {
         /* prevent delay and simulated mouse events */
         e.preventDefault();
         console.log("touchend event: ", e);
-        const elementEndedOn = document.elementFromPoint( e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+        const elementEndedOn = document.elementFromPoint(
+          e.changedTouches[0].clientX,
+          e.changedTouches[0].clientY
+        );
+        console.log("elementEndedOn: ", elementEndedOn);
+        console.log("elementEndedOn.className: ", elementEndedOn.className);
         switch (elementEndedOn.className) {
           case "response-button-label noselect":
-            buttonResponseFn(elementEndedOn.parentElement);  // e.target.click();
+            buttonResponseFn(elementEndedOn.parentElement); // e.target.click();
             break;
           case "response-button":
-            buttonResponseFn(elementEndedOn);  // e.target.click();
+            buttonResponseFn(elementEndedOn); // e.target.click();
             break;
         }
       });
@@ -218,7 +222,7 @@ class Keypad extends KeypadPeer {
     const remoteControl = document.getElementById("keypad");
 
     // Set-up audio element
-    const feedbackAudio = document.createElement('audio');
+    const feedbackAudio = document.createElement("audio");
     feedbackAudio.id = "feedbackAudio";
     feedbackAudio.src = this.keypressFeedbackSound;
     header.appendChild(feedbackAudio);
