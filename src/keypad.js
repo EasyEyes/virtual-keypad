@@ -120,23 +120,6 @@ class Keypad extends KeypadPeer {
   };
   #populateKeypad = () => {
     const buttonResponseFn = (button) => {
-      // Start playing feedback sound, ie just a 'beep'
-      // console.log("Sound to be played: ", this.pressFeedback);
-      // this.pressFeedback
-      //   .play()
-      //   .then(() => console.log("Feedback sound played successfully!"))
-      //   .catch((error) =>
-      //     console.error("Error playing feedback sound! ", error)
-      //   );
-      // .then(() => {
-      //   setTimeout(() => {
-      //     this.pressFeedback.pause();
-      //     this.pressFeedback.currentTime = 0;
-      //   }, 200);
-      // })
-      // .catch((error) => {
-      //   console.error("Error in stopping feedback sound after play: ", error);
-      // });
 
       // Send response message to experimentClient
       const message = {
@@ -171,16 +154,24 @@ class Keypad extends KeypadPeer {
       button.style.fontFamily = this.font;
 
       const feedbackAudio = document.getElementById("feedbackAudio");
-      console.log("feedbackAudio: ", feedbackAudio);
 
-      // Set behavior for press
+      /* Set behavior for press */
+      // Sound on press...
+      button.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        feedbackAudio.play();
+      });
+      button.addEventListener("mousedown", (e) => {
+        e.preventDefault();
+        feedbackAudio.play();
+      });
+      // ...send signal on release
       button.addEventListener("touchend", (e) => {
         /* prevent delay and simulated mouse events */
         e.preventDefault();
         e.target.click();
       });
       button.addEventListener("click", () => {
-        feedbackAudio.play();
         buttonResponseFn(button);
       });
 
