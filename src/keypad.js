@@ -184,6 +184,11 @@ class Keypad extends KeypadPeer {
         e.preventDefault();
         console.log("touchmove event: ", e);
       });
+      button.addEventListener("touchend", (e) => {
+        /* prevent delay and simulated mouse events */
+        e.preventDefault();
+        console.log("touchend event: ", e);
+      });
 
       // Create a label for the button
       let buttonLabel = document.createElement("span");
