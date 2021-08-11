@@ -24,7 +24,11 @@ class Receiver extends KeypadPeer {
     const validAlphabet = this.checkAlphabet(alphabet);
     this.displayUpdate("New alphabet: " + String(validAlphabet), true); // DEBUG
     try {
-      this.conn.send({ alphabet: validAlphabet });
+      this.conn.send({ 
+        alphabet: validAlphabet,
+        font: this.font,
+        peerID: this.peer.id
+       });
     } catch (e) {
       this.displayUpdate("Error in updating alphabet! ", e); // DEBUG 
       console.error(e);
@@ -33,7 +37,11 @@ class Receiver extends KeypadPeer {
   updateFont = (font) => {
     // TODO check if the font is supported, somehow
     try {
-      this.conn.send({ font: font });
+      this.conn.send({ 
+        font: font,
+        alphabet: this.alphabet,
+        peerID: this.peer.id
+      });
     } catch (e) {
       this.displayUpdate("Error in updating font! "); // DEBUG 
       console.error(e);
