@@ -23,6 +23,9 @@ class Receiver extends KeypadPeer {
     // Get an array of unique symbols
     const validAlphabet = this.checkAlphabet(alphabet);
     this.displayUpdate("New alphabet: " + String(validAlphabet), true); // DEBUG
+
+    this.alphabet = validAlphabet; // Store new alphabet
+
     try {
       this.conn.send({ 
         alphabet: validAlphabet,
@@ -38,6 +41,9 @@ class Receiver extends KeypadPeer {
     // TODO check if the font is supported, somehow
     console.log("font: ", font);
     console.log("alphabet: ", this.alphabet);
+
+    this.font = font; // Store new font
+
     try {
       this.conn.send({ 
         font: font,
