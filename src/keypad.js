@@ -58,21 +58,24 @@ class Keypad extends KeypadPeer {
     });
   };
   #onConnData = (data) => {
+    console.log("Data received: ", data);
     // Keypad has received data, namely instructions to update the keypad
-    if (!data.hasOwnProperty("alphabet") && !data.hasOwnProperty("font")) {
+    if ((!data.hasOwnProperty("alphabet") && !data.hasOwnProperty("font")) || (!data.hasOwnProperty("peerID"))) {
       console.error(
-        'Error in parsing data received! Must set "alphabet" or "font" properties'
+        'Error in parsing data received! Must set "alphabet" or "font" properties, and "peerID" property.'
       );
     } else {
       this.conn.close();
+      /*
       this.alphabet = data.hasOwnProperty("alphabet")
         ? this.checkAlphabet(data["alphabet"])
         : this.alphabet;
       this.font = data.hasOwnProperty("font") ? data["font"] : this.font;
+      */
       let newParams = {
-        alphabet: this.alphabet,
-        font: this.font,
-        peerID: this.conn.peer,
+        alphabet: data.alphabet,
+        font: data.font,
+        peerID: data.peerID,
       };
       /*
       FUTURE does this limit usable environments?

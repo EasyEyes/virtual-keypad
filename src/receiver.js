@@ -36,6 +36,8 @@ class Receiver extends KeypadPeer {
   };
   updateFont = (font) => {
     // TODO check if the font is supported, somehow
+    console.log("font: ", font);
+    console.log("alphabet: ", this.alphabet);
     try {
       this.conn.send({ 
         font: font,
