@@ -127,7 +127,7 @@ class Receiver extends KeypadPeer {
       this.onDataCallback(JSON.parse(data));
     });
     this.conn.on("close", () => {
-      // this.displayUpdate("Connection reset<br>Awaiting connection...");
+      this.displayUpdate("Connection reset<br>Awaiting connection...");
       this.conn = null;
     });
   };

@@ -3,7 +3,7 @@
   margin-top: 2%;
   padding-left: 1em;
   max-height: 10vh;
-  width: 80%;
+  width: 100%;
   font-size: 1.5rem;
   font-weight: 700;
   text-align: left;
@@ -15,8 +15,14 @@
   margin: auto;
   width: 90vw;
 
+  /* 
+  Don't rely on very bottom of screen, which
+  may be used by menu bar on smartphone
+  */
+  margin-bottom: 5vh;
+
   /* Use full height */
-  height: 90vh;
+  /* height: 90vh; */
 
   /* Auto grid of buttons */
   display: grid;
