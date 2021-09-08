@@ -49,7 +49,10 @@ class Keypad extends KeypadPeer {
   };
   #disallowIncomingConnections = (connection) => {
     connection.on("open", function () {
-      connection.send("Sender does not accept incoming connections");
+      connection.send({
+        message: "Rejected", 
+        info: "Sender does not accept incoming connections"
+      });
       setTimeout(function () {
         connection.close();
       }, 500);

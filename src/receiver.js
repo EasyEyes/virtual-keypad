@@ -86,8 +86,8 @@ class Receiver extends KeypadPeer {
     }
 
     const params = {
-      alphabet: this.alphabet,
-      font: this.font,
+      // alphabet: this.alphabet,
+      // font: this.font,
       peerID: this.peer.id,
     };
 
@@ -116,7 +116,7 @@ class Receiver extends KeypadPeer {
     if (this.conn && this.conn.open) {
       connection.on("open", function () {
         connection.send({
-          message: "Connection Rejected", 
+          message: "Rejected", 
           info: "Already connected to another client"});
         setTimeout(function () {
           connection.close();
