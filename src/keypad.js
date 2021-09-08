@@ -36,7 +36,6 @@ class Keypad extends KeypadPeer {
     this.peer.on("error", this.onPeerError);
 
     this.#prepareHTML();
-    this.#populateKeypad();
   }
   #onPeerOpen = (id) => {
     // Workaround for peer.reconnect deleting previous id
@@ -100,6 +99,7 @@ class Keypad extends KeypadPeer {
       reliable: true,
     });
 
+    console.log("Connection: ", this.conn);
     this.conn.on("open", this.#populateKeypad);
     // Handle incoming data (messages only since this is the signal sender)
     this.conn.on("data", this.#onConnData);
@@ -113,7 +113,7 @@ class Keypad extends KeypadPeer {
     const keypadHeader = document.createElement("div");
     keypadHeader.setAttribute("id", "keypad-header");
     keypadElem.appendChild(keypadHeader);
-    if (!!document.getElementById(this.targetElement)) {
+    if (document.getElementById(this.targetElement)) {
       console.log("Specified target element successfully used.");
       document.getElementById(this.targetElement).appendChild(keypadElem);
     } else {
