@@ -57,7 +57,7 @@ class Keypad extends KeypadPeer {
   };
   #onConnData = (data) => {
     console.log("Data received: ", data);
-    data = JSON.parse(data);
+    data = data; // data = JSON.parse(data);
     switch (data.message) {
       case "KeypadParameters":
         this.alphabet = data.alphabet;
@@ -141,8 +141,9 @@ class Keypad extends KeypadPeer {
        * This will only occur if the connection is still alive.
        */
       if (this.conn && this.conn.open) {
-        this.conn.send(JSON.stringify(message));
-        console.log("Keypress sent: ", JSON.stringify(message));
+        this.conn.send(message); // this.conn.send(JSON.stringify(message));
+        // console.log("Keypress sent: ", JSON.stringify(message));
+        console.log("Keypress sent: ", message);
       } else {
         console.log("Connection is closed");
       }

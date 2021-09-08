@@ -136,7 +136,7 @@ class Receiver extends KeypadPeer {
      */
     // Perform callback with data
     this.conn.on("data", (data) => {
-      data = JSON.parse(data);
+      data = data; // data = JSON.parse(data);
       console.log("Received data: ", data);
       switch (data.message) {
         case "Handshake":
