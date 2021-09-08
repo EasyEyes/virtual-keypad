@@ -132,7 +132,13 @@ class Receiver extends KeypadPeer {
      */
     // Perform callback with data
     this.conn.on("data", (data) => {
-      this.onDataCallback(JSON.parse(data));
+      data = JSON.parse(data);
+      console.log("Received data: ", data);
+      if (data.message == "Keypress") {
+        this.onDataCallback(data);
+      } else {
+        console.log("Message type: ", data.message);
+      }
     });
     this.conn.on("close", () => {
       this.displayUpdate("Connection reset. Awaiting connection...");
