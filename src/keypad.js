@@ -21,16 +21,16 @@ class Keypad extends KeypadPeer {
     const parametersFromURL = this.parseParams(
       new URLSearchParams(window.location.search)
     );
-    this.alphabet = this.checkAlphabet(parametersFromURL.alphabet);
-    this.font = parametersFromURL.font;
+    // this.alphabet = this.checkAlphabet(parametersFromURL.alphabet);
+    // this.font = parametersFromURL.font;
     this.receiverPeerId = parametersFromURL.peerId;
-    this.visualResponseFeedback = keypadParameters.visualResponseFeedback;
+    // this.visualResponseFeedback = keypadParameters.visualResponseFeedback;
 
     // Set-up sound to play on press
     this.pressFeedback = new Audio(this.keypressFeedbackSound);
 
     this.peer.on("open", this.#onPeerOpen);
-    this.peer.on("connection", this.#onPeerConnection);
+    this.peer.on("connection", this.#disallowIncomingConnections);
     this.peer.on("disconnected", this.onPeerDisconnected);
     this.peer.on("close", this.onPeerClose);
     this.peer.on("error", this.onPeerError);
@@ -47,8 +47,7 @@ class Keypad extends KeypadPeer {
     }
     this.#join();
   };
-  #onPeerConnection = (connection) => {
-    // Disallow incoming connections
+  #disallowIncomingConnections = (connection) => {
     connection.on("open", function () {
       connection.send("Sender does not accept incoming connections");
       setTimeout(function () {
@@ -58,29 +57,33 @@ class Keypad extends KeypadPeer {
   };
   #onConnData = (data) => {
     console.log("Data received: ", data);
-    // Keypad has received data, namely instructions to update the keypad
-    if ((!data.hasOwnProperty("alphabet") && !data.hasOwnProperty("font")) || (!data.hasOwnProperty("peerID"))) {
-      console.error(
-        'Error in parsing data received! Must set "alphabet" or "font" properties, and "peerID" property.'
-      );
-    } else {
-      this.conn.close();
-      /*
-      this.alphabet = data.hasOwnProperty("alphabet")
-        ? this.checkAlphabet(data["alphabet"])
-        : this.alphabet;
-      this.font = data.hasOwnProperty("font") ? data["font"] : this.font;
-      */
-      let newParams = {
-        alphabet: data.alphabet,
-        font: data.font,
-        peerID: data.peerID,
-      };
-      /*
-      FUTURE does this limit usable environments?
-      ie does this work if internet is lost after initial page load?
-      */
-      window.location.search = this.queryStringFromObject(newParams); // Redirect to correctly constructed keypad page
+    data = JSON.parse(data);
+    switch (data.message) {
+      case "KeypadParameters":
+        this.alphabet = data.alphabet;
+        this.font = data.font;
+        this.#populateKeypad();
+        break;
+      case "Update":
+        // Keypad has received data to update the keypad
+        if ((!data.hasOwnProperty("alphabet") && !data.hasOwnProperty("font"))) {
+          console.error('Error in parsing data received! Must set "alphabet" or "font" properties');
+        } else {
+          // this.conn.close();
+          /*
+          this.alphabet = data.hasOwnProperty("alphabet")
+            ? this.checkAlphabet(data["alphabet"])
+            : this.alphabet;
+          this.font = data.hasOwnProperty("font") ? data["font"] : this.font;
+          */
+          this.alphabet = data.alphabet;
+          this.font = data.font;
+        };
+        // window.location.search = this.queryStringFromObject(newParams); // Redirect to correctly constructed keypad page
+        this.#populateKeypad();
+        break;
+      default:
+        console.log("Message type: ", data.message);
     }
   };
   #join = () => {
@@ -100,12 +103,13 @@ class Keypad extends KeypadPeer {
     });
 
     console.log("Connection: ", this.conn);
-    this.conn.on("open", this.#populateKeypad);
+    this.conn.on("open", this.#initiateHandshake);
     // Handle incoming data (messages only since this is the signal sender)
     this.conn.on("data", this.#onConnData);
-    this.conn.on("close", function () {
-      console.log("Connection closed");
-    });
+    this.conn.on("close", () => console.log("Connection closed") );
+  };
+  #initiateHandshake = () => {
+    this.conn.send({ message: "Handshake", })
   };
   #prepareHTML = () => {
     const keypadElem = document.createElement("div");

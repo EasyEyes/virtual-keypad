@@ -28,6 +28,7 @@ class Receiver extends KeypadPeer {
 
     try {
       this.conn.send({ 
+        message: "Update",
         alphabet: validAlphabet,
         font: this.font,
         peerID: this.peer.id
@@ -46,6 +47,7 @@ class Receiver extends KeypadPeer {
 
     try {
       this.conn.send({ 
+        message: "Update",
         font: font,
         alphabet: this.alphabet,
         peerID: this.peer.id
@@ -113,7 +115,9 @@ class Receiver extends KeypadPeer {
     // Allow only a single connection
     if (this.conn && this.conn.open) {
       connection.on("open", function () {
-        connection.send("Already connected to another client");
+        connection.send({
+          message: "Connection Rejected", 
+          info: "Already connected to another client"});
         setTimeout(function () {
           connection.close();
         }, 500);
@@ -134,10 +138,19 @@ class Receiver extends KeypadPeer {
     this.conn.on("data", (data) => {
       data = JSON.parse(data);
       console.log("Received data: ", data);
-      if (data.message == "Keypress") {
-        this.onDataCallback(data);
-      } else {
-        console.log("Message type: ", data.message);
+      switch (data.message) {
+        case "Handshake":
+          this.conn.send({
+            message: "KeypadParameters",
+            alphabet: this.alphabet,
+            font: this.font,
+          });
+          break;
+        case "Keypress":
+          this.onDataCallback(data);
+          break;
+        default:
+          console.log("Message type: ", data.message);
       }
     });
     this.conn.on("close", () => {
