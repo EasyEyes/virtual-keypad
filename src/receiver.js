@@ -3,12 +3,15 @@ var QRCode = require("qrcode");
 import "./receiver.css";
 import { KeypadPeer } from "./keypadPeer.js";
 
+const doNothing = () => undefined;
+
 class Receiver extends KeypadPeer {
-  constructor(keypadParameters, onDataCallback) {
+  constructor(keypadParameters, onDataCallback, handshakeCallback=doNothing) {
     super({ targetElementId: keypadParameters.targetElementId });
     keypadParameters = this.#verifyKeypadParameters(keypadParameters);
 
     this.onDataCallback = onDataCallback; // What to do on a button-press
+    this.handshakeCallback = handshakeCallback; // What to do when the connection is established
     this.alphabet = this.checkAlphabet(keypadParameters["alphabet"]); // What symbols to display on the keys
     this.font = keypadParameters["font"]; // What fontface to display the symbols in
 
@@ -68,9 +71,9 @@ class Receiver extends KeypadPeer {
     }
     if (!keypadParameters.hasOwnProperty("font")) {
       console.error(
-        "Must provide 'font' parameter to Receiver object. Defaulting to 'Sloan'"
+        "Must provide 'font' parameter to Receiver object. Defaulting to 'Arial'"
       );
-      keypadParameters["alphabet"] = "Sloan";
+      keypadParameters["alphabet"] = "Arial";
     } else {
       // FUTURE verify that the selected font is available
     }
@@ -145,6 +148,7 @@ class Receiver extends KeypadPeer {
             alphabet: this.alphabet,
             font: this.font,
           });
+          this.handshakeCallback();
           break;
         case "Keypress":
           this.onDataCallback(data);

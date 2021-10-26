@@ -1,6 +1,4 @@
 import "./keypad.css";
-import "./Pelli/PelliFont.css";
-import "./Sloan/SloanFont.css";
 import { KeypadPeer } from "./keypadPeer.js";
 
 class Keypad extends KeypadPeer {

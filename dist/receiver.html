@@ -70,7 +70,7 @@
         // Specify a 'keypadUrl' field to redirect to a keypad hosted elsewhere
         // FUTURE should be able to have a visual keypress or not from here
         alphabet: [..."CDHKNORSVZ".split(""), "ESC", "SPACE"], // Set of symbols to display; array perfered
-        font: "Sloan", // Supported font, in which to display letters
+        font: "Arial", // Supported font, in which to display letters
         targetElementId: "display", // id of the the div where messages should be displayed
         visualResponseFeedback: false,
       };
@@ -80,7 +80,8 @@
       };
       var receiver = new virtualKeypad.Receiver(
         keypad_options,
-        ondata_callback
+        ondata_callback,
+        ()=>console.log("Handshake complete")
       );
     </script>
   </body>
