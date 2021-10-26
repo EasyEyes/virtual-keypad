@@ -17,22 +17,23 @@ const checkParams = (req, res, next) => {
   let noID = !req.query.hasOwnProperty('peerID');
   if (noID) { 
     console.log('No peerID given.');  // TODO Breaking! Serve error
-    req.query.peerID = uuidv4(); // TEMPorary and only usable to test keypadClient
+    throw "No peerID given -- unable to connect to peer."
+    // req.query.peerID = uuidv4(); // TEMPorary and only usable to test keypadClient
   }
 
-  // TODO check that all characters can be input as query params
-  const noAlphabet = !req.query.hasOwnProperty('alphabet');
-  if (noAlphabet) {
-    console.log('No alphabet given.');
-    req.query.alphabet = 'ABCDEFG';
-  }
+  // // TODO check that all characters can be input as query params
+  // const noAlphabet = !req.query.hasOwnProperty('alphabet');
+  // if (noAlphabet) {
+  //   console.log('No alphabet given.');
+  //   req.query.alphabet = 'ABCDEFG';
+  // }
 
-  // TODO check for valid fonts here
-  let noFont = !req.query.hasOwnProperty('font');
-  if (noFont) {
-    console.log('No alphabet given.');
-    req.query.font = 'Sloan';
-  }
+  // // TODO check for valid fonts here
+  // let noFont = !req.query.hasOwnProperty('font');
+  // if (noFont) {
+  //   console.log('No alphabet given.');
+  //   req.query.font = 'Sloan';
+  // }
   next();
 };
 

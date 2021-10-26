@@ -65,6 +65,10 @@ class Keypad extends KeypadPeer {
         this.font = data.font;
         this.#populateKeypad();
         break;
+      case "UpdateHeader":
+        document.getElementById("keypad-header").innerText = data.headerContent;
+        this.headerMessage = data.headerContent;
+        break;
       case "Update":
         // Keypad has received data to update the keypad
         if ((!data.hasOwnProperty("alphabet") && !data.hasOwnProperty("font"))) {
@@ -107,6 +111,7 @@ class Keypad extends KeypadPeer {
     this.conn.on("open", this.#initiateHandshake);
     // Handle incoming data (messages only since this is the signal sender)
     this.conn.on("data", this.#onConnData);
+    // TODO figure out how to re-establish connection, or have more robust connection
     this.conn.on("close", () => console.log("Connection closed") );
   };
   #initiateHandshake = () => {
@@ -226,7 +231,7 @@ class Keypad extends KeypadPeer {
 
     // Set-up an instructio/welcome message for the user
     const header = document.getElementById("keypad-header");
-    header.innerText = "Please respond by pressing a key.";
+    header.innerText = this.headerMessage || "Please respond by pressing a key.";
     // Get the keypad element
     const remoteControl = document.getElementById("keypad");
 
