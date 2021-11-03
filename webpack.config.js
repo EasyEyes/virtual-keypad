@@ -1,16 +1,12 @@
 const webpack = require('webpack')
 
 module.exports = {
-  mode: 'production',
-  entry: './src/main.js',
-  output: {
-    path: `${__dirname}/dist`,
-    filename: '[name].js',
-    library: 'virtualKeypad',
-    libraryTarget: 'umd',
-  },
+  // mode: 'production',
+  entry: './src/main.ts',
   module: {
     rules: [
+      { test: /\.tsx?$/, use: "ts-loader", exclude: /node_modules/ },
+      { test: /\.js$/, use: "source-map-loader"},
       { test: /\.css$/, 
         use: [ 'style-loader', 'css-loader', ],
       },
@@ -27,5 +23,15 @@ module.exports = {
         ],
       },
     ]
-  }
+  },
+  devtool: "source-map",
+  resolve: {
+    extensions: [".ts", ".js"],
+  },
+  output: {
+    path: `${__dirname}/dist`,
+    filename: '[name].js',
+    library: 'virtualKeypad',
+    libraryTarget: 'umd',
+  },
 };
