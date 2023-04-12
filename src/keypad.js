@@ -74,17 +74,9 @@ class Keypad extends KeypadPeer {
         if ((!data.hasOwnProperty("alphabet") && !data.hasOwnProperty("font"))) {
           console.error('Error in parsing data received! Must set "alphabet" or "font" properties');
         } else {
-          // this.conn.close();
-          /*
-          this.alphabet = data.hasOwnProperty("alphabet")
-            ? this.checkAlphabet(data["alphabet"])
-            : this.alphabet;
-          this.font = data.hasOwnProperty("font") ? data["font"] : this.font;
-          */
           this.alphabet = data.alphabet;
           this.font = data.font;
         };
-        // window.location.search = this.queryStringFromObject(newParams); // Redirect to correctly constructed keypad page
         this.#populateKeypad();
         break;
       default:

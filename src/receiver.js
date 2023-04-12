@@ -6,57 +6,49 @@ import { KeypadPeer } from "./keypadPeer.js";
 const doNothing = () => undefined;
 
 class Receiver extends KeypadPeer {
-  constructor(keypadParameters, onDataCallback, handshakeCallback=doNothing) {
+  constructor(keypadParameters, onDataCallback=doNothing, handshakeCallback=doNothing, customDisonnectedCallback=doNothing, customConnectionCallback=doNothing, customCloseCallback=doNothing, customErrorCallback=doNothing) {
     super({ targetElementId: keypadParameters.targetElementId });
     keypadParameters = this.#verifyKeypadParameters(keypadParameters);
 
-    this.onDataCallback = onDataCallback; // What to do on a button-press
-    this.handshakeCallback = handshakeCallback; // What to do when the connection is established
     this.alphabet = this.checkAlphabet(keypadParameters["alphabet"]); // What symbols to display on the keys
     this.font = keypadParameters["font"]; // What fontface to display the symbols in
 
+    this.onData = onDataCallback; // What to do on a button-press
+    this.onHandshake = handshakeCallback; // What to do when the connection is established
+    this.onConnection = () => {customConnectionCallback(); this.#onPeerConnection()};
+    this.onDisconnected = () => {customDisonnectedCallback(); this.onPeerDisconnected()};
+    this.onClose = () => {customCloseCallback(); this.onPeerClose()};
+    this.onError = () => {customErrorCallback(); this.onPeerError()};
+
     /* Set up callbacks that handle any events related to our peer object. */
     this.peer.on("open", this.#onPeerOpen); // On creation of Receiver (local) Peer object
-    this.peer.on("connection", this.#onPeerConnection); // On connection with Keypad (remote) Peer object
-    this.peer.on("disconnected", this.onPeerDisconnected);
-    this.peer.on("close", this.onPeerClose);
-    this.peer.on("error", this.onPeerError);
+    this.peer.on("connection", this.onConnection); // On connection with Keypad (remote) Peer object
+    this.peer.on("disconnected", this.onDisconnected);
+    this.peer.on("close", this.onClose);
+    this.peer.on("error", this.onError);
   }
-  updateAlphabet = (alphabet) => {
-    // Get an array of unique symbols
-    const validAlphabet = this.checkAlphabet(alphabet);
-    this.displayUpdate("New alphabet: " + String(validAlphabet), true); // DEBUG
+  update = (alphabet=undefined, font=undefined) => {
+    // Update alphabet
+    if (typeof alphabet !== "undefined"){
+      const validAlphabet = this.checkAlphabet(alphabet);
+      if (String(this.alphabet) !== String(validAlphabet)) this.displayUpdate("New alphabet: " + String(validAlphabet), true); // DEBUG
+      this.alphabet = validAlphabet; // Store new alphabet
+    }
 
-    this.alphabet = validAlphabet; // Store new alphabet
+    // Update font
+    // TODO check if the font is supported, somehow
+    this.font ??= font; // Store new font
 
+    // Update keypad
     try {
       this.conn.send({ 
         message: "Update",
-        alphabet: validAlphabet,
+        alphabet: this.alphabet,
         font: this.font,
         peerID: this.peer.id
        });
     } catch (e) {
-      this.displayUpdate("Error in updating alphabet! ", e); // DEBUG 
-      console.error(e);
-    }
-  };
-  updateFont = (font) => {
-    // TODO check if the font is supported, somehow
-    console.log("font: ", font);
-    console.log("alphabet: ", this.alphabet);
-
-    this.font = font; // Store new font
-
-    try {
-      this.conn.send({ 
-        message: "Update",
-        font: font,
-        alphabet: this.alphabet,
-        peerID: this.peer.id
-      });
-    } catch (e) {
-      this.displayUpdate("Error in updating font! "); // DEBUG 
+      this.displayUpdate(`Error updating! Alphabet: ${String(this.alphabet)}, font: ${this.font}`, e); // DEBUG 
       console.error(e);
     }
   };
@@ -159,10 +151,10 @@ class Receiver extends KeypadPeer {
             alphabet: this.alphabet,
             font: this.font,
           });
-          this.handshakeCallback();
+          this.onHandshake();
           break;
         case "Keypress":
-          this.onDataCallback(data);
+          this.onData(data);
           break;
         default:
           console.log("Message type: ", data.message);

@@ -86,7 +86,11 @@
       var receiver = new virtualKeypad.Receiver(
         keypad_options,
         ondata_callback,
-        ()=>console.log("Handshake complete")
+        ()=>console.log("Handshake complete"),
+        ()=>console.log("Connection disconnected"),
+        ()=>console.log("Connection connected"),
+        ()=>console.log("Connection closed"),
+        ()=>console.log("Connection error")
       );
     </script>
   </body>
