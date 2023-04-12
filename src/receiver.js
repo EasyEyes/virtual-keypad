@@ -37,7 +37,7 @@ class Receiver extends KeypadPeer {
 
     // Update font
     // TODO check if the font is supported, somehow
-    this.font ??= font; // Store new font
+    this.font = font ?? this.font; // Store new font
 
     // Update keypad
     try {
