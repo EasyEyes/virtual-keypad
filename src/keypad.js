@@ -1,10 +1,10 @@
 import "./keypad.css";
-import { KeypadPeer } from "./keypadPeer.js";
+import { KeypadPeer, keypadUrl } from "./keypadPeer.js";
 
 class Keypad extends KeypadPeer {
   constructor(
     keypadParameters = {
-      keypadUrl: "https://www.keypad.website/keypad?",
+      keypadUrl: keypadUrl,
       targetElementId: null,
       visualResponseFeedback: false,
     }

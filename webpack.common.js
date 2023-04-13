@@ -1,10 +1,9 @@
-const webpack = require('webpack')
+const path = require('path');
 
 module.exports = {
-  mode: 'production',
   entry: './src/main.js',
   output: {
-    path: `${__dirname}/dist`,
+    path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
     library: 'virtualKeypad',
     libraryTarget: 'umd',
