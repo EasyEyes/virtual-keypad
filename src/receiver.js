@@ -6,6 +6,15 @@ import { KeypadPeer } from "./keypadPeer.js";
 const doNothing = () => undefined;
 
 class Receiver extends KeypadPeer {
+  /**
+   * @param {{alphabet: string[], font:string}} keypadParameters 
+   * @param {(data) => void} onDataCallback 
+   * @param {() => void} handshakeCallback 
+   * @param {() => void} customDisonnectedCallback 
+   * @param {(connection) => void} customConnectionCallback 
+   * @param {() => void} customCloseCallback 
+   * @param {(error) => void} customErrorCallback 
+   */
   constructor(keypadParameters, onDataCallback=doNothing, handshakeCallback=doNothing, customDisonnectedCallback=doNothing, customConnectionCallback=doNothing, customCloseCallback=doNothing, customErrorCallback=doNothing) {
     super({ targetElementId: keypadParameters.targetElementId });
     keypadParameters = this.#verifyKeypadParameters(keypadParameters);
@@ -15,10 +24,10 @@ class Receiver extends KeypadPeer {
 
     this.onData = onDataCallback; // What to do on a button-press
     this.onHandshake = handshakeCallback; // What to do when the connection is established
-    this.onConnection = () => {customConnectionCallback(); this.#onPeerConnection()};
+    this.onConnection = (connection) => {customConnectionCallback(connection); this.#onPeerConnection(connection)};
     this.onDisconnected = () => {customDisonnectedCallback(); this.onPeerDisconnected()};
     this.onClose = () => {customCloseCallback(); this.onPeerClose()};
-    this.onError = () => {customErrorCallback(); this.onPeerError()};
+    this.onError = (err) => {customErrorCallback(err); this.onPeerError(err)};
 
     /* Set up callbacks that handle any events related to our peer object. */
     this.peer.on("open", this.#onPeerOpen); // On creation of Receiver (local) Peer object
