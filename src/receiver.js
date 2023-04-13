@@ -5,17 +5,16 @@ import { KeypadPeer } from "./keypadPeer.js";
 
 const doNothing = () => undefined;
 
-class Receiver extends KeypadPeer {
   /**
    * @param {{alphabet: string[], font:string}} keypadParameters 
    * @param {(data) => void} onDataCallback 
    * @param {() => void} handshakeCallback 
-   * @param {() => void} customDisonnectedCallback 
    * @param {(connection) => void} customConnectionCallback 
    * @param {() => void} customCloseCallback 
    * @param {(error) => void} customErrorCallback 
    */
-  constructor(keypadParameters, onDataCallback=doNothing, handshakeCallback=doNothing, customDisonnectedCallback=doNothing, customConnectionCallback=doNothing, customCloseCallback=doNothing, customErrorCallback=doNothing) {
+class Receiver extends KeypadPeer {
+  constructor(keypadParameters, onDataCallback=doNothing, handshakeCallback=doNothing, customConnectionCallback=doNothing, customCloseCallback=doNothing, customErrorCallback=doNothing) {
     super({ targetElementId: keypadParameters.targetElementId });
     keypadParameters = this.#verifyKeypadParameters(keypadParameters);
 
@@ -25,14 +24,13 @@ class Receiver extends KeypadPeer {
     this.onData = onDataCallback; // What to do on a button-press
     this.onHandshake = handshakeCallback; // What to do when the connection is established
     this.onConnection = (connection) => {customConnectionCallback(connection); this.#onPeerConnection(connection)};
-    this.onDisconnected = () => {customDisonnectedCallback(); this.onPeerDisconnected()};
     this.onClose = () => {customCloseCallback(); this.onPeerClose()};
     this.onError = (err) => {customErrorCallback(err); this.onPeerError(err)};
 
     /* Set up callbacks that handle any events related to our peer object. */
     this.peer.on("open", this.#onPeerOpen); // On creation of Receiver (local) Peer object
     this.peer.on("connection", this.onConnection); // On connection with Keypad (remote) Peer object
-    this.peer.on("disconnected", this.onDisconnected);
+    this.peer.on("disconnected", this.onPeerDisconnected);
     this.peer.on("close", this.onClose);
     this.peer.on("error", this.onError);
   }
@@ -170,6 +168,7 @@ class Receiver extends KeypadPeer {
       }
     });
     this.conn.on("close", () => {
+      this.onClose();
       this.displayUpdate("Connection reset. Awaiting connection...");
       this.conn = null;
     });
