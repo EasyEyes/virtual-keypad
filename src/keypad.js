@@ -122,6 +122,8 @@ class Keypad extends KeypadPeer {
       console.log("No target element used.");
       document.getElementsByTagName("main")[0].appendChild(keypadElem);
     }
+    window.onbeforeunload = () => {this.conn?.close(); console.log("closing connection on page unload.")};
+    window.onvisibilitychange = () => {this.conn?.close(); console.log("closing connection on page unload.")};
   };
   #populateKeypad = () => {
     const buttonResponseFn = (button) => {
