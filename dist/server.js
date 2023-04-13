@@ -1,6 +1,6 @@
-import express from "express";
-import { join } from "path";
-import { v4 as uuidv4 } from "uuid";
+const express = require("express");
+const path = require("path");
+const { v4: uuidv4 } = require("uuid");
 
 var app = (module.exports = express());
 var server = "http://localhost:3000";
@@ -40,10 +40,10 @@ const checkParams = (req, res, next) => {
 // Link to the actual keypad
 // ie this is where the user will be sent (from the QR code) on their phone
 app.get('/keypad', checkParams, function (req, res) {
-  res.render(join(__dirname, 'keypad.html'));
+  res.render(path.join(__dirname, 'keypad.html'));
 });
 app.get('/receiver', function (req, res) {
-  res.render(join(__dirname, 'receiver.html'));
+  res.render(path.join(__dirname, 'receiver.html'));
 });
 
 app.use(function (err, req, res, next) {
