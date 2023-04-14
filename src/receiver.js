@@ -23,9 +23,9 @@ class Receiver extends KeypadPeer {
 
     this.onData = onDataCallback; // What to do on a button-press
     this.onHandshake = handshakeCallback; // What to do when the connection is established
-    this.onConnection = (connection) => {customConnectionCallback(connection); this.#onPeerConnection(connection)};
-    this.onClose = () => {customCloseCallback(); this.onPeerClose()};
-    this.onError = (err) => {customErrorCallback(err); this.onPeerError(err)};
+    this.onConnection = (connection) => {this.#onPeerConnection(connection); customConnectionCallback(connection)};
+    this.onClose = () => {this.onPeerClose(); customCloseCallback()};
+    this.onError = (err) => {this.onPeerError(err); customErrorCallback(err)};
 
     /* Set up callbacks that handle any events related to our peer object. */
     this.peer.on("open", this.#onPeerOpen); // On creation of Receiver (local) Peer object
