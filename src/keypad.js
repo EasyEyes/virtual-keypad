@@ -79,6 +79,22 @@ class Keypad extends KeypadPeer {
         };
         this.#populateKeypad();
         break;
+      case "Disable":
+        if (data.hasOwnProperty("keys")) {
+          // TODO check that data.keys is a list of strings, and "space" isn't ["s", "p", "a"...]
+          this.disableKeys(data.keys);
+        } else {
+          this.disableKeys();
+        }
+        break;
+      case "Enable":
+        if (data.hasOwnProperty("keys")) {
+          // TODO check that data.keys is a list of strings, and "space" isn't ["s", "p", "a"...]
+          this.enableKeys(data.keys);
+        } else {
+          this.enableKeys();
+        }
+        break;
       default:
         console.log("Message type: ", data.message);
     }
@@ -110,11 +126,32 @@ class Keypad extends KeypadPeer {
     this.conn.send({ message: "Handshake", })
   };
   #prepareHTML = () => {
+    /**
+     * ----------
+     * | Header |
+     * ----------
+     * |a b c d | <- keypad-keys
+     * |e f g h |
+     * |i j k l |
+     * ----------
+     * |space esc| <- keypad-control-keys
+     */
+    // Keypad elem is a container for a message and all keys
     const keypadElem = document.createElement("div");
     keypadElem.setAttribute("id", "keypad");
-    const keypadHeader = document.createElement("div");
+    const keypadHeader = document.createElement("h1");
     keypadHeader.setAttribute("id", "keypad-header");
+    keypadHeader.classList.add("noselect");
+    const keypadKeys = document.createElement("div");
+    keypadKeys.setAttribute("id", "keypad-keys");
+    keypadKeys.classList.add("keys");
+    const keypadControlKeys = document.createElement("div");
+    keypadControlKeys.setAttribute("id", "keypad-control-keys");
+    keypadControlKeys.classList.add("keys");
     keypadElem.appendChild(keypadHeader);
+    keypadElem.appendChild(keypadKeys);
+    keypadElem.appendChild(keypadControlKeys);
+    // Add keypad, ie container with header,keys,control keys to page where specified
     if (document.getElementById(this.targetElement)) {
       console.log("Specified target element successfully used.");
       document.getElementById(this.targetElement).appendChild(keypadElem);
@@ -122,6 +159,7 @@ class Keypad extends KeypadPeer {
       console.log("No target element used.");
       document.getElementsByTagName("main")[0].appendChild(keypadElem);
     }
+    // Close connection if window closes.
     window.onbeforeunload = () => {this.conn?.close(); console.log("closing connection on page unload.")};
     window.onvisibilitychange = () => {this.conn?.close(); console.log("closing connection on page unload.")};
   };
@@ -155,6 +193,7 @@ class Keypad extends KeypadPeer {
     };
     const createButton = (symbol) => {
       // Create a response button for this symbol
+      // TODO why aren't these "button"s??? More accessible, make label easier. Did I have a good reason???
       let button = document.createElement("a");
       button.id = symbol;
       button.className = "response-button";
@@ -220,10 +259,14 @@ class Keypad extends KeypadPeer {
       // Add the label to the button
       button.appendChild(buttonLabel);
       // Add the labeled-button to the HTML
-      document.querySelector("#keypad").appendChild(button);
+      if (["SPACE", "ESC"].includes(symbol.toUpperCase())){
+        document.querySelector("#keypad-control-keys").appendChild(button);
+      } else {
+        document.querySelector("#keypad-keys").appendChild(button);
+      }
     };
 
-    // Set-up an instructio/welcome message for the user
+    // Set-up an instruction/welcome message for the user
     const header = document.getElementById("keypad-header");
     header.innerText = this.headerMessage || "Please respond by pressing a key.";
     // Get the keypad element
@@ -232,13 +275,13 @@ class Keypad extends KeypadPeer {
     // Set-up audio element
     const feedbackAudio = document.createElement("audio");
     feedbackAudio.id = "feedbackAudio";
-    feedbackAudio.src = this.keypressFeedbackSound;
+    feedbackAudio.src = "onems.mp3";
     header.appendChild(feedbackAudio);
 
     // Set correct font for button labels
     remoteControl.style.fontFamily = this.font;
     // Remove previous buttons
-    remoteControl.innerHTML = "";
+    this.clearKeys();
     // Create new buttons
     this.alphabet.forEach((symbol) => createButton(symbol));
   };
@@ -272,6 +315,46 @@ class Keypad extends KeypadPeer {
     const buttons = document.getElementsByClassName("response-button");
     [...buttons].forEach((element) => {
       element.classList.add("unpressable", "noselect");
+    });
+  };
+  /**
+   * Remove all keys from the keypad.
+   */
+  clearKeys = () => {
+    document.querySelector("#keypad-keys").innerHTML = "";
+    document.querySelector("#keypad-control-keys").innerHTML = "";
+  };
+  /**
+   * Return the nodes corresponding to the specified keys.
+   * @param {string[]} whichKeys id's of keys to select. defaults to all keys.
+   * @returns {HTMLElement[]}
+   */
+  _getKeysElements = (whichKeys=[]) => {
+    let keyElems = [...document.querySelector("#keypad").getElementsByClassName("response-button")];
+    if (whichKeys.length !== 0) keyElems = keyElems.filter(e => whichKeys.includes(e.id));
+    return keyElems;
+  };
+  /**
+   * Make selected keys unpressable.
+   */
+  disableKeys = (whichKeys=[]) => {
+    const keyElems = this._getKeysElements(whichKeys);
+    console.log("disabling elems", keyElems);
+    keyElems.forEach(e => {
+      e.classList.add("unpressable");
+      e.classList.add("noselect");
+      e.setAttribute("inert", "");
+    });
+  };
+  /**
+   * Make selected keys pressable.
+   */
+  enableKeys = (whichKeys=[]) => {
+    const keyElems = this._getKeysElements(whichKeys);
+    keyElems.forEach(e => {
+      e.classList.remove("unpressable");
+      e.classList.remove("noselect");
+      e.removeAttribute("inert");
     });
   };
 }

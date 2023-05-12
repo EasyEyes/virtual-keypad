@@ -66,6 +66,7 @@
       </p>
     </div>
     <div id="display"></div>
+    <button id="toggle-disable" style="display: none;">Disable keys.</button>
     <script>
       if ( window.location !== window.parent.location ) { 
         // The page is in an iframe, per https://tommcfarlin.com/check-if-a-page-is-in-an-iframe/
@@ -83,10 +84,34 @@
         document.getElementById("display").innerText += data.response;
         console.log(data);
       };
+      const disableSomeKeys = (ev) => {
+        const allKeys = [...keypad_options.alphabet];
+        const numberOfKeysToDisable = Math.floor(Math.random()*allKeys.length);
+        const keysToDisable = [];
+        for (let i=0; i<numberOfKeysToDisable; i++){
+          keysToDisable.push(allKeys.splice(Math.floor(Math.random()*allKeys.length), 1)[0]);
+        }
+        console.log("keysToDisable", keysToDisable);
+        console.log("ev.target.getAttribute('keys-disabled')", ev.target.getAttribute("keys-disabled"));
+
+        
+        if (ev.target.toggleAttribute("keys-disabled")) {
+          receiver.disableKeys(keysToDisable);
+          ev.target.innerText = "Enable keys.";
+        } else {
+          receiver.enableKeys();
+          ev.target.innerText = "Disable keys."
+        }
+      };
       var receiver = new virtualKeypad.Receiver(
         keypad_options,
         ondata_callback,
-        ()=>console.log("RECEIV Handshake complete"),
+        ()=>{
+          const disableButton = document.getElementById("toggle-disable");
+          disableButton.style.display = "block";
+          disableButton.onclick = disableSomeKeys;
+          console.log("RECEIV Handshake complete");
+        },
         ()=>console.log("RECEIV Connection connected"),
         ()=>console.log("RECEIV Connection closed"),
         ()=>console.log("RECEIV Connection error")

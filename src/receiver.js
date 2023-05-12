@@ -59,6 +59,30 @@ class Receiver extends KeypadPeer {
       console.error(e);
     }
   };
+  disableKeys = (whichKeys=undefined) => {
+    const message = {
+      message: "Disable",
+    };
+    if (whichKeys) message.keys = whichKeys;
+    try {
+      this.conn.send(message);
+    } catch (e) {
+      this.displayUpdate(`Error disabling keys. Keys: ${whichKeys}`);
+      console.error(e);
+    }
+  };
+  enableKeys = (whichKeys=undefined) => {
+    const message = {
+      message: "Enable",
+    };
+    if (whichKeys) message.keys = whichKeys;
+    try {
+      this.conn.send(message);
+    } catch (e) {
+      this.displayUpdate(`Error enabling keys. Keys: ${whichKeys}`);
+      console.error(e);
+    }
+  };
   updateDisplayMessage = (message) => {
     try {
       this.conn.send({

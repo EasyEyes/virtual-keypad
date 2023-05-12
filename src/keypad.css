@@ -1,95 +1,130 @@
 /* REMOTE KEYPAD STYLING */
-#keypad-header {
-  margin-top: 2%;
-  padding-left: 1em;
-  height: 10vh;
-  width: 100%;
-  font-size: 1.5rem;
-  font-weight: 700;
-  text-align: left;
-  touch-action: none;
+:root{
+  --main-keys-percent: 75;
 }
 
 #keypad {
-  /* Center the keypad */
-  margin: auto;
-  width: 90vw;
+  max-width: 1440px;
+  height: 100vh;
 
-  /* 
-  Don't rely on very bottom of screen, which
-  may be used by menu bar on smartphone
-  */
-  margin-bottom: 5vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto calc(1%*var(--main-keys-percent)) 15%;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
 
-  /* Use full height */
-  /* height: 90vh; */
+}
+#keypad-header {
+  height: 100%;
+  min-height: 5vh;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: left;
 
+  grid-row: 1;
+  overflow-y: auto;
+
+  padding: 0.5em;
+  margin-top: 0.5em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+
+  border-radius: 0.5em;
+
+  box-shadow: inset 2px 2px 4px #888888,
+              inset -2px -2px 4px #fff;
+}
+.keys {
+  height: 100%;
   /* Auto grid of buttons */
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  justify-content: center;
+
   gap: 15px;
-  justify-content: space-evenly;
+  padding: 0.5em;
+}
+#keypad-keys {
+  grid-row: 2;
+  max-width: 100%;
+  max-height: calc(1vh*var(--main-keys-percent));
+  overflow-y: auto;
+  overflow-x: visible;
+}
+#keypad-control-keys {
+  grid-row: 3;
+}
+#keypad-control-keys > a {
+  height: 100%;
+  width: 100%;
+  border-radius: 25px;
 }
 
 .response-button {
-  max-width: 25vw;
+  /* width: 100%; */
+  height: 100%;
   min-width: 44px;
-  max-height: 25vw;
-  min-width: 44px;
+  max-width: min(25vw, 325px);
+  max-height: min(25vw, 325px);
+  min-height: 44px;
   cursor: pointer;
+  /* border: 1px solid red; */
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border-radius: 12.5%;
-  border: darkslategray 2px solid;
+  border-radius: min(25%, 45px);
 
   font-size: 3rem;
   font-weight: 700;
 
   text-decoration: none;
-}
-.response-button#SPACE {
-  /* TODO actually make sure test doesn't clip */
-  font-size: 3vw; 
-}
-.response-button#ESC {
-  /* TODO actually make sure test doesn't clip */
-  font-size: 4vw; 
+  aspect-ratio: 1;
+
+  /* Horizontally center button within grid area */
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+
+  box-shadow: 7px 7px 11px #888888,
+              -7px -7px 11px #fff;
 }
 .response-button:active {
   box-shadow: 1px 5px 5px 1px #999;
-  background-color: #bbb;
+  background-color: #aaa;
 }
 
 /* Only do on a hover-enabled device, ie not a phone/tablet */
 @media (hover: hover) {
   .response-button:hover {
-    box-shadow: 1px 5px 5px 1px lightslategray;
+    box-shadow: inset 7px 7px 11px #888888,
+                inset -7px -7px 11px #fff;
   }
 }
 
 /* Very narrow windows */
 @media only screen and (max-width: 200px) {
-  #keypad {
+  #keypad-keys {
     grid-template-columns: repeat(2, 1fr);
   }
 
   .response-button {
-    width: 37.5vw;
+    /* width: 37.5vw; */
     height: 37.5vw;
   }
 }
 
 /* Wide windows */
 @media only screen and (min-width: 823px) {
-  #keypad {
+  #keypad-keys {
     grid-template-columns: repeat(4, 1fr);
   }
 
   .response-button {
-    width: 20vw;
+    /* width: 20vw; */
     height: 20vw;
   }
 }
@@ -103,9 +138,24 @@
     grid-template-columns: repeat(4, 1fr);
   }
   .response-button {
-    width: 18vw;
+    /* width: 18vw; */
     height: 18vw;
   }
+}
+
+.response-button#SPACE {
+  /* TODO actually make sure test doesn't clip */
+  font-size: 3rem; 
+  grid-column: 1/3;
+  grid-row: 1;
+  width: 36vw;
+  min-width: 100%;
+}
+.response-button#ESC {
+  /* TODO actually make sure test doesn't clip */
+  font-size: 2.5rem; 
+  grid-column: 3;
+  grid-row: 1;
 }
 
 /* .response-button:active {
@@ -126,10 +176,13 @@
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
+  touch-action: none;
 }
 
 .unpressable {
-  background-color: #999;
-  /* border-color: lightgray;  */
-  box-shadow: none;
+  background-color: #aaaaaa;
+  box-shadow: inset 7px 7px 11px #888888,
+              inset -7px -7px 11px #fff;
+  pointer-events: none;
+  user-select: none;
 }
