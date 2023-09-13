@@ -7,7 +7,7 @@
   display: grid;
   grid-template-columns: 1fr;
   /* Make header text as big as the text, keys take up as much space as needed, and control keys take up bottom space */
-  grid-template-rows: max-content auto max-content;
+  grid-template-rows: max-content auto 15vh;
 
   align-items: center;
   justify-content: center;
@@ -48,7 +48,7 @@
   width: 100%;
   height: 100%;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap-reverse;
   flex-direction: row;
   column-gap: 5px;
   row-gap: 5px;
@@ -57,15 +57,22 @@
   justify-content: center;
 
   /* Vertical shift of buttons */
-  /* align-items: center; */
-  align-items: flex-end;
+  align-items: center;
+
+  /* Hide scrollbar */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+#keypad-keys::-webkit-scrollbar {
+  /* Hide scrollbar */
+  display: none;
 }
 
 .response-button {
   width: 100%;
   height: 100%;
-  max-width: min(25vw, 150px);
-  max-height: min(25vw, 150px);
+  max-width: min(25vw, 25vh, 150px);
+  max-height: min(25vw, 25vh, 150px);
   min-width: 44px;
   min-height: 44px;
   cursor: pointer;
@@ -76,7 +83,7 @@
   justify-content: center;
 
   /* Curve corners of buttons */
-  border-radius: 25px;
+  border-radius: min(25px, 15%);
 
   /* Make buttons square */
   aspect-ratio: 1;
@@ -106,6 +113,7 @@
   height: 95%;
   width: 95%;
   min-width: 95%;
+  max-height: min(15vh, 150px);
 }
 
 .response-button#SPACE {
