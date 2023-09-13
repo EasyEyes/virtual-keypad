@@ -194,7 +194,7 @@ class Keypad extends KeypadPeer {
     const createButton = (symbol) => {
       // Create a response button for this symbol
       // TODO why aren't these "button"s??? More accessible, make label easier. Did I have a good reason???
-      let button = document.createElement("a");
+      let button = document.createElement("button");
       button.id = symbol;
       button.className = "response-button";
       button.style.fontFamily = this.font;
