@@ -118,13 +118,13 @@
 
 .response-button#SPACE {
   /* TODO actually make sure test doesn't clip */
-  font-size: 2rem; 
+  font-size: 1.5rem; 
   grid-column: 1;
   grid-row: 1;
 }
-.response-button#ESC {
+.response-button#RETURN {
   /* TODO actually make sure test doesn't clip */
-  font-size: 2rem; 
+  font-size: 1.5rem; 
   grid-column: 2;
   grid-row: 1;
 }

@@ -134,7 +134,7 @@ class Keypad extends KeypadPeer {
      * |e f g h |
      * |i j k l |
      * ----------
-     * |space esc| <- keypad-control-keys
+     * |space ret| <- keypad-control-keys
      */
     // Keypad elem is a container for a message and all keys
     const keypadElem = document.createElement("div");
@@ -259,7 +259,7 @@ class Keypad extends KeypadPeer {
       // Add the label to the button
       button.appendChild(buttonLabel);
       // Add the labeled-button to the HTML
-      if (["SPACE", "ESC"].includes(symbol.toUpperCase())){
+      if (["SPACE", "RETURN"].includes(symbol.toUpperCase())){
         document.querySelector("#keypad-control-keys").appendChild(button);
       } else {
         document.querySelector("#keypad-keys").appendChild(button);
