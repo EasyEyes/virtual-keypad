@@ -69,6 +69,10 @@ class Keypad extends KeypadPeer {
         document.getElementById("keypad-header").innerText = data.headerContent;
         this.headerMessage = data.headerContent;
         break;
+      case "UpdateFooter":
+        document.getElementById("keypad-footer").innerText = data.headerContent;
+        this.footerMessage = data.headerContent;
+        break;
       case "Update":
         // Keypad has received data to update the keypad
         if ((!data.hasOwnProperty("alphabet") && !data.hasOwnProperty("font"))) {
@@ -148,9 +152,12 @@ class Keypad extends KeypadPeer {
     const keypadControlKeys = document.createElement("div");
     keypadControlKeys.setAttribute("id", "keypad-control-keys");
     keypadControlKeys.classList.add("keys");
+    const keypadFooter = document.createElement("div");
+    keypadFooter.setAttribute("id", "keypad-footer");
     keypadElem.appendChild(keypadHeader);
     keypadElem.appendChild(keypadKeys);
     keypadElem.appendChild(keypadControlKeys);
+    keypadElem.appendChild(keypadFooter);
     // Add keypad, ie container with header,keys,control keys to page where specified
     if (document.getElementById(this.targetElement)) {
       console.log("Specified target element successfully used.");
@@ -268,12 +275,14 @@ class Keypad extends KeypadPeer {
 
     // Set-up an instruction/welcome message for the user
     const header = document.getElementById("keypad-header");
-    header.innerText = this.headerMessage || "Please respond by pressing a key.";
+    header.innerText = this.headerMessage || "";
+    header.style.display = header.innerText === "" ? "none" : "block";
     // Get the keypad element
     const remoteControl = document.getElementById("keypad");
 
     // Set-up audio element
     const feedbackAudio = document.createElement("audio");
+    // TODO investigate why feedback audio is broken/unreliable
     feedbackAudio.id = "feedbackAudio";
     feedbackAudio.src = "onems.mp3";
     header.appendChild(feedbackAudio);
@@ -292,11 +301,17 @@ class Keypad extends KeypadPeer {
     setTimeout(defaultKeypadMessaging, delayTime);
   };
   defaultKeypadMessaging = (
-    headerText = "Please respond by pressing a key."
+    headerText = ""
   ) => {
     // Set-up an instruction/welcome message for the user
     const header = document.getElementById("keypad-header");
-    header.innerText = headerText;
+    if (headerText === "") {
+      header.style.display = "none";
+    } else {
+      header.innerText = headerText;
+      header.style.display = "block";
+
+    }
 
     // Make each button pressable
     const buttons = document.getElementsByClassName("response-button");

@@ -94,6 +94,17 @@ class Receiver extends KeypadPeer {
       console.error(e);
     }
   };
+  updateFooterMessage = (message) => {
+    try {
+      this.conn.send({
+        message: "UpdateFooter",
+        headerContent: message
+      })
+    } catch (e) {
+      this.displayUpdate("Error in updating footer message.") // Debug
+      console.error(e);
+    }
+  };
   #verifyKeypadParameters = (keypadParameters) => {
     if (!keypadParameters.hasOwnProperty("alphabet")) {
       console.error(
