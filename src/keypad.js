@@ -67,6 +67,7 @@ class Keypad extends KeypadPeer {
         break;
       case "UpdateHeader":
         document.getElementById("keypad-header").innerText = data.headerContent;
+        document.getElementById("keypad-header").style.display = data.headerContent === "" ? "none" : "block";
         this.headerMessage = data.headerContent;
         break;
       case "UpdateFooter":
