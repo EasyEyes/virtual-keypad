@@ -22,7 +22,7 @@ class Receiver extends KeypadPeer {
     this.font = keypadParameters["font"]; // What fontface to display the symbols in
 
     this.onData = onDataCallback; // What to do on a button-press
-    this.onHandshake = handshakeCallback; // What to do when the connection is established
+    this.onHandshake = () => {handshakeCallback(); this._setupHeartBeatIntervals();} // What to do when the connection is established
     this.onConnection = (connection) => {this.#onPeerConnection(connection); customConnectionCallback(connection)};
     this.onClose = () => {this.onPeerClose(); customCloseCallback()};
     this.onError = (err) => {this.onPeerError(err); customErrorCallback(err)};
@@ -197,6 +197,10 @@ class Receiver extends KeypadPeer {
           break;
         case "Keypress":
           this.onData(data);
+          break;
+      // TODO factor out into keypadPeer
+        case "Heartbeat":
+          this.lastHeartbeat = performance.now();
           break;
         default:
           console.log("Message type: ", data.message);

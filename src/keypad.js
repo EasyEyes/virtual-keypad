@@ -101,6 +101,10 @@ class Keypad extends KeypadPeer {
           this.enableKeys();
         }
         break;
+      // TODO factor out into keypadPeer
+      case "Heartbeat":
+        this.lastHeartbeat = performance.now();
+        break;
       default:
         console.log("Message type: ", data.message);
     }
@@ -129,7 +133,8 @@ class Keypad extends KeypadPeer {
     this.conn.on("close", () => console.log("Connection closed") );
   };
   #initiateHandshake = () => {
-    this.conn.send({ message: "Handshake", })
+    this.conn.send({ message: "Handshake" });
+    this._setupHeartBeatIntervals();
   };
   #prepareHTML = () => {
     /**

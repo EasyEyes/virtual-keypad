@@ -17,8 +17,6 @@ export class KeypadPeer {
       targetElementId: null,
     }
   ) {
-    /* Create the Peer object for our end of the connection. */
-    this.peer = new Peer(null, { debug: 2 });
     this.conn = null;
     this.lastPeerId = null;
     this.keypadUrl = parameters.hasOwnProperty("keypadUrl")
@@ -27,6 +25,16 @@ export class KeypadPeer {
     this.targetElement = parameters.hasOwnProperty("targetElementId")
       ? parameters.targetElementId
       : null;
+    // TODO add support for ttd (ms)
+    this.ttd = parameters.hasOwnProperty("ttd") ? parameters.hasOwnProperty("ttd") : 8000;
+    // TODO add support for heartRate (ms)
+    this.heartbeatIntervalMs = parameters.hasOwnProperty("heartRate") ? parameters.hasOwnProperty("heartRate") : 2000;
+    this.lastHeartbeat = performance.now();
+    this.heartBeatInterval = undefined;
+    this.heartCheckInterval = undefined
+
+    /* Create the Peer object for our end of the connection. */
+    this.peer = new Peer(null, { pingInterval: this.heartbeatIntervalMs, debug: 2 });
 
     this.alphabet = null;
     this.font = null;
@@ -86,7 +94,7 @@ export class KeypadPeer {
       // STRING : ok
       if (
         proposedAlphabet.toUpperCase() === "SPACE" ||
-        proposedAlphabet.toUpperCase() == "ESC"
+        proposedAlphabet.toUpperCase() == "RETURN"
       ) {
         validAlphabet = [proposedAlphabet];
       } else {
@@ -95,24 +103,40 @@ export class KeypadPeer {
     } else {
       // SOMETHING ELSE : bad
       console.error(
-        "Error! Alphabet must be specified as an array of symbols, including 'ESC', 'SPACE'"
+        "Error! Alphabet must be specified as an array of symbols, including 'RETURN', 'SPACE'"
       );
       validAlphabet = [];
     }
     // Return unique elements, see: https://stackoverflow.com/questions/11246758/how-to-get-unique-values-in-an-array
     const uniqueValidAlphabet = [...new Set(validAlphabet)];
 
-    // Order alphabet so that if 'SPACE' and 'ESC' are in the list, they are correctly positioned
+    // Order alphabet so that if 'SPACE' and 'RETURN' are in the list, they are correctly positioned
     if ("SPACE" in uniqueValidAlphabet) {
       uniqueValidAlphabet = moveElementToEndOfArray(
         uniqueValidAlphabet,
         "SPACE"
       );
     }
-    if ("ESC" in uniqueValidAlphabet) {
-      uniqueValidAlphabet = moveElementToEndOfArray(uniqueValidAlphabet, "ESC");
+    if ("RETURN" in uniqueValidAlphabet) {
+      uniqueValidAlphabet = moveElementToEndOfArray(uniqueValidAlphabet, "RETURN");
     }
     return uniqueValidAlphabet;
+  };
+  _setupHeartBeatIntervals = () => {
+    this.heartBeatInterval = setInterval(() => this.conn?.send({ message: "Heartbeat", }) , this.heartbeatIntervalMs);
+
+    this.heartCheckInterval = setInterval(() => {
+      const timeSinceHeartbeatMs = performance.now() - this.lastHeartbeat;
+      if (timeSinceHeartbeatMs > this.ttd) {
+        console.log("Closing connection due to lack of heartbeat.");
+        this.conn?.close();
+        this.conn = undefined;
+        clearInterval(this.heartBeatInterval);
+        clearInterval(this.heartCheckInterval);
+        this.heartBeatInterval = undefined;
+        this.heartCheckInterval = undefined;
+      }
+    }, this.ttd);
   };
 }
 
