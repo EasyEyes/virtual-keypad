@@ -1,3 +1,4 @@
+import { applyMaxKeySize } from "./maxKeySize";
 import "./keypad.css";
 import { KeypadPeer, keypadUrl } from "./keypadPeer.js";
 
@@ -156,6 +157,7 @@ class Keypad extends KeypadPeer {
     const keypadFooter = document.createElement("div");
     keypadFooter.setAttribute("id", "keypad-footer");
     keypadElem.appendChild(keypadHeader);
+    keypadKeys.appendChild(keypadControlKeys);
     keypadElem.appendChild(keypadKeys);
     keypadElem.appendChild(keypadControlKeys);
     keypadElem.appendChild(keypadFooter);
@@ -170,6 +172,8 @@ class Keypad extends KeypadPeer {
     // Close connection if window closes.
     window.onbeforeunload = () => {this.conn?.close(); console.log("closing connection on page unload.")};
     window.onvisibilitychange = () => {this.conn?.close(); console.log("closing connection on page unload.")};
+
+    window.onresize = () => {const resize = () => applyMaxKeySize(this.alphabet?.length); setTimeout(resize, 10); console.log("Repositioning buttons due to resize.")};
   };
   #populateKeypad = () => {
     const buttonResponseFn = (button) => {
@@ -201,7 +205,6 @@ class Keypad extends KeypadPeer {
     };
     const createButton = (symbol) => {
       // Create a response button for this symbol
-      // TODO why aren't these "button"s??? More accessible, make label easier. Did I have a good reason???
       let button = document.createElement("button");
       button.id = symbol;
       button.className = "response-button";
@@ -236,18 +239,14 @@ class Keypad extends KeypadPeer {
       button.addEventListener("touchmove", (e) => {
         /* prevent delay and simulated mouse events */
         e.preventDefault();
-        console.log("touchmove event: ", e);
       });
       button.addEventListener("touchend", (e) => {
         /* prevent delay and simulated mouse events */
         e.preventDefault();
-        console.log("touchend event: ", e);
         const elementEndedOn = document.elementFromPoint(
           e.changedTouches[0].clientX,
           e.changedTouches[0].clientY
         );
-        console.log("elementEndedOn: ", elementEndedOn);
-        console.log("elementEndedOn.className: ", elementEndedOn.className);
         switch (elementEndedOn.className) {
           case "response-button-label noselect":
             buttonResponseFn(elementEndedOn.parentElement); // e.target.click();
@@ -294,6 +293,8 @@ class Keypad extends KeypadPeer {
     this.clearKeys();
     // Create new buttons
     this.alphabet.forEach((symbol) => createButton(symbol));
+    // Manually style buttons, according to Denis' algorithm
+    setTimeout(() => applyMaxKeySize(this.alphabet.length), 100);
   };
   visualFeedbackThenReset = (delayTime = 800) => {
     // ie grey out keys just after use, to discourage rapid response
@@ -337,8 +338,8 @@ class Keypad extends KeypadPeer {
    * Remove all keys from the keypad.
    */
   clearKeys = () => {
-    document.querySelector("#keypad-keys").innerHTML = "";
-    document.querySelector("#keypad-control-keys").innerHTML = "";
+    document.querySelector("#keypad-keys").innerHTML = "<div id='keypad-control-keys'></div>";
+    // document.querySelector("#keypad-control-keys").innerHTML = "";
   };
   /**
    * Return the nodes corresponding to the specified keys.
@@ -355,7 +356,6 @@ class Keypad extends KeypadPeer {
    */
   disableKeys = (whichKeys=[]) => {
     const keyElems = this._getKeysElements(whichKeys);
-    console.log("disabling elems", keyElems);
     keyElems.forEach(e => {
       e.classList.add("unpressable");
       e.classList.add("noselect");
