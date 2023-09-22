@@ -44,7 +44,7 @@ export const applyMaxKeySize = (numberOfKeys) => {
     const {keyHeightPx, cols, rows, widthPx, heightPx} = getKeysDimensions(keysElem, numberOfKeys, aspect);
     const keyElems = [...keysElem.getElementsByClassName("response-button")];
     const controlKeyElemsMask = keyElems.map(e => e.parentNode.id === "keypad-control-keys");
-    const gridCoords = keyElems.filter((k,i) => !controlKeyElemsMask[i]).map((k,i) => [Math.floor(i/cols), (cols-1)-(i%cols)]);
+    const gridCoords = keyElems.filter((k,i) => !controlKeyElemsMask[i]).map((k,i) => [Math.floor(i/cols), i%cols]);
     const widthUsed = cols*(keyHeightPx*aspect);
     const heightUsed = rows*keyHeightPx + keyHeightPx;
     console.log("gridCords", gridCoords);
