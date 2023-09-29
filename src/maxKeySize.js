@@ -11,8 +11,6 @@ const getKeysDimensions = (elem, n, aspect=0.5) => {
     keyHeightPx= (-1+Math.sqrt(1+4*n*heightPx/widthPx))/(2*n/widthPx);
     keyHeightPx = (-1+Math.sqrt(1+4*n*heightPx*aspect/widthPx))/(2*aspect*n/widthPx);
 
-    console.log(`n=${n}, aspect=${aspect}, widthPx=${widthPx}, heightPx=${heightPx}`);
-    console.log(`100% efficiency would require keyHightPx ${keyHeightPx.toFixed(1)}`);
     while (n > (Math.floor(heightPx/keyHeightPx - 1)*Math.floor(widthPx/(aspect*keyHeightPx)))){
         // Round size down so that screen is a multiple.
         const ss=[heightPx/Math.ceil(heightPx/keyHeightPx), widthPx/Math.ceil(widthPx/(aspect*keyHeightPx))];
@@ -33,7 +31,6 @@ const getKeysDimensions = (elem, n, aspect=0.5) => {
     const numKeysHorizontally = Math.floor(widthPx/(aspect*keyHeightPx));
     const numKeysVertically = Math.floor(heightPx/keyHeightPx-1);
     const efficiency = 100*areaOfKeys/screenArea;
-    console.log(`Best keyheightPx ${keyHeightPx} px. ${numKeysHorizontally} horizontally x ${numKeysVertically} vertically. Efficiency ${efficiency}`)
 
     return {keyHeightPx: keyHeightPx, cols: numKeysHorizontally, rows:numKeysVertically, widthPx: widthPx, heightPx: heightPx}
 };
@@ -47,7 +44,6 @@ export const applyMaxKeySize = (numberOfKeys) => {
     const gridCoords = keyElems.filter((k,i) => !controlKeyElemsMask[i]).map((k,i) => [Math.floor(i/cols), i%cols]);
     const widthUsed = cols*(keyHeightPx*aspect);
     const heightUsed = rows*keyHeightPx + keyHeightPx;
-    console.log("gridCords", gridCoords);
     const freeHeight = heightPx - heightUsed;
     const freeWidth = widthPx - widthUsed;
     const verticalMarginOffset = Math.floor(freeHeight/2);
@@ -61,22 +57,19 @@ export const applyMaxKeySize = (numberOfKeys) => {
         let top, left, width;
         if (controlKey) {
             top = (heightPx-keyHeightPx) - verticalMarginOffset + "px";
-            left = (k.innerText.toLowerCase() === "space" ? 0 : widthPx/2 - horizontalMarginOffset) + horizontalMarginOffset + "px";
+            left = (k.innerText.toLowerCase().includes("space") ? 0 : widthPx/2 - horizontalMarginOffset) + horizontalMarginOffset + "px";
             width = `${(widthPx - horizontalMarginOffset*2)/2}px`;
         } else {
             width = keyHeightPx*aspect;
             const [y,x] = gridCoords[j];
             j += 1;
-            console.log(`[x,y]: [${x},${y}]`);
             top = y*keyHeightPx + verticalMarginOffset + "px";
             left = `${x*width+horizontalMarginOffset}px`;
             width += "px";
         }
-        console.log(`${k.id}, h: ${height}, w: ${width}, top: ${top}, left: ${left}`);
         k.style.width = width;
         k.style.height = height;
         k.style.top = top;
         k.style.left = left;
     });
-    console.log("\n");
 };

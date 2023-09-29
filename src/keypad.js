@@ -164,7 +164,6 @@ class Keypad extends KeypadPeer {
     keypadElem.appendChild(keypadHeader);
     keypadKeys.appendChild(keypadControlKeys);
     keypadElem.appendChild(keypadKeys);
-    keypadElem.appendChild(keypadControlKeys);
     keypadElem.appendChild(keypadFooter);
     // Add keypad, ie container with header,keys,control keys to page where specified
     if (document.getElementById(this.targetElement)) {
@@ -178,7 +177,7 @@ class Keypad extends KeypadPeer {
     window.onbeforeunload = () => {this.conn?.close(); console.log("closing connection on page unload.")};
     window.onvisibilitychange = () => {this.conn?.close(); console.log("closing connection on page unload.")};
 
-    window.onresize = () => {const resize = () => applyMaxKeySize(this.alphabet?.length); setTimeout(resize, 10); console.log("Repositioning buttons due to resize.")};
+    window.onresize = () => { applyMaxKeySize(this.alphabet?.length); }
   };
   #populateKeypad = () => {
     const buttonResponseFn = (button) => {

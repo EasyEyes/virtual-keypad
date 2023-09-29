@@ -91,9 +91,6 @@
         for (let i=0; i<numberOfKeysToDisable; i++){
           keysToDisable.push(allKeys.splice(Math.floor(Math.random()*allKeys.length), 1)[0]);
         }
-        console.log("keysToDisable", keysToDisable);
-        console.log("ev.target.getAttribute('keys-disabled')", ev.target.getAttribute("keys-disabled"));
-
         
         if (ev.target.toggleAttribute("keys-disabled")) {
           receiver.disableKeys(keysToDisable);
