@@ -213,6 +213,7 @@ class Keypad extends KeypadPeer {
       button.id = symbol;
       button.className = "response-button";
       button.style.fontFamily = this.font;
+      button.style.visibility = "hidden"
 
       const feedbackAudio = document.getElementById("feedbackAudio");
 
@@ -298,7 +299,7 @@ class Keypad extends KeypadPeer {
     // Create new buttons
     this.alphabet.forEach((symbol) => createButton(symbol));
     // Manually style buttons, according to Denis' algorithm
-    setTimeout(() => applyMaxKeySize(this.alphabet.length), 100);
+    setTimeout(() => applyMaxKeySize(this.alphabet.length), 3); // Why?
   };
   visualFeedbackThenReset = (delayTime = 800) => {
     // ie grey out keys just after use, to discourage rapid response

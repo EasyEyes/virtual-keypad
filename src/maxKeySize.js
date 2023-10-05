@@ -53,23 +53,37 @@ export const applyMaxKeySize = (numberOfKeys) => {
     keyElems.forEach((k,i) => {
         k.style.position = "fixed";
         const controlKey = controlKeyElemsMask[i];
-        const height = `${keyHeightPx}px`;
         let top, left, width;
         if (controlKey) {
-            top = (heightPx-keyHeightPx) - verticalMarginOffset + "px";
-            left = (k.innerText.toLowerCase().includes("space") ? 0 : widthPx/2 - horizontalMarginOffset) + horizontalMarginOffset + "px";
-            width = `${(widthPx - horizontalMarginOffset*2)/2}px`;
+            top = (heightPx-keyHeightPx) - verticalMarginOffset;
+            left = (k.id.toLowerCase().includes("space") ? 0 : widthPx/2 - horizontalMarginOffset) + horizontalMarginOffset;
+            width = (widthPx - horizontalMarginOffset*2)/2;
+
+            k.style.height = "auto";
+            k.style.width = "auto";
+            k.style.whiteSpace = "nowrap";
+            // Set to a nominal font size, s
+            const s = 20;
+            let w = k.getBoundingClientRect().width;
+            console.log("!. ~ file: maxKeySize.js:70 ~ keyElems.forEach ~ w:", w)
+            k.style.fontSize = s + "px";
+            // Measure width of elem, w
+            w = k.getBoundingClientRect().width;
+            const r = 1/(w/width)
+            // Set font size to s*r
+            const f = Math.floor(s*r);
+            k.style.fontSize = f + "px";
         } else {
             width = keyHeightPx*aspect;
             const [y,x] = gridCoords[j];
             j += 1;
-            top = y*keyHeightPx + verticalMarginOffset + "px";
-            left = `${x*width+horizontalMarginOffset}px`;
-            width += "px";
+            top = y*keyHeightPx + verticalMarginOffset ;
+            left = x*width+horizontalMarginOffset;
         }
-        k.style.width = width;
-        k.style.height = height;
-        k.style.top = top;
-        k.style.left = left;
+        k.style.width = width + "px";
+        k.style.height = keyHeightPx + "px";
+        k.style.top = top + "px";
+        k.style.left = left + "px";
+        k.style.visibility = "visible";
     });
 };
