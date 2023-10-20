@@ -1,4 +1,3 @@
-
 const getKeysDimensions = (elem, n, aspect=0.5) => {
     /**** translation of maxKeySize.m, original provided courtesy of Prof Denis Pelli ****/
     let keyHeightPx;
@@ -8,7 +7,7 @@ const getKeysDimensions = (elem, n, aspect=0.5) => {
     const heightPx = elem.clientHeight;
     let screenArea=widthPx*heightPx
 
-    keyHeightPx= (-1+Math.sqrt(1+4*n*heightPx/widthPx))/(2*n/widthPx);
+    keyHeightPx = (-1+Math.sqrt(1+4*n*heightPx/widthPx))/(2*n/widthPx);
     keyHeightPx = (-1+Math.sqrt(1+4*n*heightPx*aspect/widthPx))/(2*aspect*n/widthPx);
 
     while (n > (Math.floor(heightPx/keyHeightPx - 1)*Math.floor(widthPx/(aspect*keyHeightPx)))){
@@ -55,9 +54,10 @@ export const applyMaxKeySize = (numberOfKeys) => {
         const controlKey = controlKeyElemsMask[i];
         let top, left, width;
         if (controlKey) {
-            top = (heightPx-keyHeightPx) - verticalMarginOffset;
-            left = (k.id.toLowerCase().includes("space") ? 0 : widthPx/2 - horizontalMarginOffset) + horizontalMarginOffset;
-            width = (widthPx - horizontalMarginOffset*2)/2;
+            top = (heightPx-keyHeightPx);
+            const m = (widthPx*0.1)/4
+            left = (k.id.toLowerCase().includes("space") ? 0 : widthPx/2) + m;
+            width = (widthPx*0.9)/2;
 
             k.style.height = "auto";
             k.style.width = "auto";
@@ -73,15 +73,17 @@ export const applyMaxKeySize = (numberOfKeys) => {
             // Set font size to s*r
             const f = Math.floor(s*r);
             k.style.fontSize = f + "px";
+            k.style.borderRadius = "25px";
+            k.style.height = (keyHeightPx - 5)+ "px";
         } else {
             width = keyHeightPx*aspect;
             const [y,x] = gridCoords[j];
             j += 1;
             top = y*keyHeightPx + verticalMarginOffset ;
             left = x*width+horizontalMarginOffset;
+            k.style.height = keyHeightPx + "px";
         }
         k.style.width = width + "px";
-        k.style.height = keyHeightPx + "px";
         k.style.top = top + "px";
         k.style.left = left + "px";
         k.style.visibility = "visible";

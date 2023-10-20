@@ -17,18 +17,12 @@
 }
 #keypad-header {
   height: 100%;
-  /* min-height: 5vh; */
   font-size: 1.5rem;
   font-weight: 700;
   text-align: center;
 
   grid-row: 1;
   overflow-y: auto;
-
-  /* padding: 0.5em;
-  margin-top: 0.5em;
-  margin-left: 0.5em;
-  margin-right: 0.5em; */
 
   border-radius: 0.5em;
 
@@ -51,27 +45,6 @@
   padding: 10px;
 
   margin: 15px;
-
-  /* overflow-y: auto;
-  overflow-x: visible; */
-
-  /* width: 100%;
-  height: 100%;
-  display: flex;
-  flex-wrap: wrap-reverse;
-  flex-direction: row;
-  column-gap: 5px;
-  row-gap: 5px; */
-
-  /* Horizontal shift of buttons */
-  /* justify-content: center; */
-
-  /* Vertical shift of buttons */
-  /* align-items: center; */
-
-  /* Hide scrollbar */
-  /* -ms-overflow-style: none;
-  scrollbar-width: none; */
 }
 /* Hide scrollbar */
 /* #keypad-keys::-webkit-scrollbar {
@@ -79,14 +52,6 @@
 } */
 
 .response-button {
-  cursor: pointer;
-
-  /* width: 100%;
-  height: 100%;
-  max-width: min(25vw, 25vh, 150px);
-  max-height: min(25vw, 25vh, 150px);
-  min-width: 32px;
-  min-height: 32px;
   cursor: pointer;
 
   /* Center text within button */
@@ -97,11 +62,8 @@
   /* Curve corners of buttons */
   border-radius: min(25px, 15%);
 
-  /* Make buttons square */
-  aspect-ratio: 1;
-
   /* Style button text */
-  font-size: 3rem;
+  font-size: larger;
   font-weight: 700;
 
 
@@ -111,7 +73,6 @@
 .response-button:active {
   box-shadow: 1px 2px 2px 1px #999;
   background-color: #aaa;
-  font-size: large;
 }
 
 /* Only do on a hover-enabled device, ie not a phone/tablet */
@@ -122,10 +83,6 @@
   }
 }
 
-/* .response-button:active {
-    background-color: steelblue;
-    box-shadow: 1px 5px 5px 1px lightslategray;
-} */
 
 .response-button-label {
   text-align: center;

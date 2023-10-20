@@ -141,7 +141,8 @@ class Receiver extends KeypadPeer {
 
     let queryString = this.queryStringFromObject(params);
     const uri = this.keypadUrl + queryString;
-    this.keypadURL = uri;
+    this.qrURL = uri;
+    console.log(this.qrURL);
 
     // Display QR code for the participant to scan
     const qrCanvas = document.createElement("canvas");
