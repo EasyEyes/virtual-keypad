@@ -36,6 +36,7 @@ const getKeysDimensions = (elem, n, aspect=0.5) => {
 
 export const applyMaxKeySize = (numberOfKeys) => {
     const aspect = 1;
+    let margin = 5;
     const keysElem =  document.getElementById("keypad");
     const {keyHeightPx, cols, rows, widthPx, heightPx} = getKeysDimensions(keysElem, numberOfKeys, aspect);
     const keyElems = [...keysElem.getElementsByClassName("response-button")];
@@ -48,44 +49,57 @@ export const applyMaxKeySize = (numberOfKeys) => {
     const verticalMarginOffset = Math.floor(freeHeight/2);
     const horizontalMarginOffset = Math.floor(freeWidth/2);
 
+    let keyFontSize;
     let j=0;
     keyElems.forEach((k,i) => {
         k.style.position = "fixed";
         const controlKey = controlKeyElemsMask[i];
         let top, left, width;
         if (controlKey) {
-            top = (heightPx-keyHeightPx);
-            const m = (widthPx*0.1)/4
-            left = (k.id.toLowerCase().includes("space") ? 0 : widthPx/2) + m;
-            width = (widthPx*0.9)/2;
+            top = heightPx-keyHeightPx;
+            width = widthPx/2 - horizontalMarginOffset - margin;
+            const m = horizontalMarginOffset + margin*0.5;
+            left = (k.id.toLowerCase().includes("space") ? m : m + width + margin);
 
-            k.style.height = "auto";
-            k.style.width = "auto";
-            k.style.whiteSpace = "nowrap";
-            // Set to a nominal font size, s
-            const s = 20;
-            let w = k.getBoundingClientRect().width;
-            console.log("!. ~ file: maxKeySize.js:70 ~ keyElems.forEach ~ w:", w)
-            k.style.fontSize = s + "px";
-            // Measure width of elem, w
-            w = k.getBoundingClientRect().width;
-            const r = 1/(w/width)
-            // Set font size to s*r
-            const f = Math.floor(s*r);
+            const f = getLargeFontSize(k, width, keyHeightPx-margin);
             k.style.fontSize = f + "px";
             k.style.borderRadius = "25px";
-            k.style.height = (keyHeightPx - 5)+ "px";
+            k.style.height = (keyHeightPx - margin)+ "px";
         } else {
-            width = keyHeightPx*aspect;
+            const height = keyHeightPx - margin;
+            width = height*aspect;
             const [y,x] = gridCoords[j];
             j += 1;
-            top = y*keyHeightPx + verticalMarginOffset ;
-            left = x*width+horizontalMarginOffset;
-            k.style.height = keyHeightPx + "px";
+            top = y*height + ((y+1)*margin) + verticalMarginOffset - margin/2;
+            left = x*width + ((x+1)*margin) + horizontalMarginOffset - margin/2;
+            if (!keyFontSize) {
+                keyFontSize = getLargeFontSize(k, width, height);
+            }
+            k.style.height = height + "px";
+            k.style.fontSize = height/2 + "px";
         }
         k.style.width = width + "px";
         k.style.top = top + "px";
         k.style.left = left + "px";
         k.style.visibility = "visible";
     });
+};
+
+const getLargeFontSize = (k, width, height) => {
+    k.style.height = "auto";
+    k.style.width = "auto";
+    k.style.whiteSpace = "nowrap";
+
+    // Set to a nominal font size, s
+    const s = 20;
+    k.style.fontSize = s + "px";
+    // Measure width of elem, w
+    const w = k.getBoundingClientRect().width;
+    const h = k.getBoundingClientRect().height
+    const rW = 1/(w/width)
+    const rH = 1/(h/height)
+    const r = Math.min(rW, rH)
+    // Set font size to s*r
+    const f = Math.floor(s*r);
+    return f;
 };

@@ -41,10 +41,6 @@
 #keypad-keys {
   /* Second row, within the keypad grid (ie whole page) */
   grid-row: 2;
-
-  padding: 10px;
-
-  margin: 15px;
 }
 /* Hide scrollbar */
 /* #keypad-keys::-webkit-scrollbar {
@@ -52,6 +48,7 @@
 } */
 
 .response-button {
+  /* border: 1px solid red; */
   cursor: pointer;
 
   /* Center text within button */
@@ -63,9 +60,12 @@
   border-radius: min(25px, 15%);
 
   /* Style button text */
-  font-size: larger;
+  /* font-size: 3rem; */
+  font-size: xx-large;
   font-weight: 700;
 
+  padding: 0;
+  margin: 0;
 
   box-shadow: 1px 1px 2px #888888,
               -1px -1px 2px #fff;

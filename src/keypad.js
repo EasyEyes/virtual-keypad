@@ -252,9 +252,9 @@ class Keypad extends KeypadPeer {
           e.changedTouches[0].clientX,
           e.changedTouches[0].clientY
         );
-        switch (elementEndedOn.className) {
+        switch (elementEndedOn?.className) {
           case "response-button-label noselect":
-            buttonResponseFn(elementEndedOn.parentElement); // e.target.click();
+            buttonResponseFn(elementEndedOn?.parentElement); // e.target.click();
             break;
           case "response-button":
             buttonResponseFn(elementEndedOn); // e.target.click();
