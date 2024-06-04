@@ -44,9 +44,27 @@ export class KeypadPeer {
       config: {
         iceServers: [
           {
-            urls: "turn:relay1.expressturn.com:3478",
-            credential: "GaXEw5Xsbyz6NVmY",
-            username: "ef4JRLGBMUMREQ4FTQ",
+            urls: "stun:stun.relay.metered.ca:80",
+          },
+          {
+            urls: "turn:global.relay.metered.ca:80",
+            username: "de884cfc34189cdf1a5dd616",
+            credential: "IcOpouU9/TYBmpHU",
+          },
+          {
+            urls: "turn:global.relay.metered.ca:80?transport=tcp",
+            username: "de884cfc34189cdf1a5dd616",
+            credential: "IcOpouU9/TYBmpHU",
+          },
+          {
+            urls: "turn:global.relay.metered.ca:443",
+            username: "de884cfc34189cdf1a5dd616",
+            credential: "IcOpouU9/TYBmpHU",
+          },
+          {
+            urls: "turns:global.relay.metered.ca:443?transport=tcp",
+            username: "de884cfc34189cdf1a5dd616",
+            credential: "IcOpouU9/TYBmpHU",
           },
         ],
       },
