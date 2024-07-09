@@ -49,6 +49,8 @@ export const applyMaxKeySize = (numberOfKeys) => {
     const verticalMarginOffset = Math.floor(freeHeight/2);
     const horizontalMarginOffset = Math.floor(freeWidth/2);
 
+    const controlKeys = [];
+    let controlKeyFontSize = Infinity;
     let keyFontSize;
     let j=0;
     keyElems.forEach((k,i) => {
@@ -62,7 +64,8 @@ export const applyMaxKeySize = (numberOfKeys) => {
             left = (k.id.toLowerCase().includes("space") ? m : m + width + margin);
 
             const f = getLargeFontSize(k, width, keyHeightPx-margin);
-            k.style.fontSize = f + "px";
+            controlKeyFontSize = Math.min(f, controlKeyFontSize);
+            controlKeys.push(k);
             k.style.borderRadius = "25px";
             k.style.height = (keyHeightPx - margin)+ "px";
         } else {
@@ -83,6 +86,8 @@ export const applyMaxKeySize = (numberOfKeys) => {
         k.style.left = left + "px";
         k.style.visibility = "visible";
     });
+    // Set the control keys to the same size, the smaller of the two
+    controlKeys.forEach(k => k.style.fontSize = controlKeyFontSize + "px");
 };
 
 const getLargeFontSize = (k, width, height) => {
