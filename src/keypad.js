@@ -70,18 +70,20 @@ class Keypad extends KeypadPeer {
         document.getElementById("keypad-header").innerText = data.headerContent;
         document.getElementById("keypad-header").style.display = data.headerContent === "" ? "none" : "block";
         this.headerMessage = data.headerContent;
+        this.#populateKeypad();
         break;
       case "UpdateFooter":
         document.getElementById("keypad-footer").innerText = data.headerContent;
         this.footerMessage = data.headerContent;
+        this.#populateKeypad();
         break;
       case "Update":
         // Keypad has received data to update the keypad
         if ((!data.hasOwnProperty("alphabet") && !data.hasOwnProperty("font"))) {
           console.error('Error in parsing data received! Must set "alphabet" or "font" properties');
         } else {
-          this.alphabet = data.alphabet;
-          this.font = data.font;
+          this.alphabet = data.alphabet ?? this.alphabet;
+          this.font = data.font ?? this.font;
         };
         this.#populateKeypad();
         break;
@@ -299,7 +301,7 @@ class Keypad extends KeypadPeer {
     // Create new buttons
     this.alphabet.forEach((symbol) => createButton(symbol));
     // Manually style buttons, according to Denis' algorithm
-    setTimeout(() => applyMaxKeySize(this.alphabet.length), 3); // Why?
+    setTimeout(() => applyMaxKeySize(this.alphabet.length), 5); // Why?
   };
   visualFeedbackThenReset = (delayTime = 800) => {
     // ie grey out keys just after use, to discourage rapid response
