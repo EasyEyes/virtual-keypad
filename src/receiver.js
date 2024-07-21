@@ -227,6 +227,7 @@ class Receiver extends KeypadPeer {
             message: "KeypadParameters",
             alphabet: this.alphabet,
             font: this.font,
+            onErrorReconnectMessage: this.onErrorReconnectMessage,
           });
           this.onHandshake();
           break;

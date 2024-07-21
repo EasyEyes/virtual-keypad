@@ -66,16 +66,20 @@
       </p>
     </div>
     <div id="display"></div>
-    <div style="display: flex;">
-      <button id="toggle-disable" style="display: none;">Disable keys.</button>
-      <button id="randomize-alphabet" style="display: none;">Randomize character set.</button>
+    <div style="display: flex">
+      <button id="toggle-disable" style="display: none">Disable keys.</button>
+      <button id="randomize-alphabet" style="display: none">
+        Randomize character set.
+      </button>
     </div>
     <script>
-      if ( window.location !== window.parent.location ) { 
+      if (window.location !== window.parent.location) {
         // The page is in an iframe, per https://tommcfarlin.com/check-if-a-page-is-in-an-iframe/
         document.getElementById("info").style.display = "none";
-      } 
-      let starting_alphabet = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789".split("")]; 
+      }
+      let starting_alphabet = [
+        ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789".split(""),
+      ];
       const ctrl = ["RETURN", "SPACE"];
       let alphabet = [...starting_alphabet, ...ctrl];
 
@@ -86,6 +90,7 @@
         font: "Arial", // Supported font, in which to display letters
         targetElementId: "display", // id of the the div where messages should be displayed
         visualResponseFeedback: false,
+        onErrorReconnectMessage: "Custom error message",
       };
       let ondata_callback = (data) => {
         document.getElementById("display").innerText += "\n" + data.response;
@@ -98,15 +103,18 @@
           ev.target.innerText = "Enable keys.";
         } else {
           receiver.enableKeys();
-          ev.target.innerText = "Disable keys."
+          ev.target.innerText = "Disable keys.";
         }
       };
       const changeAlphabet = (ev) => {
-        const sampledAlphabet = [...randomSelection(starting_alphabet), ...ctrl];
+        const sampledAlphabet = [
+          ...randomSelection(starting_alphabet),
+          ...ctrl,
+        ];
         if (ev.target.toggleAttribute("keys-changed")) {
           // Reset disabled keys on alphabet change, easier than persisting disabled for this demo page
-          ev.target.toggleAttribute("keys-disabled")
-          ev.target.innerText = "Disable keys."
+          ev.target.toggleAttribute("keys-disabled");
+          ev.target.innerText = "Disable keys.";
 
           alphabet = sampledAlphabet;
           ev.target.innerText = "Reset alphabet.";
@@ -119,24 +127,25 @@
       var receiver = new virtualKeypad.Receiver(
         keypad_options,
         ondata_callback,
-        ()=>{
+        () => {
           const disableButton = document.getElementById("toggle-disable");
           disableButton.style.display = "block";
           disableButton.onclick = disableSomeKeys;
-          const changeAlphabetButton = document.getElementById("randomize-alphabet");
+          const changeAlphabetButton =
+            document.getElementById("randomize-alphabet");
           changeAlphabetButton.style.display = "block";
           changeAlphabetButton.onclick = changeAlphabet;
 
           console.log("RECEIV Handshake complete");
         },
-        ()=>console.log("RECEIV Connection connected"),
-        ()=>console.log("RECEIV Connection closed"),
-        ()=>console.log("RECEIV Connection error")
+        () => console.log("RECEIV Connection connected"),
+        () => console.log("RECEIV Connection closed"),
+        () => console.log("RECEIV Connection error")
       );
       const randomSelection = (source) => {
         const maybe = () => Math.random() > 0.5;
         const selection = [];
-        for (let i=0; i<source.length; i++){
+        for (let i = 0; i < source.length; i++) {
           if (maybe()) selection.push(source[i]);
         }
         return selection;

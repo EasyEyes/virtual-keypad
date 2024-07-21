@@ -60,9 +60,7 @@ export const applyMaxKeySize = (numberOfKeys) => {
     numberOfKeys,
     aspect
   );
-  console.log(
-    `keyHeightPx: ${keyHeightPx}, cols: ${cols}, rows: ${rows}, widthPx: ${widthPx}, heightPx: ${heightPx}`
-  );
+
   const keyElems = [...keysElem.getElementsByClassName("response-button")];
   const controlKeyElemsMask = keyElems.map(
     (e) => e.parentNode.id === "keypad-control-keys"
@@ -76,10 +74,6 @@ export const applyMaxKeySize = (numberOfKeys) => {
   const freeWidth = widthPx - widthUsed;
   const verticalMarginOffset = Math.floor(freeHeight / 2);
   const horizontalMarginOffset = Math.floor(freeWidth / 2);
-
-  console.log(
-    `widthUsed: ${widthUsed}, heightUsed: ${heightUsed}, freeHeight: ${freeHeight}, freeWidth: ${freeWidth}, verticalMarginOffset: ${verticalMarginOffset}, horizontalMarginOffset: ${horizontalMarginOffset}`
-  );
 
   const controlKeys = [];
   let controlKeyFontSize = Infinity;

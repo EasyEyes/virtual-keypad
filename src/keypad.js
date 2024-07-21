@@ -64,6 +64,7 @@ class Keypad extends KeypadPeer {
       case "KeypadParameters":
         this.alphabet = data.alphabet;
         this.font = data.font;
+        this.onErrorReconnectMessage = data.onErrorReconnectMessage;
         this.#populateKeypad();
         break;
       case "UpdateHeader":
