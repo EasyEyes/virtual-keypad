@@ -49,8 +49,8 @@ class Keypad extends KeypadPeer {
   #disallowIncomingConnections = (connection) => {
     connection.on("open", function () {
       connection.send({
-        message: "Rejected", 
-        info: "Sender does not accept incoming connections"
+        message: "Rejected",
+        info: "Sender does not accept incoming connections",
       });
       setTimeout(function () {
         connection.close();
@@ -68,7 +68,8 @@ class Keypad extends KeypadPeer {
         break;
       case "UpdateHeader":
         document.getElementById("keypad-header").innerText = data.headerContent;
-        document.getElementById("keypad-header").style.display = data.headerContent === "" ? "none" : "block";
+        document.getElementById("keypad-header").style.display =
+          data.headerContent === "" ? "none" : "block";
         this.headerMessage = data.headerContent;
         this.#populateKeypad();
         break;
@@ -79,12 +80,14 @@ class Keypad extends KeypadPeer {
         break;
       case "Update":
         // Keypad has received data to update the keypad
-        if ((!data.hasOwnProperty("alphabet") && !data.hasOwnProperty("font"))) {
-          console.error('Error in parsing data received! Must set "alphabet" or "font" properties');
+        if (!data.hasOwnProperty("alphabet") && !data.hasOwnProperty("font")) {
+          console.error(
+            'Error in parsing data received! Must set "alphabet" or "font" properties'
+          );
         } else {
           this.alphabet = data.alphabet ?? this.alphabet;
           this.font = data.font ?? this.font;
-        };
+        }
         this.#populateKeypad();
         break;
       case "Disable":
@@ -132,7 +135,7 @@ class Keypad extends KeypadPeer {
     // Handle incoming data (messages only since this is the signal sender)
     this.conn.on("data", this.#onConnData);
     // TODO figure out how to re-establish connection, or have more robust connection
-    this.conn.on("close", () => console.log("Connection closed") );
+    this.conn.on("close", () => console.log("Connection closed"));
   };
   #initiateHandshake = () => {
     this.conn.send({ message: "Handshake" });
@@ -176,10 +179,18 @@ class Keypad extends KeypadPeer {
       document.getElementsByTagName("main")[0].appendChild(keypadElem);
     }
     // Close connection if window closes.
-    window.onbeforeunload = () => {this.conn?.close(); console.log("closing connection on page unload.")};
-    window.onvisibilitychange = () => {this.conn?.close(); console.log("closing connection on page unload.")};
+    window.onbeforeunload = () => {
+      this.conn?.close();
+      console.log("closing connection on page unload.");
+    };
+    window.onvisibilitychange = () => {
+      this.conn?.close();
+      console.log("closing connection on page unload.");
+    };
 
-    window.onresize = () => { applyMaxKeySize(this.alphabet?.length); }
+    window.onresize = () => {
+      applyMaxKeySize(this.alphabet?.length);
+    };
   };
   #populateKeypad = () => {
     const buttonResponseFn = (button) => {
@@ -215,7 +226,7 @@ class Keypad extends KeypadPeer {
       button.id = symbol;
       button.className = "response-button";
       button.style.fontFamily = this.font;
-      button.style.visibility = "hidden"
+      button.style.visibility = "hidden";
 
       const feedbackAudio = document.getElementById("feedbackAudio");
 
@@ -273,7 +284,7 @@ class Keypad extends KeypadPeer {
       // Add the label to the button
       button.appendChild(buttonLabel);
       // Add the labeled-button to the HTML
-      if (["SPACE", "RETURN"].includes(symbol.toUpperCase())){
+      if (["SPACE", "RETURN"].includes(symbol.toUpperCase())) {
         document.querySelector("#keypad-control-keys").appendChild(button);
       } else {
         document.querySelector("#keypad-keys").appendChild(button);
@@ -309,9 +320,7 @@ class Keypad extends KeypadPeer {
     // Setup keys for the next trial
     setTimeout(defaultKeypadMessaging, delayTime);
   };
-  defaultKeypadMessaging = (
-    headerText = ""
-  ) => {
+  defaultKeypadMessaging = (headerText = "") => {
     // Set-up an instruction/welcome message for the user
     const header = document.getElementById("keypad-header");
     if (headerText === "") {
@@ -319,7 +328,6 @@ class Keypad extends KeypadPeer {
     } else {
       header.innerText = headerText;
       header.style.display = "block";
-
     }
 
     // Make each button pressable
@@ -345,7 +353,8 @@ class Keypad extends KeypadPeer {
    * Remove all keys from the keypad.
    */
   clearKeys = () => {
-    document.querySelector("#keypad-keys").innerHTML = "<div id='keypad-control-keys'></div>";
+    document.querySelector("#keypad-keys").innerHTML =
+      "<div id='keypad-control-keys'></div>";
     // document.querySelector("#keypad-control-keys").innerHTML = "";
   };
   /**
@@ -353,17 +362,22 @@ class Keypad extends KeypadPeer {
    * @param {string[]} whichKeys id's of keys to select. defaults to all keys.
    * @returns {HTMLElement[]}
    */
-  _getKeysElements = (whichKeys=[]) => {
-    let keyElems = [...document.querySelector("#keypad").getElementsByClassName("response-button")];
-    if (whichKeys.length !== 0) keyElems = keyElems.filter(e => whichKeys.includes(e.id));
+  _getKeysElements = (whichKeys = []) => {
+    let keyElems = [
+      ...document
+        .querySelector("#keypad")
+        .getElementsByClassName("response-button"),
+    ];
+    if (whichKeys.length !== 0)
+      keyElems = keyElems.filter((e) => whichKeys.includes(e.id));
     return keyElems;
   };
   /**
    * Make selected keys unpressable.
    */
-  disableKeys = (whichKeys=[]) => {
+  disableKeys = (whichKeys = []) => {
     const keyElems = this._getKeysElements(whichKeys);
-    keyElems.forEach(e => {
+    keyElems.forEach((e) => {
       e.classList.add("unpressable");
       e.classList.add("noselect");
       e.setAttribute("inert", "");
@@ -372,9 +386,9 @@ class Keypad extends KeypadPeer {
   /**
    * Make selected keys pressable.
    */
-  enableKeys = (whichKeys=[]) => {
+  enableKeys = (whichKeys = []) => {
     const keyElems = this._getKeysElements(whichKeys);
-    keyElems.forEach(e => {
+    keyElems.forEach((e) => {
       e.classList.remove("unpressable");
       e.classList.remove("noselect");
       e.removeAttribute("inert");

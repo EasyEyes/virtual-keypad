@@ -5,27 +5,52 @@ import { KeypadPeer } from "./keypadPeer.js";
 
 const doNothing = () => undefined;
 
-  /**
-   * @param {{alphabet: string[], font:string}} keypadParameters 
-   * @param {(data) => void} onDataCallback 
-   * @param {() => void} handshakeCallback 
-   * @param {(connection) => void} customConnectionCallback 
-   * @param {() => void} customCloseCallback 
-   * @param {(error) => void} customErrorCallback 
-   */
+/**
+ * @param {{alphabet: string[], font:string}} keypadParameters
+ * @param {(data) => void} onDataCallback
+ * @param {() => void} handshakeCallback
+ * @param {(connection) => void} customConnectionCallback
+ * @param {() => void} customCloseCallback
+ * @param {(error) => void} customErrorCallback
+ */
 class Receiver extends KeypadPeer {
-  constructor(keypadParameters, onDataCallback=doNothing, handshakeCallback=doNothing, customConnectionCallback=doNothing, customCloseCallback=doNothing, customErrorCallback=doNothing) {
-    super({ targetElementId: keypadParameters.targetElementId });
+  constructor(
+    keypadParameters,
+    onDataCallback = doNothing,
+    handshakeCallback = doNothing,
+    customConnectionCallback = doNothing,
+    customCloseCallback = doNothing,
+    customErrorCallback = doNothing
+  ) {
+    super({
+      targetElementId: keypadParameters.targetElementId,
+      onErrorReconnectMessage: keypadParameters.onErrorReconnectMessage,
+    });
     keypadParameters = this.#verifyKeypadParameters(keypadParameters);
 
     this.alphabet = this.checkAlphabet(keypadParameters["alphabet"]); // What symbols to display on the keys
     this.font = keypadParameters["font"]; // What fontface to display the symbols in
+    this.onErrorReconnectMessage =
+      keypadParameters.onErrorReconnectMessage ??
+      "Connection lost. Please reconnect...";
 
     this.onData = onDataCallback; // What to do on a button-press
-    this.onHandshake = () => {handshakeCallback(); this._setupHeartBeatIntervals();} // What to do when the connection is established
-    this.onConnection = (connection) => {this.#onPeerConnection(connection); customConnectionCallback(connection)};
-    this.onClose = () => {this.onPeerClose(); customCloseCallback()};
-    this.onError = (err) => {this.onPeerError(err); customErrorCallback(err)};
+    this.onHandshake = () => {
+      handshakeCallback();
+      this._setupHeartBeatIntervals();
+    }; // What to do when the connection is established
+    this.onConnection = (connection) => {
+      this.#onPeerConnection(connection);
+      customConnectionCallback(connection);
+    };
+    this.onClose = () => {
+      this.onPeerClose();
+      customCloseCallback();
+    };
+    this.onError = (err) => {
+      this.onPeerError(err);
+      customErrorCallback(err);
+    };
 
     /* Set up callbacks that handle any events related to our peer object. */
     this.peer.on("open", this.#onPeerOpen); // On creation of Receiver (local) Peer object
@@ -34,11 +59,12 @@ class Receiver extends KeypadPeer {
     this.peer.on("close", this.onClose);
     this.peer.on("error", this.onError);
   }
-  update = (alphabet=undefined, font=undefined) => {
+  update = (alphabet = undefined, font = undefined) => {
     // Update alphabet
-    if (typeof alphabet !== "undefined"){
+    if (typeof alphabet !== "undefined") {
       const validAlphabet = this.checkAlphabet(alphabet);
-      if (String(this.alphabet) !== String(validAlphabet)) this.displayUpdate("New alphabet: " + String(validAlphabet), true); // DEBUG
+      if (String(this.alphabet) !== String(validAlphabet))
+        this.displayUpdate("New alphabet: " + String(validAlphabet), true); // DEBUG
       this.alphabet = validAlphabet; // Store new alphabet
     }
 
@@ -48,18 +74,23 @@ class Receiver extends KeypadPeer {
 
     // Update keypad
     try {
-      this.conn.send({ 
+      this.conn.send({
         message: "Update",
         alphabet: this.alphabet,
         font: this.font,
-        peerID: this.peer.id
-       });
+        peerID: this.peer.id,
+      });
     } catch (e) {
-      this.displayUpdate(`Error updating! Alphabet: ${String(this.alphabet)}, font: ${this.font}`, e); // DEBUG 
+      this.displayUpdate(
+        `Error updating! Alphabet: ${String(this.alphabet)}, font: ${
+          this.font
+        }`,
+        e
+      ); // DEBUG
       console.error(e);
     }
   };
-  disableKeys = (whichKeys=undefined) => {
+  disableKeys = (whichKeys = undefined) => {
     const message = {
       message: "Disable",
     };
@@ -71,7 +102,7 @@ class Receiver extends KeypadPeer {
       console.error(e);
     }
   };
-  enableKeys = (whichKeys=undefined) => {
+  enableKeys = (whichKeys = undefined) => {
     const message = {
       message: "Enable",
     };
@@ -87,10 +118,10 @@ class Receiver extends KeypadPeer {
     try {
       this.conn.send({
         message: "UpdateHeader",
-        headerContent: message
+        headerContent: message,
       });
     } catch (e) {
-      this.displayUpdate("Error in updating message!"); // DEBUG 
+      this.displayUpdate("Error in updating message!"); // DEBUG
       console.error(e);
     }
   };
@@ -98,10 +129,10 @@ class Receiver extends KeypadPeer {
     try {
       this.conn.send({
         message: "UpdateFooter",
-        headerContent: message
-      })
+        headerContent: message,
+      });
     } catch (e) {
-      this.displayUpdate("Error in updating footer message.") // Debug
+      this.displayUpdate("Error in updating footer message."); // Debug
       console.error(e);
     }
   };
@@ -112,7 +143,9 @@ class Receiver extends KeypadPeer {
       );
       keypadParameters["alphabet"] = "CDHKNORSVZ".split("");
     } else {
-      keypadParameters["alphabet"] = this.checkAlphabet(keypadParameters.alphabet);
+      keypadParameters["alphabet"] = this.checkAlphabet(
+        keypadParameters.alphabet
+      );
     }
     if (!keypadParameters.hasOwnProperty("font")) {
       console.error(
@@ -165,8 +198,9 @@ class Receiver extends KeypadPeer {
     if (this.conn && this.conn.open) {
       connection.on("open", function () {
         connection.send({
-          message: "Rejected", 
-          info: "Already connected to another client"});
+          message: "Rejected",
+          info: "Already connected to another client",
+        });
         setTimeout(function () {
           connection.close();
         }, 500);
@@ -199,7 +233,7 @@ class Receiver extends KeypadPeer {
         case "Keypress":
           this.onData(data);
           break;
-      // TODO factor out into keypadPeer
+        // TODO factor out into keypadPeer
         case "Heartbeat":
           this.lastHeartbeat = performance.now();
           break;

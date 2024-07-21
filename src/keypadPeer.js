@@ -15,8 +15,10 @@ export class KeypadPeer {
     parameters = {
       keypadUrl: keypadUrl,
       targetElementId: null,
+      onErrorReconnectMessage: "Connection lost. Please reconnect...",
     }
   ) {
+    this.onErrorReconnectMessage = parameters.onErrorReconnectMessage;
     this.conn = null;
     this.lastPeerId = null;
     this.keypadUrl = parameters.hasOwnProperty("keypadUrl")
@@ -91,7 +93,7 @@ export class KeypadPeer {
     }
   };
   onPeerDisconnected = () => {
-    this.displayUpdate("Connection lost. Please reconnect");
+    this.displayUpdate(this.onErrorReconnectMessage);
     // Workaround for peer.reconnect deleting previous id
     this.peer.id = this.lastPeerId;
     this.peer._lastServerId = this.lastPeerId;
