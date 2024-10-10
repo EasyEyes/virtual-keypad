@@ -52,18 +52,19 @@ const getKeysDimensions = (elem, n, aspect = 0.5) => {
 };
 
 export const applyMaxKeySize = (numberOfKeys) => {
+  console.log("!. in applyMaxKeySize");
   const aspect = 1;
   let margin = 5;
   const keysElem = document.getElementById("keypad");
   const { keyHeightPx, cols, rows, widthPx, heightPx } = getKeysDimensions(
     keysElem,
     numberOfKeys,
-    aspect
+    aspect,
   );
 
   const keyElems = [...keysElem.getElementsByClassName("response-button")];
   const controlKeyElemsMask = keyElems.map(
-    (e) => e.parentNode.id === "keypad-control-keys"
+    (e) => e.parentNode.id === "keypad-control-keys",
   );
   const gridCoords = keyElems
     .filter((k, i) => !controlKeyElemsMask[i])

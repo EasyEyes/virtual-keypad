@@ -8,7 +8,7 @@ class Keypad extends KeypadPeer {
       keypadUrl: keypadUrl,
       targetElementId: null,
       visualResponseFeedback: false,
-    }
+    },
   ) {
     super({
       keypadUrl: keypadParameters.keypadUrl,
@@ -18,7 +18,7 @@ class Keypad extends KeypadPeer {
     this.receiverPeerId = null;
 
     const parametersFromURL = this.parseParams(
-      new URLSearchParams(window.location.search)
+      new URLSearchParams(window.location.search),
     );
     // this.alphabet = this.checkAlphabet(parametersFromURL.alphabet);
     // this.font = parametersFromURL.font;
@@ -83,7 +83,7 @@ class Keypad extends KeypadPeer {
         // Keypad has received data to update the keypad
         if (!data.hasOwnProperty("alphabet") && !data.hasOwnProperty("font")) {
           console.error(
-            'Error in parsing data received! Must set "alphabet" or "font" properties'
+            'Error in parsing data received! Must set "alphabet" or "font" properties',
           );
         } else {
           this.alphabet = data.alphabet ?? this.alphabet;
@@ -190,6 +190,11 @@ class Keypad extends KeypadPeer {
     };
 
     window.onresize = () => {
+      console.count("Window resized.");
+      applyMaxKeySize(this.alphabet?.length);
+    };
+    if (window.visualViewport) window.visualViewport.onresize = () => {
+      console.count("VisualViewport resized.");
       applyMaxKeySize(this.alphabet?.length);
     };
   };
@@ -264,7 +269,7 @@ class Keypad extends KeypadPeer {
         e.preventDefault();
         const elementEndedOn = document.elementFromPoint(
           e.changedTouches[0].clientX,
-          e.changedTouches[0].clientY
+          e.changedTouches[0].clientY,
         );
         switch (elementEndedOn?.className) {
           case "response-button-label noselect":
@@ -338,7 +343,7 @@ class Keypad extends KeypadPeer {
     });
   };
   interResponseKeypadMessaging = (
-    interResponseMessage = "Please fix your gaze on the + mark on your computer screen."
+    interResponseMessage = "Please fix your gaze on the + mark on your computer screen.",
   ) => {
     // Change header text to reflect WAIT message
     const header = document.getElementById("keypad-header");
