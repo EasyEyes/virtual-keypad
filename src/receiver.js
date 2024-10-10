@@ -1,6 +1,6 @@
 // import { QRCode  } from "qrcode";
 var QRCode = require("qrcode");
-import "./receiver.css";
+// import "./receiver.css";
 import { KeypadPeer } from "./keypadPeer.js";
 
 const doNothing = () => undefined;
@@ -209,7 +209,7 @@ class Receiver extends KeypadPeer {
     }
     this.conn = connection;
     console.log("Connection: ", connection);
-    this.displayUpdate("You typed: ");
+    this.displayUpdate("[Connection established]", true);
     this.#ready();
   };
   #ready = () => {

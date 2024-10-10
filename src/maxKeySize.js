@@ -52,7 +52,6 @@ const getKeysDimensions = (elem, n, aspect = 0.5) => {
 };
 
 export const applyMaxKeySize = (numberOfKeys) => {
-  console.log("!. in applyMaxKeySize");
   const aspect = 1;
   let margin = 5;
   const keysElem = document.getElementById("keypad");

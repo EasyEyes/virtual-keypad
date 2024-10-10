@@ -31,46 +31,61 @@
 
       html,
       body {
+        font-size: calc(1em + 1vw);
         margin: 0;
         padding: 0;
+        overflow: hidden;
+      }
+      #container {
         height: 100vh;
         width: 100vw;
-        font-size: calc(1em + 1vw);
-        /* background-color: #eee; */
+        display: grid;
+        grid-template-rows: 1fr 3fr;
+        grid-template-columns: auto;
+        padding: 1em;
       }
-
-      main {
-        margin: 0 auto;
-        padding-bottom: 5rem;
-        width: 80%;
-        max-width: 1440px;
-        /* background-color: #eee; */
+      #display-and-buttons {
+        display: flex;
+        min-width: 50vh;
+        overflow-y: auto;
+        border: 3px solid black;
+        border-radius: 10px;
       }
       #display {
         overflow-x: wrap;
-        max-width: 75vw;
         word-break: break-all;
+        padding: 0;
+        width: 70%;
+        /* max-height: 100%; */
+        overflow-y: auto;
       }
-      /* -------------------------------------------------------------------------- */
-      /* color: #FF9A00; */
-      /* color: #666; */
+      #display-control-buttons {
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+        padding: 2rem;
+      }
     </style>
   </head>
   <body>
-    <div id="info">
-      <h1>Set up keypad</h1>
-      <p>
-        Scan the QR code from the device you'd like to use as a keypad. This
-        receiver just echoes keypresses; provide a different on-data callback to
-        customize how the receiver handles keypresses.
-      </p>
-    </div>
-    <div id="display"></div>
-    <div style="display: flex">
-      <button id="toggle-disable" style="display: none">Disable keys.</button>
-      <button id="randomize-alphabet" style="display: none">
-        Randomize character set.
-      </button>
+    <div id="container">
+      <div id="info">
+        <h1>Set up keypad</h1>
+        <p>
+          Scan the QR code from the device you'd like to use as a keypad. This
+          receiver just echoes keypresses; provide a different on-data callback to
+          customize how the receiver handles keypresses.
+        </p>
+      </div>
+      <div id="display-and-buttons">
+        <div id="display"></div>
+        <div id="display-control-buttons">
+          <button id="toggle-disable" style="display: none">Disable keys.</button>
+          <button id="randomize-alphabet" style="display: none">
+            Randomize character set.
+          </button>
+        </div>
+      </div>
     </div>
     <script>
       if (window.location !== window.parent.location) {
@@ -93,7 +108,7 @@
         onErrorReconnectMessage: "Custom error message",
       };
       let ondata_callback = (data) => {
-        document.getElementById("display").innerText += "\n" + data.response;
+        receiver.displayUpdate(`[data] ${data.response}`, true);
         console.log(data);
       };
       const disableSomeKeys = (ev) => {
