@@ -95,9 +95,13 @@ export class KeypadPeer {
   onPeerDisconnected = () => {
     this.displayUpdate(this.onErrorReconnectMessage);
     // Workaround for peer.reconnect deleting previous id
-    this.peer.id = this.lastPeerId;
-    this.peer._lastServerId = this.lastPeerId;
-    this.peer.reconnect();
+    try {
+      this.peer.id = this.lastPeerId;
+      this.peer._lastServerId = this.lastPeerId;
+      this.peer.reconnect();
+    } catch (e) {
+      console.log(e);
+    }
   };
   onPeerClose = () => {
     this.displayUpdate("Connection closed");
