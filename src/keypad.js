@@ -16,6 +16,7 @@ class Keypad extends KeypadPeer {
     });
     this.startTime = Date.now();
     this.receiverPeerId = null;
+    this.controlButtons = keypadParameters.controlButtons ?? ["SPACE", "RETURN"];
 
     const parametersFromURL = this.parseParams(
       new URLSearchParams(window.location.search),
@@ -64,6 +65,7 @@ class Keypad extends KeypadPeer {
       case "KeypadParameters":
         this.alphabet = data.alphabet;
         this.font = data.font;
+        this.controlButtons = data.controlButtons;
         this.onErrorReconnectMessage = data.onErrorReconnectMessage;
         this.#populateKeypad();
         break;
@@ -81,13 +83,14 @@ class Keypad extends KeypadPeer {
         break;
       case "Update":
         // Keypad has received data to update the keypad
-        if (!data.hasOwnProperty("alphabet") && !data.hasOwnProperty("font")) {
+        if (!data.hasOwnProperty("alphabet") && !data.hasOwnProperty("font") && !data.hasOwnProperty("controlButtons")) {
           console.error(
             'Error in parsing data received! Must set "alphabet" or "font" properties',
           );
         } else {
           this.alphabet = data.alphabet ?? this.alphabet;
           this.font = data.font ?? this.font;
+          this.controlButtons = data.controlButtons ?? this.controlButtons;
         }
         this.#populateKeypad();
         break;
@@ -250,12 +253,12 @@ class Keypad extends KeypadPeer {
       button.addEventListener("mouseup", (e) => {
         e.preventDefault();
         console.log("mouseup event: ", e);
-        switch (e.toElement.className) {
+        switch (e.target.className) {
           case "response-button-label noselect":
-            buttonResponseFn(e.toElement.parentElement); // e.target.click();
+            buttonResponseFn(e.target.parentElement);
             break;
           case "response-button":
-            buttonResponseFn(e.toElement); // e.target.click();
+            buttonResponseFn(e.target);
             break;
         }
       });
@@ -290,7 +293,7 @@ class Keypad extends KeypadPeer {
       // Add the label to the button
       button.appendChild(buttonLabel);
       // Add the labeled-button to the HTML
-      if (["SPACE", "RETURN"].includes(symbol.toUpperCase())) {
+      if (this.controlButtons.includes(symbol.toUpperCase())) {
         document.querySelector("#keypad-control-keys").appendChild(button);
       } else {
         document.querySelector("#keypad-keys").appendChild(button);

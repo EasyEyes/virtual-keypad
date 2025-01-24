@@ -30,6 +30,7 @@ class Receiver extends KeypadPeer {
 
     this.alphabet = this.checkAlphabet(keypadParameters["alphabet"]); // What symbols to display on the keys
     this.font = keypadParameters["font"]; // What fontface to display the symbols in
+    this.controlButtons = keypadParameters["controlButtons"];
     this.onErrorReconnectMessage =
       keypadParameters.onErrorReconnectMessage ??
       "Connection lost. Please reconnect...";
@@ -226,6 +227,7 @@ class Receiver extends KeypadPeer {
           this.conn.send({
             message: "KeypadParameters",
             alphabet: this.alphabet,
+            controlButtons: this.controlButtons,
             font: this.font,
             onErrorReconnectMessage: this.onErrorReconnectMessage,
           });

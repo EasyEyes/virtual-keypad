@@ -79,15 +79,19 @@ export const applyMaxKeySize = (numberOfKeys) => {
   let controlKeyFontSize = Infinity;
   let keyFontSize;
   let j = 0;
+  
+  const numControlKeys = controlKeyElemsMask.filter(x => x).length;
+
   keyElems.forEach((k, i) => {
     k.style.position = "fixed";
     const controlKey = controlKeyElemsMask[i];
     let top, left, width;
     if (controlKey) {
       top = heightPx - keyHeightPx;
-      width = widthPx / 2 - margin;
+      width = (widthPx / numControlKeys) - margin;
       const m = margin * 0.5;
-      left = k.id.toLowerCase().includes("space") ? m : m + width + margin;
+      const controlKeyIndex = controlKeys.length;
+      left = m + controlKeyIndex * (width + margin);
 
       const f = getLargeFontSize(k, width, keyHeightPx - margin);
       controlKeyFontSize = Math.min(f, controlKeyFontSize);

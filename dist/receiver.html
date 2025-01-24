@@ -95,7 +95,7 @@
       let starting_alphabet = [
         ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789".split(""),
       ];
-      const ctrl = ["RETURN", "SPACE"];
+      const ctrl = ["RETURN", "SPACE", "SKIP BLOCK"];
       let alphabet = [...starting_alphabet, ...ctrl];
 
       let keypad_options = {
@@ -106,6 +106,7 @@
         targetElementId: "display", // id of the the div where messages should be displayed
         visualResponseFeedback: false,
         onErrorReconnectMessage: "Custom error message",
+        controlButtons: ctrl,
       };
       let ondata_callback = (data) => {
         receiver.displayUpdate(`[data] ${data.response}`, true);

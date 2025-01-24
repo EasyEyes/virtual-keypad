@@ -30,11 +30,11 @@ export class KeypadPeer {
     // TODO add support for ttd (ms)
     this.ttd = parameters.hasOwnProperty("ttd")
       ? parameters.hasOwnProperty("ttd")
-      : 8000;
+      : 60000;
     // TODO add support for heartRate (ms)
     this.heartbeatIntervalMs = parameters.hasOwnProperty("heartRate")
       ? parameters.hasOwnProperty("heartRate")
-      : 2000;
+      : 10000;
     this.lastHeartbeat = performance.now();
     this.heartBeatInterval = undefined;
     this.heartCheckInterval = undefined;
