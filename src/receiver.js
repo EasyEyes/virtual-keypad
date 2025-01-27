@@ -60,7 +60,7 @@ class Receiver extends KeypadPeer {
     this.peer.on("close", this.onClose);
     this.peer.on("error", this.onError);
   }
-  update = (alphabet = undefined, font = undefined) => {
+  update = (alphabet = undefined, font = undefined, controlButtons = undefined) => {
     // Update alphabet
     if (typeof alphabet !== "undefined") {
       const validAlphabet = this.checkAlphabet(alphabet);
@@ -73,6 +73,8 @@ class Receiver extends KeypadPeer {
     // TODO check if the font is supported, somehow
     this.font = font ?? this.font; // Store new font
 
+    this.controlButtons = controlButtons ?? this.controlButtons;
+
     // Update keypad
     try {
       this.conn.send({
@@ -80,6 +82,7 @@ class Receiver extends KeypadPeer {
         alphabet: this.alphabet,
         font: this.font,
         peerID: this.peer.id,
+        controlButtons: this.controlButtons,
       });
     } catch (e) {
       this.displayUpdate(
@@ -155,6 +158,7 @@ class Receiver extends KeypadPeer {
       keypadParameters["alphabet"] = "Arial";
     } else {
       // FUTURE verify that the selected font is available
+      // TODO necessary to check control buttons?
     }
     return keypadParameters;
   };
