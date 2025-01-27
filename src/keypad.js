@@ -293,7 +293,7 @@ class Keypad extends KeypadPeer {
       // Add the label to the button
       button.appendChild(buttonLabel);
       // Add the labeled-button to the HTML
-      if (this.controlButtons.includes(symbol.toUpperCase())) {
+      if (this.controlButtons.map(x => x.toLowerCase()).includes(symbol.toLowerCase())) {
         document.querySelector("#keypad-control-keys").appendChild(button);
       } else {
         document.querySelector("#keypad-keys").appendChild(button);
