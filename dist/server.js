@@ -4,6 +4,7 @@ const { v4: uuidv4 } = require("uuid");
 
 var app = (module.exports = express());
 var server = "http://localhost:3000";
+const PORT = process.env.PORT || 3000;
 
 // I got an error with line below if I didnt' add the extended property
 // Don't actually know if this should be set to true or false.
@@ -61,6 +62,7 @@ app.use(function (req, res) {
 });
 
 if (!module.parent) {
-  app.listen(3000);
-  console.log("Express started on port 3000");
+  app.listen(PORT, () => {
+    console.log(`Express started on port ${PORT}`);
+  });
 }
