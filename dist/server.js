@@ -10,14 +10,14 @@ var server = "http://localhost:3000";
 // app.use(express.urlencoded({ extended: true }));
 // app.use(express.json());
 
-// app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, "dist")));
 
 // Middleware to check we have all the params we need
 const checkParams = (req, res, next) => {
-  let noID = !req.query.hasOwnProperty('peerID');
-  if (noID) { 
-    console.log('No peerID given.');  // TODO Breaking! Serve error
-    throw "No peerID given -- unable to connect to peer."
+  let noID = !req.query.hasOwnProperty("peerID");
+  if (noID) {
+    console.log("No peerID given."); // TODO Breaking! Serve error
+    throw "No peerID given -- unable to connect to peer.";
     // req.query.peerID = uuidv4(); // TEMPorary and only usable to test keypadClient
   }
 
@@ -39,28 +39,28 @@ const checkParams = (req, res, next) => {
 
 // Link to the actual keypad
 // ie this is where the user will be sent (from the QR code) on their phone
-app.get('/keypad', checkParams, function (req, res) {
-  res.render(path.join(__dirname, 'keypad.html'));
+app.get("/keypad", checkParams, function (req, res) {
+  res.render(path.join(__dirname, "keypad.html"));
 });
-app.get('/receiver', function (req, res) {
-  res.render(path.join(__dirname, 'receiver.html'));
+app.get("/receiver", function (req, res) {
+  res.render(path.join(__dirname, "receiver.html"));
 });
 
 app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.send({
-    error: err.message
+    error: err.message,
   });
 });
 
 app.use(function (req, res) {
   res.status(404);
   res.send({
-    error: "404 not found"
+    error: "404 not found",
   });
 });
 
 if (!module.parent) {
   app.listen(3000);
-  console.log('Express started on port 3000');
+  console.log("Express started on port 3000");
 }
