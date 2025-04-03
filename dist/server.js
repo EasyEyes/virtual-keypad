@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 
-var app = (module.exports = express());
+var app = express();
 var server = "http://localhost:3000";
 const PORT = process.env.PORT || 3000;
 
@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 // app.use(express.urlencoded({ extended: true }));
 // app.use(express.json());
 
-app.use(express.static(path.join(__dirname, "dist")));
+app.use(express.static(__dirname));
 
 // Middleware to check we have all the params we need
 const checkParams = (req, res, next) => {
