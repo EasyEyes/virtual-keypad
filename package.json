@@ -2,14 +2,15 @@
   "name": "virtual-keypad",
   "version": "5.15.2",
   "description": "User response at a distance. Simple utility to summon forth a virtual keypad webapp.",
-  "main": "dist/main.js",
+  "main": "dist/server.js",
   "directories": {
     "example": "example",
     "bin": "dist"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack serve --open --config webpack.dev.js",
+    "start": "node dist/server.js",
+    "dev": "webpack serve --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js"
   },
   "keywords": [],
@@ -20,6 +21,7 @@
     "url": "https://github.com/EasyEyes/virtual-keypad"
   },
   "dependencies": {
+    "express": "^4.18.2",
     "peerjs": "^1.5.2",
     "qrcode": "^1.4.4",
     "uuid": "^8.3.2"
