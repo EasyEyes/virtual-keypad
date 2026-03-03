@@ -82,7 +82,7 @@ class Keypad extends KeypadPeer {
         this.#populateKeypad();
         break;
       case "Update":
-        // Keypad has received data to update the keypad
+        // Keypad has received data to update keypad
         if (!data.hasOwnProperty("alphabet") && !data.hasOwnProperty("font") && !data.hasOwnProperty("controlButtons")) {
           console.error(
             'Error in parsing data received! Must set "alphabet" or "font" properties',
@@ -120,7 +120,7 @@ class Keypad extends KeypadPeer {
   };
   #join = () => {
     /**
-     * Create the connection between the two Peers.
+     * Create connection between two Peers.
      *
      * Sets up callbacks that handle any events related to the
      * connection and data received on it.
@@ -129,14 +129,14 @@ class Keypad extends KeypadPeer {
     if (this.conn) {
       this.conn.close();
     }
-    // Create connection to destination peer specified by the query param
+    // Create connection to destination peer specified by query param
     this.conn = this.peer.connect(this.receiverPeerId, {
       reliable: true,
     });
 
     console.log("Connection: ", this.conn);
     this.conn.on("open", this.#initiateHandshake);
-    // Handle incoming data (messages only since this is the signal sender)
+    // Handle incoming data (messages only since this is signal sender)
     this.conn.on("data", this.#onConnData);
     // TODO figure out how to re-establish connection, or have more robust connection
     this.conn.on("close", () => console.log("Connection closed"));
@@ -194,11 +194,13 @@ class Keypad extends KeypadPeer {
 
     window.onresize = () => {
       console.count("Window resized.");
-      applyMaxKeySize(this.alphabet?.length);
+      // NEW: Pass font family to applyMaxKeySize
+      applyMaxKeySize(this.alphabet?.length, this.font);
     };
     if (window.visualViewport) window.visualViewport.onresize = () => {
       console.count("VisualViewport resized.");
-      applyMaxKeySize(this.alphabet?.length);
+      // NEW: Pass font family to applyMaxKeySize
+      applyMaxKeySize(this.alphabet?.length, this.font);
     };
   };
   #populateKeypad = () => {
@@ -284,15 +286,15 @@ class Keypad extends KeypadPeer {
         }
       });
 
-      // Create a label for the button
+      // Create a label for button
       let buttonLabel = document.createElement("span");
       buttonLabel.classList.add("response-button-label", "noselect");
       buttonLabel.innerText = symbol;
       buttonLabel.style.fontFamily = this.font;
 
-      // Add the label to the button
+      // Add to label to button
       button.appendChild(buttonLabel);
-      // Add the labeled-button to the HTML
+      // Add to labeled-button to HTML
       if (this.controlButtons.map(x => x.toLowerCase()).includes(symbol.toLowerCase())) {
         document.querySelector("#keypad-control-keys").appendChild(button);
       } else {
@@ -300,11 +302,11 @@ class Keypad extends KeypadPeer {
       }
     };
 
-    // Set-up an instruction/welcome message for the user
+    // Set-up an instruction/welcome message for user
     const header = document.getElementById("keypad-header");
     header.innerText = this.headerMessage || "";
     header.style.display = header.innerText === "" ? "none" : "block";
-    // Get the keypad element
+    // Get keypad element
     const remoteControl = document.getElementById("keypad");
 
     // Set-up audio element
@@ -321,16 +323,17 @@ class Keypad extends KeypadPeer {
     // Create new buttons
     this.alphabet.forEach((symbol) => createButton(symbol));
     // Manually style buttons, according to Denis' algorithm
-    setTimeout(() => applyMaxKeySize(this.alphabet.length), 5); // Why?
+    // NEW: Pass font family to applyMaxKeySize
+    setTimeout(() => applyMaxKeySize(this.alphabet?.length, this.font), 5); // Why?
   };
   visualFeedbackThenReset = (delayTime = 800) => {
     // ie grey out keys just after use, to discourage rapid response
     this.interResponseKeypadMessaging();
-    // Setup keys for the next trial
+    // Setup keys for next trial
     setTimeout(defaultKeypadMessaging, delayTime);
   };
   defaultKeypadMessaging = (headerText = "") => {
-    // Set-up an instruction/welcome message for the user
+    // Set-up an instruction/welcome message for user
     const header = document.getElementById("keypad-header");
     if (headerText === "") {
       header.style.display = "none";
@@ -359,15 +362,14 @@ class Keypad extends KeypadPeer {
     });
   };
   /**
-   * Remove all keys from the keypad.
+   * Remove all keys from keypad.
    */
   clearKeys = () => {
     document.querySelector("#keypad-keys").innerHTML =
       "<div id='keypad-control-keys'></div>";
-    // document.querySelector("#keypad-control-keys").innerHTML = "";
   };
   /**
-   * Return the nodes corresponding to the specified keys.
+   * Return nodes corresponding to specified keys.
    * @param {string[]} whichKeys id's of keys to select. defaults to all keys.
    * @returns {HTMLElement[]}
    */

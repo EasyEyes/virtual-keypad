@@ -1,6 +1,6 @@
 {
   "name": "virtual-keypad",
-  "version": "5.15.2",
+  "version": "5.16.0",
   "description": "User response at a distance. Simple utility to summon forth a virtual keypad webapp.",
   "main": "dist/server.js",
   "directories": {
@@ -33,7 +33,9 @@
     "core-js": "^3.41.0",
     "css-loader": "^5.2.6",
     "file-loader": "^6.2.0",
+    "jsdom": "^28.1.0",
     "style-loader": "^2.0.0",
+    "vitest": "^4.0.18",
     "webpack": "^5.40.0",
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^4.13.2",

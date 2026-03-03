@@ -7,7 +7,7 @@
 
   display: grid;
   grid-template-columns: 1fr;
-  /* Make header text as big as the text, keys take up as much space as needed, and control keys take up bottom space */
+  /* Make header text as big as possible, keys take up as much space as needed, and control keys take up bottom space */
   grid-template-rows: max-content auto;
 
   align-items: center;
@@ -15,6 +15,7 @@
 
   font-family: sans-serif;
 }
+
 #keypad-header {
   height: 100%;
   font-size: 1.5rem;
@@ -29,6 +30,7 @@
   box-shadow: inset 2px 2px 4px #888888,
               inset -2px -2px 4px #fff;
 }
+
 #keypad-footer {
   position: absolute;
   font-size: smaller;
@@ -39,13 +41,9 @@
 
 /* Grid of main keys themselves */
 #keypad-keys {
-  /* Second row, within the keypad grid (ie whole page) */
+  /* Second row, within keypad grid (i.e., whole page) */
   grid-row: 2;
 }
-/* Hide scrollbar */
-/* #keypad-keys::-webkit-scrollbar {
-  display: none;
-} */
 
 .response-button {
   /* border: 1px solid red; */
@@ -55,6 +53,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column; /* NEW: Enable vertical layout for wrapping */
 
   /* Curve corners of buttons */
   border-radius: min(25px, 15%);
@@ -69,13 +68,18 @@
 
   box-shadow: 1px 1px 2px #888888,
               -1px -1px 2px #fff;
+
+  /* NEW: Enable flexible text layout */
+  overflow: hidden;
+  box-sizing: border-box;
 }
+
 .response-button:active {
   box-shadow: 1px 2px 2px 1px #999;
   background-color: #aaa;
 }
 
-/* Only do on a hover-enabled device, ie not a phone/tablet */
+/* Only do on a hover-enabled device, i.e., not a phone/tablet */
 @media (hover: hover) {
   .response-button:hover {
     box-shadow: inset 1px 1px 2px #888888,
@@ -83,10 +87,22 @@
   }
 }
 
-
 .response-button-label {
   text-align: center;
-  /* color: #eeeeee; */
+  color: black;
+
+  /* NEW: Enable text wrapping and centering */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: normal;
+  overflow: hidden;
+  padding: 2px;
+  box-sizing: border-box;
 }
 
 .noselect {
@@ -106,4 +122,13 @@
               inset -1px -1px 2px #fff;
   pointer-events: none;
   user-select: none;
+}
+
+/* Control buttons maintain bottom alignment */
+#keypad-control-keys .response-button {
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; /* NEW: Enable vertical layout */
 }
