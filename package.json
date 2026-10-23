@@ -40,5 +40,8 @@
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^4.13.2",
     "webpack-merge": "^5.8.0"
+  },
+  "engines": {
+    "node": ">=22.23.4 <23 || >=24.22.1 <25 || >=26.12.1 <27"
   }
 }
